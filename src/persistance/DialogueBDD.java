@@ -8,7 +8,8 @@ import model.data.City;
 public class DialogueBDD {
 
 	public static void main(){
-		
+		DialogueBDD d = new DialogueBDD();
+		City c = d.recupereVille();
 	}
 	public City recupereVille(){
 		Statement statement = Connexion.getConnexion().createStatement();
