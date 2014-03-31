@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.data.City;
 
-public class TabuSearch implements Lookup {
+public class Tabu implements Lookup {
 
 	@Override
 	public void run(ArrayList<City> cities) {

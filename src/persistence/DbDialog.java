@@ -1,4 +1,4 @@
-package persistance;
+package persistence;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ public class DbDialog {
 		Statement statement;
 		ResultSet rs = null;
 		try {
-			statement = ConnexionBDD.getConnexion().createStatement();
+			statement = DbConnection.getConnection().createStatement();
 			rs = statement.executeQuery(requete);
 		} catch (SQLException e) {
 			e.printStackTrace();
