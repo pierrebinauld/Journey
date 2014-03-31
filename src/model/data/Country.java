@@ -7,7 +7,7 @@ public class Country {
 
 	private String name;
 	private String description;
-	private String dimension;
+	private int dimension;
 	private List<City> cities = new ArrayList<City>();
 	
 	public String getName() {
@@ -22,10 +22,10 @@ public class Country {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getDimension() {
+	public int getDimension() {
 		return dimension;
 	}
-	public void setDimension(String dimension) {
+	public void setDimension(int dimension) {
 		this.dimension = dimension;
 	}
 	public void addCity(City city) {
@@ -36,5 +36,14 @@ public class Country {
 	}
 	public void setCities(ArrayList<City> cities) {
 		this.cities = cities;
+	}
+
+	
+	public String toString(){
+		String citiesInCountry = "";
+		for(City c : cities){
+			citiesInCountry += c.toString();
+		}
+		return "Pays "+name+"; descr="+description+" ; dimension="+dimension+"\n"+citiesInCountry;
 	}
 }

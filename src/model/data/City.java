@@ -1,6 +1,5 @@
 package model.data;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 
 public class City {
@@ -19,5 +18,9 @@ public class City {
 	}
 	public void setPosition(Point2D.Double position) {
 		this.position = position;
+	}
+	
+	public String toString(){
+		return "Ville numéro "+id+"; x="+position.x+" ; y="+position.y+"\n";
 	}
 }
