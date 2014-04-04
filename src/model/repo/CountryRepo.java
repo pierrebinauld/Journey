@@ -29,6 +29,7 @@ public class CountryRepo implements Repo<Country>{
 					city.setPosition(new Point2D.Double(rsCities.getDouble("latitude"),rsCities.getDouble("longitude")));
 					country.getCities().add(city);
 				}
+				return country;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
