@@ -1,13 +1,11 @@
 package model.repo;
 
-import java.awt.geom.Point2D;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import persistance.DbDialog;
-import model.data.City;
 import model.data.Country;
+import model.data.City;
 
 public class CountryRepo implements Repo<Country>{
 
@@ -15,20 +13,14 @@ public class CountryRepo implements Repo<Country>{
 	public Country find(String name) {
 		Country country = new Country();
 		DbDialog db = new DbDialog();
+		CityRepo cityrepo = new CityRepo();
 		ResultSet rsCountry = db.executeRequest("select * from country");
 		try {
 			if(rsCountry.next()){
-				ResultSet rsCities = db.executeRequest("select * from city where idcountry = '" + rsCountry.getInt("idcountry") + "'");
 				country.setName(rsCountry.getString("nomcountry"));
 				country.setDescription(rsCountry.getString("description"));
 				country.setDimension(rsCountry.getInt("dimension"));
-				country.setCities(new ArrayList<City>());
-				while(rsCities.next()){
-					City city = new City();
-					city.setId(rsCities.getInt("idcity"));
-					city.setPosition(new Point2D.Double(rsCities.getDouble("latitude"),rsCities.getDouble("longitude")));
-					country.getCities().add(city);
-				}
+				country.setCities(cityrepo.findByCountry(rsCountry.getInt("idcountry")));
 				return country;
 			}
 		} catch (SQLException e) {
@@ -39,8 +31,26 @@ public class CountryRepo implements Repo<Country>{
 	
 	@Override
 	public void save(Country obj) {
-		// TODO Auto-generated method stub
-		
+		DbDialog db = new DbDialog();
+		ResultSet rsExist = db.executeRequest("select * from country where idcountry ="+obj.getId());
+		try {
+			String sql="";
+			if(rsExist.next()){//update
+				sql = "Update country set nomcountry="+obj.getName()+", description ="+obj.getDescription()+", dimension ="+obj.getDimension()+" where idcountry ="+obj.getId();
+			}
+			else{//insert
+				ResultSet rsMax = db.executeRequest("select max(idcountry) from country");
+				sql = "insert into country(idcountry, nomcountry,description,dimension)values("+(rsMax.getInt("max(idcountry)")+1)+", "+obj.getName()+", "+obj.getDescription()+", "+obj.getDimension()+")";
+			}
+			db.executeRequest(sql);
+			for(City c: obj.getCities()) {
+				CityRepo cr = new CityRepo();
+				cr.save(c);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	
