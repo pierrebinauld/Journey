@@ -1,46 +1,85 @@
 package model.parser;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import model.data.City;
 import model.data.Country;
 
 public class TSPLIBParser {
 
+	private Pattern namePattern;
+	private Pattern commentPattern;
+	private Pattern dimensionPattern;
+	private Pattern coordinatePattern;
+
+	public TSPLIBParser() {
+		init();
+	}
+
+	public void init() {
+
+		namePattern = Pattern.compile("NAME : (.+)");
+		commentPattern = Pattern.compile("COMMENT : (.+)");
+		dimensionPattern = Pattern.compile("DIMENSION : (.+)");
+		coordinatePattern = Pattern.compile("(\\d+)\\s+(\\d+\\.\\d{4})\\s+(\\d+\\.\\d{4})");
+	}
+
 	public Country parse(File file) throws IOException {
 		Country country = new Country();
 		BufferedReader buff = new BufferedReader(new FileReader(file));
 
 		try {
-			String line;
+			String line = "";
 			int i = 0;
 
-			while ((line = buff.readLine()) != null) {
-
+			while ((line = buff.readLine()) != null && !"EOF".equals(line)) {
+				boolean matched = false;
 				if (i < 7) {
-					String[] datas = line.split("NAME : ");
-					if (1 == datas.length) {
-						country.setName(datas[0]);
+					if (!matched) {
+						Matcher m = namePattern.matcher(line);
+						if (m.matches()) {
+							country.setName(m.group(1));
+							matched = true;
+						}
+					}
+					if (!matched) {
+						Matcher m = commentPattern.matcher(line);
+						if (m.matches()) {
+							if(null == country.getDescription()) {
+								country.setDescription(m.group(1));
+							} else if (m.matches()){
+								country.setDescription(country.getDescription() + "\n" + m.group(1));
+							}
+							matched = true;
+						}
+					}
+					if (!matched) {
+						Matcher m = dimensionPattern.matcher(line);
+						if (m.matches()) {
+							country.setDimension(m.group(1));
+							matched = true;
+						}
 					}
 				} else {
-					String[] datas = line.split("\\s");
-					if (3 == datas.length) {
+					Matcher m = coordinatePattern.matcher(line);
+					if (m.matches()) {
 						City city = new City();
-						city.setId(Integer.parseInt(datas[0]));
+						city.setId(Integer.parseInt(m.group(1)));
 
 						Point2D.Double position = new Point2D.Double();
-						position.x = Double.parseDouble(datas[1]);
-						position.y = Double.parseDouble(datas[2]);
+						String g2 = m.group(2);
+						position.x = Double.parseDouble(m.group(2));
+						position.y = Double.parseDouble(m.group(3));
 						city.setPosition(position);
 
 						country.addCity(city);
 					}
-
 				}
 
 				i++;
@@ -54,6 +93,7 @@ public class TSPLIBParser {
 
 	public static void main(String[] args) throws IOException {
 		File file = new File("/home/pierre/git/Journey/data/ch71009.tsp");
+//		File file = new File("http://www.math.uwaterloo.ca/tsp/world/ch71009.tsp");
 
 		TSPLIBParser parser = new TSPLIBParser();
 		Country country = parser.parse(file);
