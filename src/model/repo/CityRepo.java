@@ -19,7 +19,7 @@ public class CityRepo implements Repo<City>{
 		try {
 			if(rsCity.next()){
 				c.setId(rsCity.getInt("idcity"));
-				c.setPosition(new Point2D.Double(rsCity.getDouble("latitude"),rsCity.getDouble("longitude")));
+				c.setPosition(new Point2D.Double(rsCity.getDouble("y"),rsCity.getDouble("x")));
 				return c;
 			}
 		} catch (SQLException e) {
@@ -47,8 +47,22 @@ public class CityRepo implements Repo<City>{
 
 	@Override
 	public void save(City obj) {
-		// TODO Auto-generated method stub
-		
+		DbDialog db = new DbDialog();
+		ResultSet rsExist = db.executeRequest("select * from city where idcity = "+obj.getId());
+		try {
+			String sql="";
+			if(rsExist.next()){//update
+				sql = "Update city set x ="+obj.getPosition().x+", y ="+obj.getPosition().y+" where idcity = "+obj.getId();
+			}
+			else{//insert
+				ResultSet rsMax = db.executeRequest("select max(idcity) from city");
+				sql = "insert into city(idcity,x,y,idcountry)values("+(rsMax.getInt("max(idcity)")+1)+", "+obj.getPosition().x+", "+obj.getPosition().y+", "+obj.getIdCountry()+")";
+			}
+			db.executeRequest(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
