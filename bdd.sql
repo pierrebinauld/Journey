@@ -1,32 +1,48 @@
 create table country(
-	idcountry int not null primary key,
-	nomcountry varchar(40) not null,
-	description varchar(400) not null,
-	dimension int not null
+	idcountry       int             unsigned not null,
+	nomcountry      varchar(40)     not null,
+	description     varchar(400)    not null,
+	dimension       int             unsigned not null,
+
+	primary key pk_country (idcountry)
 );
 
 create table city(
-	idcity int NOT NULL PRIMARY KEY,
-	latitude long not null,
-	longitude long not null,
-	idcountry int not null
+	idcity          int             unsigned not null,
+	x               decimal(10, 4)  not null,
+	y               decimal(10, 4)  not null,
+	idcountry       int             unsigned not null,
+
+	primary key pk_stats (idcity),
+	foreign key fk_city_country (idcountry) references country (idcountry)
 );
 
 create table lookup(
-	idlookup int  not null primary key,
-	namelookup varchar(40) not null
+	idlookup        int             unsigned not null,
+	namelookup      varchar(40)     not null,
+
+	primary key pk_stats (idlookup)
 );
 
 create table stats(
-	id int not null primary key,
-	best long not null,
-	countexe int not null,
-	total long not null,
-	average long not null,
-	idcountry int not null,
-	idlookup int  not null
+	idstats        int             unsigned not null,
+	best           int             unsigned not null,
+	countexe       int             unsigned not null,
+	average        int             unsigned not null,
+	idcountry      int             unsigned not null,
+	idlookup       int             unsigned not null,
+
+	primary key pk_stats (idstats),
+	foreign key fk_stats_country (idcountry) references country (idcountry),
+	foreign key fk_stats_lookup (idlookup) references lookup (idlookup)
 );
 
-alter table city add foreign key fk_city(idcountry) references country (idcountry);
-alter table stats add foreign key fk_stats_country(idcountry) references country (idcountry);
-alter table stats add foreign key fk_stats_lookup(idlookup) references lookup (idlookup);
+create table distance (
+	idcity1         int         unsigned not null,
+	idcity2         int         unsigned not null,
+	distance        int         unsigned not null,
+
+	primary key pk_distance (idcity1, idcity2),
+	foreign key fk_distance_city1 (idcity1) references city (idcity),
+	foreign key fk_distance_city2 (idcity2) references city (idcity)
+);
