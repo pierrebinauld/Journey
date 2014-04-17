@@ -1,44 +1,44 @@
 package model.repo;
 
+import model.data.City;
+import persistence.DbDialog;
+
 import java.awt.geom.Point2D;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import persistance.DbDialog;
-import model.data.City;
-
-public class CityRepo implements Repo<City>{
+public class CityRepo implements Repo<City> {
 
 	@Override
-	public City find(String id) {
+	public City findById(int id) {
 		City c = new City();
 		DbDialog db = new DbDialog();
-		ResultSet rsCity = db.executeRequest("select * from city where idcity='"+id+"'");
+		ResultSet rsCity = db.executeRequest("select * from city where idcity=" + id);
 		try {
-			if(rsCity.next()){
-				c.setId(rsCity.getInt("idcity"));
-				c.setPosition(new Point2D.Double(rsCity.getDouble("y"),rsCity.getDouble("x")));
+			if(rsCity.next()) {
+				c.setId(id);
+				c.setPosition(new Point2D.Double(rsCity.getDouble("x"), rsCity.getDouble("y")));
 				return c;
 			}
-		} catch (SQLException e) {
+		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	public List<City> findByCountry(int idcountry){
+
+	public List<City> findByCountryId(int idcountry) {
 		DbDialog db = new DbDialog();
 		List<City> list = new ArrayList<City>();
 		CityRepo cityrepo = new CityRepo();
-		ResultSet rsCities = db.executeRequest("select idcity from city where idcountry = '" + idcountry + "'");
+		ResultSet rsCities = db.executeRequest("select idcity from city where idcountry=" + idcountry);
 		try {
-			while(rsCities.next()){
-				City city = cityrepo.find(rsCities.getString("idcity"));
+			while(rsCities.next()) {
+				City city = cityrepo.findById(rsCities.getInt("idcity"));
 				list.add(city);
 			}
-		} catch (SQLException e) {
+		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -46,23 +46,23 @@ public class CityRepo implements Repo<City>{
 	}
 
 	@Override
-	public void save(City obj) {
+	public void save(City city) {
 		DbDialog db = new DbDialog();
-		ResultSet rsExist = db.executeRequest("select * from city where idcity = "+obj.getId());
+		ResultSet rsExist = db.executeRequest("select count(*) as idexists from city where idcity=" + city.getId());
 		try {
-			String sql="";
-			if(rsExist.next()){//update
-				sql = "Update city set x ="+obj.getPosition().x+", y ="+obj.getPosition().y+" where idcity = "+obj.getId();
-			}
-			else{//insert
-				ResultSet rsMax = db.executeRequest("select max(idcity) from city");
-				sql = "insert into city(idcity,x,y,idcountry)values("+(rsMax.getInt("max(idcity)")+1)+", "+obj.getPosition().x+", "+obj.getPosition().y+", "+obj.getIdCountry()+")";
+			String sql = "";
+			if(rsExist.next()) {
+				if(0 != rsExist.getInt("idexists")) {//update
+					sql = "update city set x=" + city.getPosition().getX() + ", y=" + city.getPosition().getY() + " where idcity=" + city.getId();
+				} else {//insert
+					ResultSet rsMax = db.executeRequest("select coalesce(max(idcity), 0) as idcitymax from city");
+					sql = "insert into city(idcity, x, y, idcountry) values(" + (rsMax.getInt("idcitymax") + 1) + ", " + city.getPosition().getX() + ", " + city.getPosition().getY() + ", " + city.getIdCountry() + ")";
+				}
 			}
 			db.executeRequest(sql);
-		} catch (SQLException e) {
+		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 }

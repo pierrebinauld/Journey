@@ -1,6 +1,6 @@
 create table country(
 	idcountry       int             unsigned not null,
-	nomcountry      varchar(40)     not null,
+	namecountry     varchar(40)     not null,
 	description     varchar(400)    not null,
 	dimension       int             unsigned not null,
 
@@ -25,12 +25,12 @@ create table lookup(
 );
 
 create table stats(
-	idstats        int             unsigned not null,
-	best           int             unsigned not null,
-	countexe       int             unsigned not null,
-	average        int             unsigned not null,
-	idcountry      int             unsigned not null,
-	idlookup       int             unsigned not null,
+	idstats         int             unsigned not null,
+	best            int             unsigned not null,
+	countexe        int             unsigned not null,
+	average         int             unsigned not null,
+	idcountry       int             unsigned not null,
+	idlookup        int             unsigned not null,
 
 	primary key pk_stats (idstats),
 	foreign key fk_stats_country (idcountry) references country (idcountry),
