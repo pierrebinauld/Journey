@@ -6,30 +6,23 @@ public class City {
 
 	private int id;
 	private Point2D.Double position;
-	private int idCountry;
 
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public City setId(int id) {
 		this.id = id;
+		return this;
 	}
 
 	public Point2D.Double getPosition() {
 		return position;
 	}
 
-	public void setPosition(Point2D.Double position) {
+	public City setPosition(Point2D.Double position) {
 		this.position = position;
-	}
-
-	public int getIdCountry() {
-		return idCountry;
-	}
-
-	public void setIdCountry(int idCountry) {
-		this.idCountry = idCountry;
+		return this;
 	}
 
 	public String toString() {

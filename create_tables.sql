@@ -2,18 +2,18 @@ create table country(
 	idcountry       int             unsigned not null,
 	namecountry     varchar(40)     not null,
 	description     varchar(400)    not null,
-	dimension       int             unsigned not null,
 
-	primary key pk_country (idcountry)
+	primary key pk_country (idcountry),
+	unique u_country_name (namecountry)
 );
 
 create table city(
 	idcity          int             unsigned not null,
+	idcountry       int             unsigned not null,
 	x               decimal(10, 4)  not null,
 	y               decimal(10, 4)  not null,
-	idcountry       int             unsigned not null,
 
-	primary key pk_stats (idcity),
+	primary key pk_city (idcity, idcountry),
 	foreign key fk_city_country (idcountry) references country (idcountry)
 );
 
@@ -21,7 +21,7 @@ create table lookup(
 	idlookup        int             unsigned not null,
 	namelookup      varchar(40)     not null,
 
-	primary key pk_stats (idlookup)
+	primary key pk_lookup (idlookup)
 );
 
 create table stats(

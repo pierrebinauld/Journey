@@ -9,9 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CityRepo implements Repo<City> {
+public class CityRepo {
 
-	@Override
 	public City findById(int id) {
 		City c = new City();
 		DbDialog db = new DbDialog();
@@ -45,21 +44,22 @@ public class CityRepo implements Repo<City> {
 		return list;
 	}
 
-	@Override
-	public void save(City city) {
+	public void save(City city, int idCountry) {
 		DbDialog db = new DbDialog();
-		ResultSet rsExist = db.executeRequest("select count(*) as idexists from city where idcity=" + city.getId());
+		ResultSet rsExist = db.executeRequest("select count(*) as idexists from city where idcity=" + city.getId() + " and idcountry=" + idCountry);
 		try {
 			String sql = "";
 			if(rsExist.next()) {
 				if(0 != rsExist.getInt("idexists")) {//update
-					sql = "update city set x=" + city.getPosition().getX() + ", y=" + city.getPosition().getY() + " where idcity=" + city.getId();
+					sql = "update city set x=" + city.getPosition().getX() + ", y=" + city.getPosition().getY() + " where idcity=" + city.getId() + " and idcountry=" + idCountry;
 				} else {//insert
 					ResultSet rsMax = db.executeRequest("select coalesce(max(idcity), 0) as idcitymax from city");
-					sql = "insert into city(idcity, x, y, idcountry) values(" + (rsMax.getInt("idcitymax") + 1) + ", " + city.getPosition().getX() + ", " + city.getPosition().getY() + ", " + city.getIdCountry() + ")";
+					rsMax.next();
+					city.setId(rsMax.getInt("idcitymax") + 1);
+					sql = "insert into city(idcity, idcountry, x, y) values(" + city.getId() + ", " + idCountry + ", " + city.getPosition().getX() + ", " + city.getPosition().getY() + ")";
 				}
 			}
-			db.executeRequest(sql);
+			db.executeUpdate(sql);
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
