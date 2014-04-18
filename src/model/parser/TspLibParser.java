@@ -26,7 +26,7 @@ public class TspLibParser {
 		readHeader(reader, country);
 		readData(reader, country);
 		reader.close();
-
+		System.out.println("Parsing finished.");
 		return country;
 	}
 

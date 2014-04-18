@@ -53,9 +53,6 @@ public class CityRepo {
 				if(0 != rsExist.getInt("idexists")) {//update
 					sql = "update city set x=" + city.getPosition().getX() + ", y=" + city.getPosition().getY() + " where idcity=" + city.getId() + " and idcountry=" + idCountry;
 				} else {//insert
-					ResultSet rsMax = db.executeRequest("select coalesce(max(idcity), 0) as idcitymax from city");
-					rsMax.next();
-					city.setId(rsMax.getInt("idcitymax") + 1);
 					sql = "insert into city(idcity, idcountry, x, y) values(" + city.getId() + ", " + idCountry + ", " + city.getPosition().getX() + ", " + city.getPosition().getY() + ")";
 				}
 			}
