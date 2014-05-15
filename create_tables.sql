@@ -38,11 +38,12 @@ create table stats(
 );
 
 create table distance (
+	idcountry       int         unsigned not null,
 	idcity1         int         unsigned not null,
 	idcity2         int         unsigned not null,
 	distance        int         unsigned not null,
 
-	primary key pk_distance (idcity1, idcity2),
-	foreign key fk_distance_city1 (idcity1) references city (idcity),
-	foreign key fk_distance_city2 (idcity2) references city (idcity)
+	primary key pk_distance (idcountry, idcity1, idcity2),
+	foreign key fk_distance_city1 (idcountry, idcity1) references city (idcountry, idcity),
+	foreign key fk_distance_city2 (idcountry, idcity2) references city (idcountry, idcity)
 );

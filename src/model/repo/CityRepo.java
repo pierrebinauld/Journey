@@ -13,8 +13,7 @@ public class CityRepo {
 
 	public City findById(int id) {
 		City c = new City();
-		DbDialog db = new DbDialog();
-		ResultSet rsCity = db.executeRequest("select * from city where idcity=" + id);
+		ResultSet rsCity = DbDialog.executeRequest("select * from city where idcity=" + id);
 		try {
 			if(rsCity.next()) {
 				c.setId(id);
@@ -29,9 +28,9 @@ public class CityRepo {
 
 	public List<City> findByCountryId(int idcountry) {
 		DbDialog db = new DbDialog();
-		List<City> list = new ArrayList<City>();
+		List<City> list = new ArrayList<>();
 		CityRepo cityrepo = new CityRepo();
-		ResultSet rsCities = db.executeRequest("select idcity from city where idcountry=" + idcountry);
+		ResultSet rsCities = DbDialog.executeRequest("select idcity from city where idcountry=" + idcountry);
 		try {
 			while(rsCities.next()) {
 				City city = cityrepo.findById(rsCities.getInt("idcity"));
@@ -46,7 +45,7 @@ public class CityRepo {
 
 	public void save(City city, int idCountry) {
 		DbDialog db = new DbDialog();
-		ResultSet rsExist = db.executeRequest("select count(*) as idexists from city where idcity=" + city.getId() + " and idcountry=" + idCountry);
+		ResultSet rsExist = DbDialog.executeRequest("select count(*) as idexists from city where idcity=" + city.getId() + " and idcountry=" + idCountry);
 		try {
 			String sql = "";
 			if(rsExist.next()) {
@@ -56,7 +55,7 @@ public class CityRepo {
 					sql = "insert into city(idcity, idcountry, x, y) values(" + city.getId() + ", " + idCountry + ", " + city.getPosition().getX() + ", " + city.getPosition().getY() + ")";
 				}
 			}
-			db.executeUpdate(sql);
+			DbDialog.executeUpdate(sql);
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
