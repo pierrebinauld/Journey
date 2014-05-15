@@ -1,14 +1,17 @@
 package persistence;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class DbWriterThread extends Thread {
 
+	private Connection connection;
 	private LinkedBlockingQueue<String> queue;
 
-	public DbWriterThread(LinkedBlockingQueue<String> queue) {
+	public DbWriterThread(Connection connection, LinkedBlockingQueue<String> queue) {
+		this.connection = connection;
 		this.queue = queue;
 	}
 
@@ -18,7 +21,7 @@ public class DbWriterThread extends Thread {
 			String sql = null;
 			try {
 				sql = queue.take();
-				Statement statement = DbConnection.getConnection().createStatement();
+				Statement statement = connection.createStatement();
 				statement.executeUpdate(sql);
 			} catch(InterruptedException e) {
 				e.printStackTrace();

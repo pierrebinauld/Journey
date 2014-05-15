@@ -12,14 +12,17 @@ public class DbConnection {
 	private static DbConnection instance;
 
     private Connection connection;
-	private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<>();
-	private Thread dbThread = new DbWriterThread(queue);
+	private LinkedBlockingQueue<String> queue;
+	private Thread dbWriterThread;
 
     public DbConnection() {
         try {
 //            connection = DriverManager.getConnection("jdbc:mysql://94.23.195.14/" + DB_NAME, USER, PASSWORD);
 	        connection = DriverManager.getConnection("jdbc:mysql://localhost/" + DB_NAME, USER, PASSWORD);
 	        connection.setAutoCommit(false);
+	        queue  = new LinkedBlockingQueue<>();
+	        dbWriterThread = new DbWriterThread(connection, queue);
+	        dbWriterThread.run();
         } catch(SQLException e) {
             e.printStackTrace();
         }
