@@ -1,8 +1,7 @@
 package persistence;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class DbConnection {
 
@@ -10,7 +9,11 @@ public class DbConnection {
     private static final String USER = "journey";
     private static final String PASSWORD = "journey";
 
-    private static Connection connection;
+	private static DbConnection instance;
+
+    private Connection connection;
+	private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<>();
+	private Thread dbThread = new DbWriterThread(queue);
 
     public DbConnection() {
         try {
@@ -22,10 +25,24 @@ public class DbConnection {
         }
     }
 
-    public static Connection getConnection() {
-        if(connection == null) {
-            new DbConnection();
+    public static DbConnection getConnection() {
+        if(instance == null) {
+            instance = new DbConnection();
         }
-        return connection;
+        return instance;
     }
+
+	public ResultSet executeRequest(String sql) {
+		try {
+			Statement statement = connection.createStatement();
+			return statement.executeQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void executeUpdate(final String sql) {
+		queue.add(sql);
+	}
 }
