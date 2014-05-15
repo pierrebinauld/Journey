@@ -9,9 +9,15 @@ import java.util.HashMap;
 
 public class DistanceRepo {
 
+	private DbConnection db;
+
+	public DistanceRepo(DbConnection db) {
+		this.db = db;
+	}
+
 	public HashMap<Integer, Integer> findByCityId(int cityId) {
 		HashMap<Integer, Integer> neighborhood = new HashMap<>();
-		ResultSet rsDistances = DbConnection.getConnection().executeRequest("select idcity2 as idcity, distance from distance where idcity1=" + cityId + " union select idcity1 as idcity, distance from distance where idcity2=" + cityId);
+		ResultSet rsDistances = db.executeRequest("select idcity2 as idcity, distance from distance where idcity1=" + cityId + " union select idcity1 as idcity, distance from distance where idcity2=" + cityId);
 		try {
 			while(rsDistances.next()) {
 				neighborhood.put(rsDistances.getInt("idcity"), rsDistances.getInt("distance"));
@@ -23,6 +29,6 @@ public class DistanceRepo {
 	}
 
 	public void save(Distance distance) {
-		DbConnection.getConnection().executeUpdate("insert into distance(idcountry, idcity1, idcity2, distance) values(" + distance.getIdCountry() + ", " + distance.getIdCity1() + ", " + distance.getIdCity2() + ", " + distance.getDistance() + ")");
+		db.executeUpdate("insert into distance(idcountry, idcity1, idcity2, distance) values(" + distance.getIdCountry() + ", " + distance.getIdCity1() + ", " + distance.getIdCity2() + ", " + distance.getDistance() + ")");
 	}
 }

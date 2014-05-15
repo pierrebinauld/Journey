@@ -26,6 +26,11 @@ public class City {
 	}
 
 	public String toString() {
-		return "Ville n° : " + id + "\nx=" + position.getX() + " ; y=" + position.getY() + "\n";
+		StringBuilder builder = new StringBuilder();
+		builder.append("CITY")
+				.append("Id: ").append(id).append('\t')
+				.append("X: ").append(position.getX()).append('\t')
+				.append("Y: ").append(position.getY()).append('\n');
+		return builder.toString();
 	}
 }

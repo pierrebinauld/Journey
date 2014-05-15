@@ -1,5 +1,7 @@
+package utils;
 
-public class Constants {
+public class Constant {
+
 	public static String TSP_PATH = "/home/tom/Documents/polytech/OD/dev/Journey/data/";
 
 	public static String[] TSP_FILES = {

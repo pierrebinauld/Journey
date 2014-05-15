@@ -1,14 +1,13 @@
 package model.lookup;
 
-import java.util.ArrayList;
-
 import model.data.City;
+
+import java.util.ArrayList;
 
 public class SimulatedAnnealing implements Lookup {
 
-    @Override
+	@Override
 	public void run(ArrayList<City> cities) {
 		//TODO: implement algorithm
 	}
-
 }

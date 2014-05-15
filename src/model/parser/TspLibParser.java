@@ -11,13 +11,13 @@ import java.io.IOException;
 
 public class TspLibParser {
 
-	private static String TOKEN_NAME = "NAME";
-	private static String TOKEN_COMMENT = "COMMENT";
-	private static String TOKEN_TYPE = "TYPE";
+	private static String TOKEN_NAME      = "NAME";
+	private static String TOKEN_COMMENT   = "COMMENT";
+	private static String TOKEN_TYPE      = "TYPE";
 	private static String TOKEN_DIMENSION = "DIMENSION";
-	private static String TOKEN_EWT = "EDGE_WEIGHT_TYPE";
-	private static String TOKEN_COORD = "NODE_COORD_SECTION";
-	private static String TOKEN_EOF = "EOF";
+	private static String TOKEN_EWT       = "EDGE_WEIGHT_TYPE";
+	private static String TOKEN_COORD     = "NODE_COORD_SECTION";
+	private static String TOKEN_EOF       = "EOF";
 
 	public static Country parse(File file) throws IOException {
 		Country country = new Country();
@@ -31,7 +31,7 @@ public class TspLibParser {
 	}
 
 	private static void readHeader(BufferedReader reader, Country country) throws IOException {
-		while(readHeaderLine(reader, country));
+		while(readHeaderLine(reader, country)) ;
 	}
 
 	private static boolean readHeaderLine(BufferedReader reader, Country country) throws IOException {
@@ -78,19 +78,5 @@ public class TspLibParser {
 			);
 		}
 		return true;
-	}
-
-	public static void main(String[] args) throws IOException {
-		File file = new File("/home/pierre/git/Journey/data/ch71009.tsp");
-
-		Country country = TspLibParser.parse(file);
-
-		for(City city : country.getCities()) {
-			System.out.println(city.getPosition());
-		}
-		System.out.println("Size: " + country.getCities().size());
-		System.out.println("Name: " + country.getName());
-		System.out.println("Desc: " + country.getDescription());
-		System.out.println("Dim: " + country.getDimension());
 	}
 }

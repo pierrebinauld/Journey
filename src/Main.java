@@ -4,26 +4,29 @@ import model.data.Distance;
 import model.parser.TspLibParser;
 import model.repo.CountryRepo;
 import model.repo.DistanceRepo;
+import persistence.DbConnection;
+import utils.Constant;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class Main {
 
 	public static void main(String[] args) {
-		int fileId = 0;
-//		Country country = fromParser(fileId);
-//		testDb(country);
-		Country country = fromDb(Constants.TSP_FILES[fileId]);
-		testDistance(country);
+		int fileId = 5;
+		Country country = fromParser(fileId);
+		DbConnection db = new DbConnection();
+		testDb(db, country);
+//		Country country = fromDb(db, utils.Constants.TSP_FILES[fileId]);
+//		testDistance(db, country);
+		db.close();
 	}
 
 	private static Country fromParser(int fileId) {
 		try {
-			File file = new File(Constants.TSP_PATH + Constants.TSP_FILES[fileId] + ".tsp");
+			File file = new File(Constant.TSP_PATH + Constant.TSP_FILES[fileId] + ".tsp");
 			return TspLibParser.parse(file);
 		} catch(IOException e) {
 			e.printStackTrace();
@@ -31,19 +34,19 @@ public class Main {
 		return null;
 	}
 
-	private static Country fromDb(String countryName) {
-		CountryRepo r = new CountryRepo();
+	private static Country fromDb(DbConnection db, String countryName) {
+		CountryRepo r = new CountryRepo(db);
 		return r.findByName(countryName);
 	}
 
-	private static void testDb(Country country) {
-		CountryRepo r = new CountryRepo();
+	private static void testDb(DbConnection db, Country country) {
+		CountryRepo r = new CountryRepo(db);
 		r.save(country);
 	}
 
-	private static void testDistance(Country country) {
+	private static void testDistance(DbConnection db, Country country) {
 		List<City> cities = country.getCities();
-		DistanceRepo repo = new DistanceRepo();
+		DistanceRepo repo = new DistanceRepo(db);
 
 		ListIterator<City> it1 = cities.listIterator(0);
 		ListIterator<City> it2 = null;

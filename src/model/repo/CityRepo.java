@@ -11,9 +11,15 @@ import java.util.List;
 
 public class CityRepo {
 
+	private DbConnection db;
+
+	public CityRepo(DbConnection db) {
+		this.db = db;
+	}
+
 	public City findById(int id) {
 		City c = new City();
-		ResultSet rsCity = DbConnection.getConnection().executeRequest("select * from city where idcity=" + id);
+		ResultSet rsCity = db.executeRequest("select * from city where idcity=" + id);
 		try {
 			if(rsCity.next()) {
 				c.setId(id);
@@ -28,11 +34,10 @@ public class CityRepo {
 
 	public List<City> findByCountryId(int idcountry) {
 		List<City> list = new ArrayList<>();
-		CityRepo cityrepo = new CityRepo();
-		ResultSet rsCities = DbConnection.getConnection().executeRequest("select idcity from city where idcountry=" + idcountry);
+		ResultSet rsCities = db.executeRequest("select idcity from city where idcountry=" + idcountry);
 		try {
 			while(rsCities.next()) {
-				City city = cityrepo.findById(rsCities.getInt("idcity"));
+				City city = findById(rsCities.getInt("idcity"));
 				list.add(city);
 			}
 		} catch(SQLException e) {
@@ -43,7 +48,6 @@ public class CityRepo {
 	}
 
 	public void save(City city, int idCountry) {
-		DbConnection db = DbConnection.getConnection();
 		ResultSet rsExist = db.executeRequest("select count(*) as idexists from city where idcity=" + city.getId() + " and idcountry=" + idCountry);
 		try {
 			String sql = "";
