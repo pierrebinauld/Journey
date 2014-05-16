@@ -8,7 +8,7 @@ import model.data.City;
 
 public class Circuit {
 
-	int root = 0;
+	int origin = 0;
 	List<City> cities = new ArrayList<>();
 	
 	LinkedList<Integer> circuit = new LinkedList<>();
@@ -39,7 +39,10 @@ public class Circuit {
 		distances.set(city, distance);
 	}
 	
-	public void updateLength() {
+	public void close(int distance) {
+
+		distances.set(origin, distance);
+		
 		length = 0;
 		for(int d : distances) {
 			length += d;
@@ -50,5 +53,8 @@ public class Circuit {
 		return length;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return circuit.toString();
+	}
 }

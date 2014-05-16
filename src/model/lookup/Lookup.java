@@ -1,10 +1,11 @@
 package model.lookup;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import model.data.City;
 
 public interface Lookup {
 	
-	public void run(ArrayList<City> cities);
+	public Circuit run(List<City> cities);
+    //TODO: use template method design pattern
 }

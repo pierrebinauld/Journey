@@ -5,36 +5,70 @@ import java.util.List;
 
 public class Country {
 
+	private int id;
 	private String name;
 	private String description;
-	private String dimension;
 	private List<City> cities = new ArrayList<City>();
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public Country setId(int id) {
+		this.id = id;
+		return this;
+	}
+
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+
+	public Country setName(String name) {
 		this.name = name;
+		return this;
 	}
+
 	public String getDescription() {
 		return description;
 	}
-	public void setDescription(String description) {
+
+	public Country setDescription(String description) {
 		this.description = description;
+		return this;
 	}
-	public String getDimension() {
-		return dimension;
+
+	public Country addDescriptionLine(String descriptionLine) {
+		if(this.description == null) {
+			this.description = descriptionLine;
+		} else {
+			this.description += "\n" + descriptionLine;
+		}
+		return this;
 	}
-	public void setDimension(String dimension) {
-		this.dimension = dimension;
-	}
-	public void addCity(City city) {
+
+	public Country addCity(City city) {
 		cities.add(city);
+		return this;
 	}
+
 	public List<City> getCities() {
 		return cities;
 	}
-	public void setCities(ArrayList<City> cities) {
+
+	public Country setCities(List<City> cities) {
 		this.cities = cities;
+		return this;
+	}
+
+	public int getDimension() {
+		return cities.size();
+	}
+
+	public String toString() {
+		String citiesInCountry = "";
+		for(City c : cities) {
+			citiesInCountry += c.toString();
+		}
+		return "Pays : " + name + "\ndescription : " + description + "\ndimension : " + getDimension() + "\nvilles : " + citiesInCountry;
 	}
 }
