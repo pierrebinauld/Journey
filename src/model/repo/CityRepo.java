@@ -1,13 +1,13 @@
 package model.repo;
 
-import model.data.City;
-import persistence.DbConnection;
-
 import java.awt.geom.Point2D;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.data.City;
+import persistence.DbConnection;
 
 public class CityRepo {
 

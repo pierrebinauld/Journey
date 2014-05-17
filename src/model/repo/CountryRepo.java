@@ -1,11 +1,11 @@
 package model.repo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import model.data.City;
 import model.data.Country;
 import persistence.DbConnection;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class CountryRepo {
 
