@@ -1,19 +1,24 @@
 package model.repo;
 
-import model.data.City;
-import persistence.DbDialog;
-
 import java.awt.geom.Point2D;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.data.City;
+import persistence.DbConnection;
+
 public class CityRepo {
+
+	private DbConnection db;
+
+	public CityRepo(DbConnection db) {
+		this.db = db;
+	}
 
 	public City findById(int id) {
 		City c = new City();
-		DbDialog db = new DbDialog();
 		ResultSet rsCity = db.executeRequest("select * from city where idcity=" + id);
 		try {
 			if(rsCity.next()) {
@@ -28,13 +33,11 @@ public class CityRepo {
 	}
 
 	public List<City> findByCountryId(int idcountry) {
-		DbDialog db = new DbDialog();
-		List<City> list = new ArrayList<City>();
-		CityRepo cityrepo = new CityRepo();
+		List<City> list = new ArrayList<>();
 		ResultSet rsCities = db.executeRequest("select idcity from city where idcountry=" + idcountry);
 		try {
 			while(rsCities.next()) {
-				City city = cityrepo.findById(rsCities.getInt("idcity"));
+				City city = findById(rsCities.getInt("idcity"));
 				list.add(city);
 			}
 		} catch(SQLException e) {
@@ -45,7 +48,6 @@ public class CityRepo {
 	}
 
 	public void save(City city, int idCountry) {
-		DbDialog db = new DbDialog();
 		ResultSet rsExist = db.executeRequest("select count(*) as idexists from city where idcity=" + city.getId() + " and idcountry=" + idCountry);
 		try {
 			String sql = "";

@@ -11,13 +11,13 @@ import java.io.IOException;
 
 public class TspLibParser {
 
-	private static String TOKEN_NAME = "NAME";
-	private static String TOKEN_COMMENT = "COMMENT";
-	private static String TOKEN_TYPE = "TYPE";
+	private static String TOKEN_NAME      = "NAME";
+	private static String TOKEN_COMMENT   = "COMMENT";
+	private static String TOKEN_TYPE      = "TYPE";
 	private static String TOKEN_DIMENSION = "DIMENSION";
-	private static String TOKEN_EWT = "EDGE_WEIGHT_TYPE";
-	private static String TOKEN_COORD = "NODE_COORD_SECTION";
-	private static String TOKEN_EOF = "EOF";
+	private static String TOKEN_EWT       = "EDGE_WEIGHT_TYPE";
+	private static String TOKEN_COORD     = "NODE_COORD_SECTION";
+	private static String TOKEN_EOF       = "EOF";
 
 	public static Country parse(File file) throws IOException {
 		Country country = new Country();
@@ -31,7 +31,7 @@ public class TspLibParser {
 	}
 
 	private static void readHeader(BufferedReader reader, Country country) throws IOException {
-		while(readHeaderLine(reader, country));
+		while(readHeaderLine(reader, country)) ;
 	}
 
 	private static boolean readHeaderLine(BufferedReader reader, Country country) throws IOException {

@@ -8,15 +8,23 @@ import java.util.List;
 import model.data.City;
 import model.data.Country;
 import model.parser.TspLibParser;
+import model.service.DistanceService;
+import model.service.EuclidianDistanceService;
+import model.service.TimeService;
+import model.service.impl.ManhattanDistanceService;
+import model.service.impl.decorator.LocalStorageDistanceService;
 import model.tools.Tools;
 
 public class GreedyAlgorithm implements Lookup {
 
+	private DistanceService distanceService;
+	
 	private int sampleSize;
 	private List<Integer> sample = new LinkedList<>();
 	private Circuit circuit = new Circuit();
 
-	public GreedyAlgorithm(int sampleSize) {
+	public GreedyAlgorithm(DistanceService distanceService, int sampleSize) {
+		this.distanceService = distanceService;
 		this.sampleSize = sampleSize;
 	}
 
@@ -41,7 +49,6 @@ public class GreedyAlgorithm implements Lookup {
 			}
 			root = updateCircuitWithNearestNeighbor(root, sample, cities);
 		}
-		System.out.println(" - - - - - -");
 		while (indexes.size() > 0) {
 //			System.out.println(indexes);
 			root = updateCircuitWithNearestNeighbor(root, indexes, cities);
@@ -65,7 +72,7 @@ public class GreedyAlgorithm implements Lookup {
 	}
 
 	private int updateCircuitWithNearestNeighbor(int root, List<Integer> neighbors, List<City> cities) {
-		City rootCity = cities.get(root);
+//		City rootCity = cities.get(root);
 		int nearest = 0;
 		int distance = 0;
 		int test;
@@ -73,7 +80,8 @@ public class GreedyAlgorithm implements Lookup {
 		int indexNearest = 0;
 
 		for (int n = 0; n < count; n++) {
-			test = Tools.manhattan(rootCity, cities.get(neighbors.get(n)));
+//			test = Tools.manhattan(rootCity, cities.get(neighbors.get(n)));
+			test = distanceService.getDistance(root, neighbors.get(n));
 			if (test < distance || distance == 0) {
 				distance = test;
 				nearest = neighbors.get(n);
@@ -95,27 +103,30 @@ public class GreedyAlgorithm implements Lookup {
 	}
 
 	public static void main(String[] args) throws IOException {
-		File file = new File("/home/pierre/git/Journey/data/wi29.tsp");
+		TimeService time = new TimeService();
+		
+//		File file = new File("/home/pierre/git/Journey/data/wi29.tsp");
+//		File file = new File("/home/pierre/git/Journey/data/ch71009.tsp");
+		File file = new File("/home/pierre/git/Journey/data/ja9847.tsp");
 
 		Country country = TspLibParser.parse(file);
-
-		for (City city : country.getCities()) {
-			System.out.println(city.getPosition());
-		}
 
 		System.out.println("Name: " + country.getName());
 		System.out.println("Desc: " + country.getDescription());
 		System.out.println("Dim: " + country.getDimension());
 
-		GreedyAlgorithm g = new GreedyAlgorithm(10);
+//		DistanceService distanceService = new ManhattanDistanceService(country.getCities());
+//		DistanceService distanceService = new LocalStorageDistanceService(new ManhattanDistanceService(country.getCities()));
+//		DistanceService distanceService = new EuclidianDistanceService(country.getCities());
+		DistanceService distanceService = new LocalStorageDistanceService(new EuclidianDistanceService(country.getCities()));
 		
-		long start; 
-		start = System.nanoTime();
+		GreedyAlgorithm g = new GreedyAlgorithm(distanceService, 10);
+		
+		time.start();
 		Circuit c = g.run(country.getCities());
-		long duree = System.nanoTime() - start;
-		System.out.println(duree/1000000000);
+		System.out.println("Time: " + time.tickInSecond() + "s");
 
 		System.out.println("length: " + c.getLength());
-		System.out.println(c);
+//		System.out.println(c);
 	}
 }

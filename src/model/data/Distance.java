@@ -2,33 +2,52 @@ package model.data;
 
 public class Distance {
 
-	private City city1;
-	private City city2;
+	private int idCountry;
+	private int idCity1;
+	private int idCity2;
 	private int distance;
 
-	protected Distance(City city1, City city2, int distance) {
-		this.city1 = city1;
-		this.city2 = city2;
+	private Distance(int idCountry, int idCity1, int idCity2, int distance) {
+		this.idCountry = idCountry;
 		this.distance = distance;
+
+		if(idCity1 < idCity2) {
+			this.idCity1 = idCity1;
+			this.idCity2 = idCity2;
+		} else {
+			this.idCity1 = idCity2;
+			this.idCity2 = idCity1;
+		}
 	}
 
-	public static Distance Euclidian(City city1, City city2) {
+	public static Distance Euclidian(int idCountry, City city1, City city2) {
 		return new Distance(
-				city1,
-				city2,
-				(int)Math.round(city1.getPosition().distance(city2.getPosition()))
+				idCountry,
+				city1.getId(),
+				city2.getId(),
+				(int) Math.round(city1.getPosition().distance(city2.getPosition()))
 		);
 	}
 
-	public static Distance Manhattan(City city1, City city2) {
+	public static Distance Manhattan(int idCountry, City city1, City city2) {
 		return new Distance(
-				city1,
-				city2,
-				(int)Math.round(
-					Math.abs(city1.getPosition().getX() - city2.getPosition().getX()) +
-					Math.abs(city1.getPosition().getY() - city2.getPosition().getY())
-				)
+				idCountry,
+				city1.getId(),
+				city2.getId(),
+				(int) Math.round(Math.abs(city1.getPosition().getX() - city2.getPosition().getX()) + Math.abs(city1.getPosition().getY() - city2.getPosition().getY()))
 		);
+	}
+
+	public int getIdCountry() {
+		return idCountry;
+	}
+
+	public int getIdCity1() {
+		return idCity1;
+	}
+
+	public int getIdCity2() {
+		return idCity2;
 	}
 
 	public int getDistance() {

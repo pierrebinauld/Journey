@@ -1,6 +1,5 @@
 package model.lookup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.data.City;

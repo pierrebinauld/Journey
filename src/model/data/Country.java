@@ -64,11 +64,17 @@ public class Country {
 		return cities.size();
 	}
 
+	@Override
 	public String toString() {
-		String citiesInCountry = "";
-		for(City c : cities) {
-			citiesInCountry += c.toString();
+		StringBuilder builder = new StringBuilder();
+		builder.append("COUNTRY\n")
+				.append("Size: ").append(getCities().size()).append('\n')
+				.append("Name: ").append(getName()).append('\n')
+				.append("Desc: ").append(getDescription()).append('\n')
+				.append("Dim: ").append(getDimension()).append('\n');
+		for(City city : getCities()) {
+			builder.append(city);
 		}
-		return "Pays : " + name + "\ndescription : " + description + "\ndimension : " + getDimension() + "\nvilles : " + citiesInCountry;
+		return builder.toString();
 	}
 }

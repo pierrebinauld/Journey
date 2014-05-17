@@ -1,5 +1,7 @@
 package model.lookup;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,6 @@ public class GeneticAlgorithm implements Lookup {
 	public Circuit run(List<City> cities) {
 		// TODO Auto-generated method stub
 		return null;
-	}
 
+	}
 }
