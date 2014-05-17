@@ -2,6 +2,7 @@ package model.lookup.impl;
 
 import model.data.City;
 import model.lookup.AbstractBuilderAlgorithm;
+import model.lookup.Circuit;
 
 import java.util.ArrayList;
 
@@ -12,10 +13,8 @@ public class RandomAlgorithm extends AbstractBuilderAlgorithm {
 	}
 
 	@Override
-	public void run() {
-		Circuit c = newCircuit();
-		c.setCities(cities);
-
-		//TODO
+	public Circuit run() {
+		//TODO: implement algorithm
+		return null;
 	}
 }

@@ -1,20 +1,15 @@
 package persistence;
 
 
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class DbConnection {
 
-	private static final String HOST     = "localhost";    /* <-- comment this line to switch host
+	private static final String HOST = "localhost";    /* <-- comment this line to switch host
 	private static final String HOST     = "94.23.195.14"; // */
-	private static final String DB_NAME  = "journey";
-	private static final String USER     = "journey";
+	private static final String DB_NAME = "journey";
+	private static final String USER = "journey";
 	private static final String PASSWORD = "journey";
 
 	private Connection connection;

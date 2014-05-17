@@ -1,6 +1,7 @@
 package model.lookup.impl;
 
 import model.lookup.AbstractModifierAlgorithm;
+import model.lookup.Circuit;
 
 public class Tabu extends AbstractModifierAlgorithm {
 
@@ -9,8 +10,8 @@ public class Tabu extends AbstractModifierAlgorithm {
 	}
 
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-
+	public Circuit run() {
+		// TODO: implement algorithm
+		return null;
 	}
 }

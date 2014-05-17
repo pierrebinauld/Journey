@@ -1,9 +1,5 @@
 package persistence;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 public class DbDialog {
 //	public ResultSet executeRequest(String sql) {
 //		try {

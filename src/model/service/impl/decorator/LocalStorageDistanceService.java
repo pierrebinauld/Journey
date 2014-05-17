@@ -1,10 +1,10 @@
 package model.service.impl.decorator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import model.lookup.Circuit;
 import model.service.impl.AbstractDistanceService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocalStorageDistanceService extends DecoratorDistanceService {
 
@@ -12,15 +12,15 @@ public class LocalStorageDistanceService extends DecoratorDistanceService {
 
 	public LocalStorageDistanceService(AbstractDistanceService distanceService) {
 		super(distanceService);
-		
+
 		initDistances(distanceService.getCities().size());
 	}
 
 	public void initDistances(int count) {
-		for (int i = 0; i < count - 1; i++) {
+		for(int i = 0; i < count - 1; i++) {
 			List<Integer> secondCities = new ArrayList<>();
 
-			for (int j = i + 1; j < count; j++) {
+			for(int j = i + 1; j < count; j++) {
 				secondCities.add(-1);
 			}
 
@@ -31,10 +31,10 @@ public class LocalStorageDistanceService extends DecoratorDistanceService {
 	@Override
 	public int getDistance(int indexCity1, int indexCity2) {
 		int first, second;
-		if (indexCity1 < indexCity2) {
+		if(indexCity1 < indexCity2) {
 			first = indexCity1;
 			second = indexCity2;
-		} else if (indexCity1 > indexCity2) {
+		} else if(indexCity1 > indexCity2) {
 			first = indexCity2;
 			second = indexCity1;
 		} else { // indexCity1 == indexCity2
@@ -47,7 +47,7 @@ public class LocalStorageDistanceService extends DecoratorDistanceService {
 		// System.out.println("count:" + distances.size());
 		int d = distances.get(first).get(second - first - 1);
 
-		if (-1 == d) {
+		if(-1 == d) {
 			d = distanceService.getDistance(first, second);
 			distances.get(first).set(second - first - 1, d);
 		}

@@ -41,7 +41,6 @@ public class DbWriterThread extends Thread {
 				forceClose = true;
 				System.err.println("Could not commit. Closing.");
 			}
-
 		} catch(SQLException e2) {
 			try {
 				connection.rollback();
@@ -49,7 +48,6 @@ public class DbWriterThread extends Thread {
 				forceClose = true;
 				System.err.println("Could not rollback. Closing.");
 			}
-
 		} finally {
 			if(forceClose) {
 				try {

@@ -21,5 +21,4 @@ public class DbStorageDistanceService extends DecoratorDistanceService {
 		// TODO Auto-generated method stub
 		return distanceService.getDistance(indexCity1, indexCity2);
 	}
-
 }

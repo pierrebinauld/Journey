@@ -1,6 +1,7 @@
 package model.lookup.impl;
 
 import model.lookup.AbstractModifierAlgorithm;
+import model.lookup.Circuit;
 
 public class GeneticAlgorithm extends AbstractModifierAlgorithm {
 
@@ -9,8 +10,9 @@ public class GeneticAlgorithm extends AbstractModifierAlgorithm {
 	}
 
 	@Override
-	public void run() {
+	public Circuit run() {
 		// TODO Auto-generated method stub
 
+		return null;
 	}
 }

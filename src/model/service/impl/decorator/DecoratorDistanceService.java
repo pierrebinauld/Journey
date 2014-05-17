@@ -9,6 +9,4 @@ public abstract class DecoratorDistanceService implements DistanceService {
 	public DecoratorDistanceService(DistanceService distanceService) {
 		this.distanceService = distanceService;
 	}
-	
-	
 }

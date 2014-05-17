@@ -2,13 +2,13 @@ package model.lookup;
 
 import model.data.City;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractBuilderAlgorithm implements Lookup {
 
-	private ArrayList<City> cities;
+	protected List<City> cities;
 
-	protected AbstractBuilderAlgorithm(ArrayList<City> cities) {
+	protected AbstractBuilderAlgorithm(List<City> cities) {
 		this.cities = cities;
 	}
 }
