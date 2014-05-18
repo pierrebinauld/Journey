@@ -1,20 +1,21 @@
 package model.lookup.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
 import model.data.City;
 import model.data.Country;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
 import model.parser.TspLibParser;
 import model.service.DistanceService;
-import model.service.EuclidianDistanceService;
 import model.service.TimeService;
+import model.service.impl.AbstractDistanceService;
+import model.service.impl.ManhattanDistanceService;
 import model.service.impl.decorator.LocalStorageDistanceService;
 import model.tools.Tools;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 
@@ -37,14 +38,15 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 		
 		int root = init();
 
-		while (indexes.size() > sampleSize) {
+		while (indexes.size() > 0) {
 			updateIndexesSampleList();
 			root = updateCircuitWithNearestNeighbor(root, sample);
 		}
 		
-		while (indexes.size() > 0) {
-			root = updateCircuitWithNearestNeighbor(root, indexes);
+		while (sample.size() > 0) {
+			root = updateCircuitWithNearestNeighbor(root, sample);
 		}
+		
 
 		closeCircuit(root);
 
@@ -69,7 +71,7 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 	private void updateIndexesSampleList() {
 		while (sample.size() < sampleSize) {
 			int neighbor = Tools.random(0, indexes.size());
-			sample.add(neighbor);
+			sample.add(indexes.get(neighbor));
 			indexes.remove(neighbor);
 		}
 	}
@@ -106,8 +108,8 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 	public static void main(String[] args) throws IOException {
 		TimeService time = new TimeService();
 
-		// File file = new File("/home/pierre/git/Journey/data/wi29.tsp");
-		// File file = new File("/home/pierre/git/Journey/data/ch71009.tsp");
+//		 File file = new File("/home/pierre/git/Journey/data/wi29.tsp");
+//		 File file = new File("/home/pierre/git/Journey/data/ch71009.tsp");
 		File file = new File("/home/pierre/git/Journey/data/ja9847.tsp");
 
 		Country country = TspLibParser.parse(file);
@@ -115,22 +117,22 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 		System.out.println("Name: " + country.getName());
 		System.out.println("Desc: " + country.getDescription());
 		System.out.println("Dim: " + country.getDimension());
+System.out.println();
+		AbstractDistanceService distanceService = new ManhattanDistanceService(country.getCities());
+//		AbstractDistanceService distanceService = new EuclidianDistanceService(country.getCities());
+		DistanceService decoratedDistanceService  = new LocalStorageDistanceService(distanceService);
 
-		// DistanceService distanceService = new
-		// ManhattanDistanceService(country.getCities());
-		// DistanceService distanceService = new LocalStorageDistanceService(new
-		// ManhattanDistanceService(country.getCities()));
-		// DistanceService distanceService = new
-		// EuclidianDistanceService(country.getCities());
-		DistanceService distanceService = new LocalStorageDistanceService(new EuclidianDistanceService(country.getCities()));
-
-		GreedyAlgorithm g = new GreedyAlgorithm(distanceService, country.getCities(), 10);
+		GreedyAlgorithm g = new GreedyAlgorithm(decoratedDistanceService, country.getCities(), 5);
 
 		time.start();
 		Circuit c = g.run();
 		System.out.println("Time: " + time.tickInSecond() + "s");
 
+		System.out.println("size: " + c.getCities().size() + " - " + c.getCircuit().size());
 		System.out.println("length: " + c.getLength());
+		System.out.println();
+		System.out.println("Check length: " + (distanceService.checkLength(c)));
+		System.out.println("Check length: " + (decoratedDistanceService.checkLength(c)));
 		// System.out.println(c);
 	}
 }

@@ -3,7 +3,6 @@ package model.service;
 import model.lookup.Circuit;
 
 public interface DistanceService {
-	// Decorator pattern ?
 
 	boolean checkLength(Circuit circuit);
 

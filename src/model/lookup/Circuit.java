@@ -11,7 +11,7 @@ public class Circuit {
 	int origin = 0;
 	List<City> cities = new ArrayList<>();
 
-	LinkedList<Integer> circuit = new LinkedList<>();
+	List<Integer> circuit = new LinkedList<>();
 	List<Integer> distances = new ArrayList<>();
 
 	int length = 0;
@@ -23,7 +23,12 @@ public class Circuit {
 		return cities;
 	}
 
+	public List<Integer> getCircuit() {
+		return circuit;
+	}
+
 	public void setCities(int origin, List<City> cities) {
+		this.origin = origin;
 		this.cities = cities;
 
 		circuit.add(origin);

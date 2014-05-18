@@ -1,15 +1,10 @@
 package model.service.impl;
 
-import model.data.City;
-import model.lookup.Circuit;
-
 import java.util.List;
 
-public class ManhattanDistanceService extends AbstractDistanceService {
+import model.data.City;
 
-	public ManhattanDistanceService(List<City> cities) {
-		super(cities);
-	}
+public class ManhattanDistanceService extends AbstractDistanceService {
 
 	public static int manhattan(City city1, City city2) {
 		return (int) Math.round(
@@ -18,14 +13,12 @@ public class ManhattanDistanceService extends AbstractDistanceService {
 		);
 	}
 
-	@Override
-	public int getDistance(int indexCity1, int indexCity2) {
-		return ManhattanDistanceService.manhattan(cities.get(indexCity1), cities.get(indexCity2));
+	public ManhattanDistanceService(List<City> cities) {
+		super(cities);
 	}
 
 	@Override
-	public boolean checkLength(Circuit circuit) {
-		// TODO Auto-generated method stub
-		return false;
+	public int getDistance(int indexCity1, int indexCity2) {
+		return ManhattanDistanceService.manhattan(cities.get(indexCity1), cities.get(indexCity2));
 	}
 }
