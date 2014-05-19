@@ -8,10 +8,9 @@ import java.util.List;
 
 public class Circuit {
 
-	int origin = 0;
 	List<City> cities = new ArrayList<>();
 
-	List<Integer> circuit = new LinkedList<>();
+	LinkedList<Integer> circuit = new LinkedList<>();
 	List<Integer> distances = new ArrayList<>();
 
 	int length = 0;
@@ -23,12 +22,11 @@ public class Circuit {
 		return cities;
 	}
 
-	public List<Integer> getCircuit() {
+	public LinkedList<Integer> getCircuit() {
 		return circuit;
 	}
 
 	public void setCities(int origin, List<City> cities) {
-		this.origin = origin;
 		this.cities = cities;
 
 		circuit.add(origin);
@@ -39,14 +37,35 @@ public class Circuit {
 		}
 	}
 
-	public void add(int city, int distance) {
-		circuit.add(city);
-		distances.set(city, distance);
+	public void setCities(List<City> cities) {
+		this.cities = cities;
+
+		int count = cities.size();
+		for(int i = 0; i < count; i++) {
+			distances.add(0);
+		}
+	}
+
+	public void add(int cityIndex, int distanceBefore) {
+		circuit.add(cityIndex);
+		distances.set(cityIndex, distanceBefore);
+	}
+
+	public void add(int index, int cityIndex, int distanceBefore, int distanceAfter) {
+		circuit.add(index, cityIndex);
+		distances.set(cityIndex, distanceBefore);
+		if(circuit.size() > index+1) {
+			distances.set(circuit.get(index+1), distanceAfter);
+		}
+	}
+
+	public void setDistance(int cityIndex, int distance) {
+		distances.set(cityIndex, distance);
 	}
 
 	public void close(int distance) {
 
-		distances.set(origin, distance);
+		distances.set(circuit.get(0), distance);
 
 		length = 0;
 		for(int d : distances) {
@@ -54,6 +73,10 @@ public class Circuit {
 		}
 	}
 
+	public int size() {
+		return circuit.size();
+	}
+	
 	public int getLength() {
 		return length;
 	}
@@ -62,4 +85,13 @@ public class Circuit {
 	public String toString() {
 		return circuit.toString();
 	}
+
+	public int getOrigin() {
+		return circuit.get(0);
+	}
+
+	public List<Integer> getDistances() {
+		return distances;
+	}
+
 }

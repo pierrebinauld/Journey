@@ -3,6 +3,7 @@ package model.service.impl;
 import java.util.List;
 
 import model.data.City;
+import model.lookup.Circuit;
 
 public class EuclidianDistanceService extends AbstractDistanceService {
 

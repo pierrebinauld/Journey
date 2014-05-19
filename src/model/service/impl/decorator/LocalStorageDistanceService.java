@@ -1,10 +1,9 @@
 package model.service.impl.decorator;
 
-import model.lookup.Circuit;
-import model.service.impl.AbstractDistanceService;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import model.service.impl.AbstractDistanceService;
 
 public class LocalStorageDistanceService extends DecoratorDistanceService {
 
@@ -53,10 +52,5 @@ public class LocalStorageDistanceService extends DecoratorDistanceService {
 		}
 
 		return d;
-	}
-
-	@Override
-	public boolean checkLength(Circuit circuit) {
-		return distanceService.checkLength(circuit);
 	}
 }

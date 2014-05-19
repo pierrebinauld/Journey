@@ -11,15 +11,15 @@ import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
 import model.parser.TspLibParser;
 import model.service.DistanceService;
+import model.service.LandscapeService;
 import model.service.TimeService;
 import model.service.impl.AbstractDistanceService;
 import model.service.impl.ManhattanDistanceService;
+import model.service.impl.TwoOptLandscapeService;
 import model.service.impl.decorator.LocalStorageDistanceService;
 import model.tools.Tools;
 
 public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
-
-	private DistanceService distanceService;
 
 	private int origin;
 	private int sampleSize;
@@ -28,8 +28,7 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 	private Circuit circuit = new Circuit();
 
 	public GreedyAlgorithm(DistanceService distanceService, List<City> cities, int sampleSize) {
-		super(cities);
-		this.distanceService = distanceService;
+		super(distanceService, cities);
 		this.sampleSize = sampleSize;
 	}
 
@@ -103,36 +102,5 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 			cities.add(i);
 		}
 		return cities;
-	}
-
-	public static void main(String[] args) throws IOException {
-		TimeService time = new TimeService();
-
-//		 File file = new File("/home/pierre/git/Journey/data/wi29.tsp");
-//		 File file = new File("/home/pierre/git/Journey/data/ch71009.tsp");
-		File file = new File("/home/pierre/git/Journey/data/ja9847.tsp");
-
-		Country country = TspLibParser.parse(file);
-
-		System.out.println("Name: " + country.getName());
-		System.out.println("Desc: " + country.getDescription());
-		System.out.println("Dim: " + country.getDimension());
-System.out.println();
-		AbstractDistanceService distanceService = new ManhattanDistanceService(country.getCities());
-//		AbstractDistanceService distanceService = new EuclidianDistanceService(country.getCities());
-		DistanceService decoratedDistanceService  = new LocalStorageDistanceService(distanceService);
-
-		GreedyAlgorithm g = new GreedyAlgorithm(decoratedDistanceService, country.getCities(), 5);
-
-		time.start();
-		Circuit c = g.run();
-		System.out.println("Time: " + time.tickInSecond() + "s");
-
-		System.out.println("size: " + c.getCities().size() + " - " + c.getCircuit().size());
-		System.out.println("length: " + c.getLength());
-		System.out.println();
-		System.out.println("Check length: " + (distanceService.checkLength(c)));
-		System.out.println("Check length: " + (decoratedDistanceService.checkLength(c)));
-		// System.out.println(c);
 	}
 }

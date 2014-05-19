@@ -4,7 +4,5 @@ import model.lookup.Circuit;
 
 public interface DistanceService {
 
-	boolean checkLength(Circuit circuit);
-
-	int getDistance(int indexCity1, int indexCity2);
+	int getDistance(int cityIndex1, int cityIndex2);
 }
