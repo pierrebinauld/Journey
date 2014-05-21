@@ -1,12 +1,13 @@
 package model.lookup.impl;
 
+import model.iterator.LandscapeIterator;
 import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
 
 public class Tabu extends AbstractModifierAlgorithm {
 
-	protected Tabu(Circuit initialCircuit) {
-		super(initialCircuit);
+	protected Tabu(LandscapeIterator<?> landscapeIterator,Circuit initialCircuit) {
+		super(landscapeIterator,initialCircuit);
 	}
 
 	@Override

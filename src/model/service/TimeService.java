@@ -3,11 +3,9 @@ package model.service;
 public class TimeService {
 
 	private long start;
-	private long time;
 
 	public TimeService() {
 		start = 0;
-		time = 0;
 	}
 
 	public void start() {
@@ -15,9 +13,7 @@ public class TimeService {
 	}
 
 	public long tick() {
-		time = System.nanoTime() - start;
-
-		return time;
+		return System.nanoTime() - start;
 	}
 
 	public float tickInSecond() {

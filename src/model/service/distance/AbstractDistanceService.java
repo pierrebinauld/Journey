@@ -1,4 +1,4 @@
-package model.service.impl;
+package model.service.distance;
 
 import java.util.HashSet;
 import java.util.List;
@@ -6,18 +6,19 @@ import java.util.List;
 import model.data.City;
 import model.lookup.Circuit;
 import model.service.DistanceService;
-import model.service.LandscapeService;
 
-public abstract class AbstractLandscapeService implements LandscapeService {
+public abstract class AbstractDistanceService implements DistanceService {
 
-	protected DistanceService distanceService;
 	protected List<City> cities;
-	
-	public AbstractLandscapeService(DistanceService distanceService, List<City> cities) {
-		this.distanceService = distanceService;
+
+	public AbstractDistanceService(List<City> cities) {
 		this.cities = cities;
 	}
 
+	public List<City> getCities() {
+		return cities;
+	}
+	
 	@Override
 	public boolean checkLength(Circuit circuit) {
 		
@@ -37,12 +38,11 @@ public abstract class AbstractLandscapeService implements LandscapeService {
 		
 		// Verify circuit length
 		for(int i = 1; i<size; i++) {
-			length += distanceService.getDistance(c.get(i-1), c.get(i));
+			length += this.getDistance(c.get(i-1), c.get(i));
 		}
 
-		length += distanceService.getDistance(c.get(0), c.get(size - 1));
+		length += this.getDistance(c.get(0), c.get(size - 1));
 		
 		return circuit.getLength() == length;
 	}
-
 }

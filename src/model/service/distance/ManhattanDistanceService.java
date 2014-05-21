@@ -1,4 +1,4 @@
-package model.service.impl;
+package model.service.distance;
 
 import java.util.List;
 

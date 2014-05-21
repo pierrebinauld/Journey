@@ -1,5 +1,6 @@
-package model.service.impl.decorator;
+package model.service.distance.decorator;
 
+import model.lookup.Circuit;
 import model.service.DistanceService;
 
 public class DbStorageDistanceService extends DecoratorDistanceService {
@@ -13,5 +14,10 @@ public class DbStorageDistanceService extends DecoratorDistanceService {
 	public int getDistance(int indexCity1, int indexCity2) {
 		// TODO Auto-generated method stub
 		return distanceService.getDistance(indexCity1, indexCity2);
+	}
+
+	@Override
+	public boolean checkLength(Circuit circuit) {
+		return distanceService.checkLength(circuit);
 	}
 }

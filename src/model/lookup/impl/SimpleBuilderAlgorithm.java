@@ -7,9 +7,9 @@ import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
 import model.service.DistanceService;
 
-public class SimpleAlgorithm extends AbstractBuilderAlgorithm {
+public class SimpleBuilderAlgorithm extends AbstractBuilderAlgorithm {
 
-	public SimpleAlgorithm(DistanceService distanceService, List<City> cities) {
+	public SimpleBuilderAlgorithm(DistanceService distanceService, List<City> cities) {
 		super(distanceService, cities);
 	}
 

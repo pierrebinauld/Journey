@@ -1,22 +1,12 @@
 package model.lookup.impl;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.data.City;
-import model.data.Country;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
-import model.parser.TspLibParser;
 import model.service.DistanceService;
-import model.service.LandscapeService;
-import model.service.TimeService;
-import model.service.impl.AbstractDistanceService;
-import model.service.impl.ManhattanDistanceService;
-import model.service.impl.TwoOptLandscapeService;
-import model.service.impl.decorator.LocalStorageDistanceService;
 import model.tools.Tools;
 
 public class GreedyAlgorithm extends AbstractBuilderAlgorithm {

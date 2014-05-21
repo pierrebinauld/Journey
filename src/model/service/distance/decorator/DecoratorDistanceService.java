@@ -1,4 +1,4 @@
-package model.service.impl.decorator;
+package model.service.distance.decorator;
 
 import model.service.DistanceService;
 
