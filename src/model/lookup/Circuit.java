@@ -94,4 +94,30 @@ public class Circuit {
 		return distances;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((circuit == null) ? 0 : circuit.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Circuit other = (Circuit) obj;
+		if (circuit == null) {
+			if (other.circuit != null)
+				return false;
+		} else if (!circuit.equals(other.circuit))
+			return false;
+		return true;
+	}
+
+	
 }

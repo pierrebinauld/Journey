@@ -1,45 +1,41 @@
 package model.lookup.impl;
 
-import model.iterator.LandscapeIterator;
 import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
+import model.service.LandscapeService;
 
-public class SimpleModifierAlgorithm extends AbstractModifierAlgorithm {
+public class SimpleModifierAlgorithm<Key> extends AbstractModifierAlgorithm<Key> {
 
-	public SimpleModifierAlgorithm(LandscapeIterator<? extends Object> landscapeIterator, Circuit initialCircuit) {
-		super(landscapeIterator, initialCircuit);
+	public SimpleModifierAlgorithm(LandscapeService<Key> landscapeService, Circuit initialCircuit) {
+		super(landscapeService, initialCircuit);
 	}
 
 	@Override
 	public Circuit run() {
-
+		Circuit result = circuit;
+		int currentLength = circuit.getLength();
+		int length = currentLength;
+		Key currentKey = null;
 		boolean run = true;
-		int initialLength = circuit.getLength();
-		int length = circuit.getLength();
-		int calculatedLength;
 
-		Object key = null;
-
-		Circuit currentCircuit = circuit;
-
-		while (run) {
-			landscapeIterator.setCircuit(currentCircuit);
-			initialLength = length;
+		while(run){
+			currentKey = null;
+			landscapeService.setCircuit(result);
 			
-			for (;landscapeIterator.hasNext();) {
-				calculatedLength = landscapeIterator.next();
-				if (calculatedLength <= length) {
-					length = calculatedLength;
-					key = landscapeIterator.getCurrentKey();
+			for(Key key : landscapeService) {
+				length = landscapeService.getNeighborLength(key);
+				if (length < currentLength) {
+					currentLength = length;
+					currentKey = key;
 				}
 			}
-			currentCircuit = landscapeIterator.getNeighbor(key);
-			if (length == initialLength) {
+			if (null != currentKey) {
+				result = landscapeService.getNeighbor(currentKey);
+			} else {
 				run = false;
 			}
-			System.out.println(currentCircuit);
 		}
 
-		return landscapeIterator.getNeighbor(key);
+		return result;
 	}
 }

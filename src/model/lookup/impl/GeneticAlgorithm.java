@@ -1,13 +1,13 @@
 package model.lookup.impl;
 
-import model.iterator.LandscapeIterator;
 import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
+import model.service.LandscapeService;
 
 public class GeneticAlgorithm extends AbstractModifierAlgorithm {
 
-	protected GeneticAlgorithm(LandscapeIterator<?> landscapeIterator, Circuit initialCircuit) {
-		super(landscapeIterator, initialCircuit);
+	protected GeneticAlgorithm(LandscapeService<?> landscapeService, Circuit initialCircuit) {
+		super(landscapeService, initialCircuit);
 	}
 
 	@Override

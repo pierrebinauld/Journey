@@ -3,17 +3,17 @@ package model.lookup;
 import java.util.List;
 
 import model.data.City;
-import model.iterator.LandscapeIterator;
+import model.service.LandscapeService;
 
-public abstract class AbstractModifierAlgorithm implements Lookup {
+public abstract class AbstractModifierAlgorithm<Key> implements Lookup {
 
-	protected LandscapeIterator<?> landscapeIterator;
+	protected LandscapeService<Key> landscapeService;
 	
 	protected Circuit circuit;
 	protected List<City> cities;
 
-	public AbstractModifierAlgorithm(LandscapeIterator<?> landscapeIterator, Circuit initialCircuit) {
-		this.landscapeIterator = landscapeIterator;
+	public AbstractModifierAlgorithm(LandscapeService<Key> landscapeService, Circuit initialCircuit) {
+		this.landscapeService = landscapeService;
 		
 		this.circuit = initialCircuit;
 		this.cities = circuit.getCities();

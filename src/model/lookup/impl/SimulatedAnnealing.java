@@ -1,13 +1,13 @@
 package model.lookup.impl;
 
-import model.iterator.LandscapeIterator;
 import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
+import model.service.LandscapeService;
 
-public class SimulatedAnnealing extends AbstractModifierAlgorithm {
+public class SimulatedAnnealing<Key> extends AbstractModifierAlgorithm<Key> {
 
-	protected SimulatedAnnealing(LandscapeIterator<?> landscapeIterator, Circuit initialCircuit) {
-		super(landscapeIterator, initialCircuit);
+	protected SimulatedAnnealing(LandscapeService<Key> landscapeService, Circuit initialCircuit) {
+		super(landscapeService, initialCircuit);
 	}
 
 	@Override
