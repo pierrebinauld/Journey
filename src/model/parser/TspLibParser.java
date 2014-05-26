@@ -18,23 +18,22 @@ public class TspLibParser {
 	private static String TOKEN_EWT       = "EDGE_WEIGHT_TYPE";
 	private static String TOKEN_COORD     = "NODE_COORD_SECTION";
 	private static String TOKEN_EOF       = "EOF";
-
-	public static Country parse(File file) throws IOException {
+	
+	public Country parse(File file) throws IOException {
 		Country country = new Country();
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 
 		readHeader(reader, country);
 		readData(reader, country);
 		reader.close();
-		System.out.println("Parsing finished.");
 		return country;
 	}
 
-	private static void readHeader(BufferedReader reader, Country country) throws IOException {
+	private void readHeader(BufferedReader reader, Country country) throws IOException {
 		while(readHeaderLine(reader, country)) ;
 	}
 
-	private static boolean readHeaderLine(BufferedReader reader, Country country) throws IOException {
+	private boolean readHeaderLine(BufferedReader reader, Country country) throws IOException {
 		String line = reader.readLine();
 		if(line == null) {
 			return false;
@@ -55,11 +54,11 @@ public class TspLibParser {
 		return true;
 	}
 
-	private static void readData(BufferedReader reader, Country country) throws IOException {
+	private void readData(BufferedReader reader, Country country) throws IOException {
 		while(readDataLine(reader, country)) ;
 	}
 
-	private static boolean readDataLine(BufferedReader reader, Country country) throws IOException {
+	private boolean readDataLine(BufferedReader reader, Country country) throws IOException {
 		String line = reader.readLine();
 		if(line == null) {
 			return false;
@@ -77,6 +76,7 @@ public class TspLibParser {
 							.setPosition(position)
 			);
 		}
+		
 		return true;
 	}
 }

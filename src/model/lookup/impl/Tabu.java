@@ -3,7 +3,6 @@ package model.lookup.impl;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import model.iterator.key.TwoCityKey;
 import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
 import model.service.LandscapeService;
@@ -22,55 +21,50 @@ public class Tabu<Key> extends AbstractModifierAlgorithm<Key> {
 
 	@Override
 	public Circuit run() {
-		Circuit result = circuit;
-		int currentLength = circuit.getLength();
-		int length = currentLength;
-		Object currentKey = null;
+		Circuit result = initialCircuit;
+
+		int count = 0;
+		int testedLength;
+		int currentLength = -1;
+		Circuit testedCircuit = null;
 		Circuit currentCircuit = null;
-		boolean run = true;
+		Circuit currentIterationCircuit = initialCircuit;
+		landscapeService.setCircuit(initialCircuit);
 
-		landscapeService.setCircuit(result);
+		while(count < iterationCount) {
+			landscapeService.setCircuit(currentIterationCircuit);
+			
+			for (Key key : landscapeService) {
+				testedLength = landscapeService.getNeighborLength(key);
+				if (testedLength < currentLength || -1 == currentLength) {
+					testedCircuit = landscapeService.getNeighbor(key);
 
-		for (int i = 0; i < iterationCount; i++) {
-
-			// Go down into landscape
-			run = true;
-			while (run) {
-				currentKey = null;
-				currentCircuit = null;
-
-				for(Key key : landscapeService) {
-					length = landscapeService.getNeighborLength(key);
-					if (length < currentLength) {
-						Circuit test = landscapeService.getNeighbor(key);
-						if(!tabu.contains(test)) {
-							currentCircuit = test;
-							currentLength = length;
-							currentKey = key;
-						}
+					if (!tabu.contains(testedCircuit)) {
+						currentCircuit = testedCircuit;
+						currentLength = testedLength;
 					}
 				}
-
-			
-				if (null == currentCircuit) {
-					run = false;
-				} else {
-					landscapeService.setCircuit(currentCircuit);
-				}
-			} // Arrived in a local minimum
-			
-			putTabuList(currentCircuit);
-			if(currentCircuit.getLength() < result.getLength()) {
-				result = currentCircuit;
 			}
+			
+			if(currentIterationCircuit.getLength() <= currentCircuit.getLength()) {
+				if(currentIterationCircuit.getLength() < result.getLength()) {
+					result = currentCircuit;
+				}
+				putTabuList(currentIterationCircuit);
+				count++;
+				System.out.println(count + "/" + iterationCount);
+			}
+			currentLength = -1;
+			currentIterationCircuit = currentCircuit;
+			
 		}
 
 		return result;
 	}
-	
+
 	private void putTabuList(Circuit c) {
 		tabu.add(c);
-		if(tabu.size() > tabuSize) {
+		if (tabu.size() > tabuSize) {
 			tabu.poll();
 		}
 	}

@@ -12,14 +12,11 @@ import model.tools.Tools;
 public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 
 	private int origin;
-	private int sampleSize;
-	private List<Integer> sample = new LinkedList<>();
 	private List<Integer> indexes = new LinkedList<>();
 	private Circuit circuit = new Circuit();
 
-	public GreedyAlgorithm(DistanceService distanceService, List<City> cities, int sampleSize) {
+	public GreedyAlgorithm(DistanceService distanceService, List<City> cities) {
 		super(distanceService, cities);
-		this.sampleSize = sampleSize;
 	}
 
 	@Override
@@ -27,16 +24,33 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 		
 		int root = init();
 
-		while (indexes.size() > 0) {
-			updateIndexesSampleList();
-			root = updateCircuitWithNearestNeighbor(root, sample);
-		}
-		
-		while (sample.size() > 0) {
-			root = updateCircuitWithNearestNeighbor(root, sample);
-		}
-		
+		int nearest;
+		int distance;
+		int test;
+		int count;
+		int indexNearest;
 
+		while (indexes.size() > 0) {
+			count = indexes.size();
+			distance = 0;
+			nearest = 0;
+			indexNearest = 0;
+			System.out.println(count);
+			
+			for (int n = 0; n < count; n++) {
+				test = distanceService.getDistance(root, indexes.get(n));
+				if (test < distance || distance == 0) {
+					distance = test;
+					nearest = indexes.get(n);
+					indexNearest = n;
+				}
+			}
+	
+			circuit.add(nearest, distance);
+			indexes.remove(indexNearest);
+			root = nearest;
+		}
+		
 		closeCircuit(root);
 
 		return circuit;
@@ -57,35 +71,6 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 		circuit.close(distanceService.getDistance(origin, root));
 	}
 
-	private void updateIndexesSampleList() {
-		while (sample.size() < sampleSize) {
-			int neighbor = Tools.random(0, indexes.size());
-			sample.add(indexes.get(neighbor));
-			indexes.remove(neighbor);
-		}
-	}
-
-	private int updateCircuitWithNearestNeighbor(int root, List<Integer> neighbors) {
-		int nearest = 0;
-		int distance = 0;
-		int test;
-		int count = neighbors.size();
-		int indexNearest = 0;
-
-		for (int n = 0; n < count; n++) {
-			test = distanceService.getDistance(root, neighbors.get(n));
-			if (test < distance || distance == 0) {
-				distance = test;
-				nearest = neighbors.get(n);
-				indexNearest = n;
-			}
-		}
-
-		circuit.add(nearest, distance);
-		neighbors.remove(indexNearest);
-		return nearest;
-	}
-
 	private List<Integer> buildCitiesIndex(int size) {
 		List<Integer> cities = new LinkedList<>();
 		for (int i = 0; i < size; i++) {
@@ -93,4 +78,5 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 		}
 		return cities;
 	}
+	
 }

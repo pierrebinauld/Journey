@@ -12,8 +12,8 @@ public class SimpleModifierAlgorithm<Key> extends AbstractModifierAlgorithm<Key>
 
 	@Override
 	public Circuit run() {
-		Circuit result = circuit;
-		int currentLength = circuit.getLength();
+		Circuit result = initialCircuit;
+		int currentLength = initialCircuit.getLength();
 		int length = currentLength;
 		Key currentKey = null;
 		boolean run = true;

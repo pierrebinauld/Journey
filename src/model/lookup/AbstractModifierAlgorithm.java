@@ -9,13 +9,13 @@ public abstract class AbstractModifierAlgorithm<Key> implements Lookup {
 
 	protected LandscapeService<Key> landscapeService;
 	
-	protected Circuit circuit;
+	protected Circuit initialCircuit;
 	protected List<City> cities;
 
 	public AbstractModifierAlgorithm(LandscapeService<Key> landscapeService, Circuit initialCircuit) {
 		this.landscapeService = landscapeService;
 		
-		this.circuit = initialCircuit;
-		this.cities = circuit.getCities();
+		this.initialCircuit = initialCircuit;
+		this.cities = initialCircuit.getCities();
 	}
 }
