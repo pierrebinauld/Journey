@@ -52,7 +52,6 @@ public class Tabu<Key> extends AbstractModifierAlgorithm<Key> {
 				}
 				putTabuList(currentIterationCircuit);
 				count++;
-				System.out.println(count + "/" + iterationCount);
 			}
 			currentLength = -1;
 			currentIterationCircuit = currentCircuit;

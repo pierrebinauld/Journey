@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Circuit {
+public class Circuit implements Comparable<Circuit> {
 
 	List<City> cities = new ArrayList<>();
 
@@ -16,6 +16,10 @@ public class Circuit {
 	int length = 0;
 
 	public Circuit() {
+	}
+
+	public Circuit(List<City> cities) {
+		this.setCities(cities);
 	}
 
 	public List<City> getCities() {
@@ -117,6 +121,11 @@ public class Circuit {
 		} else if (!circuit.equals(other.circuit))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Circuit c) {
+		return this.getLength() - c.getLength();
 	}
 
 	

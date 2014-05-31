@@ -24,4 +24,8 @@ public abstract class AbstractLandscapeService<Key> implements LandscapeService<
 		this.distances = circuit.getDistances();
 	}
 	
+	@Override
+	public DistanceService getDistanceService() {
+		return distanceService;
+	}
 }

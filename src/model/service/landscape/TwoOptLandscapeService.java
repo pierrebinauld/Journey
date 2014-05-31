@@ -8,6 +8,7 @@ import model.iterator.TwoOptLandscapeIterator;
 import model.iterator.key.TwoCityKey;
 import model.lookup.Circuit;
 import model.service.DistanceService;
+import model.tools.Tools;
 
 public class TwoOptLandscapeService extends AbstractLandscapeService<TwoCityKey> {
 
@@ -22,6 +23,13 @@ public class TwoOptLandscapeService extends AbstractLandscapeService<TwoCityKey>
 	@Override
 	public Iterator<TwoCityKey> iterator() {
 		return new TwoOptLandscapeIterator(circuit);
+	}
+
+	@Override
+	public TwoCityKey randomKey() {
+		int index1 = Tools.random(0, citiesSize-2);
+		int index2 = Tools.random(index1 + 2, citiesSize);
+		return new TwoCityKey(index1, index2);
 	}
 
 	@Override
@@ -97,5 +105,4 @@ public class TwoOptLandscapeService extends AbstractLandscapeService<TwoCityKey>
 
 		return length;
 	}
-
 }
