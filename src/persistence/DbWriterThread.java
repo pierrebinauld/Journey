@@ -1,6 +1,6 @@
 package persistence;
 
-import utils.ExitStatus;
+import tools.ExitStatus;
 
 import java.sql.Connection;
 import java.sql.SQLException;

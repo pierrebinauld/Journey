@@ -1,6 +1,6 @@
 package model.iterator.key;
 
-public class TwoCityKey {
+public class TwoCityKey implements Key {
 
 	public int index1;
 	public int index2;

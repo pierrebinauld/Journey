@@ -1,8 +1,5 @@
 package model.service;
 
-import java.util.HashSet;
-import java.util.List;
-
 import model.lookup.Circuit;
 
 public interface DistanceService {

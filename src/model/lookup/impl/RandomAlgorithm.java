@@ -1,15 +1,15 @@
 package model.lookup.impl;
 
-import java.util.ArrayList;
-
 import model.data.City;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
 import model.service.DistanceService;
 
+import java.util.List;
+
 public class RandomAlgorithm extends AbstractBuilderAlgorithm {
 
-	public RandomAlgorithm(DistanceService distanceService, ArrayList<City> cities) {
+	public RandomAlgorithm(DistanceService distanceService, List<City> cities) {
 		super(distanceService, cities);
 	}
 

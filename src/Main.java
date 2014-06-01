@@ -1,8 +1,3 @@
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JFrame;
-
 import model.data.Country;
 import model.iterator.key.TwoCityKey;
 import model.lookup.AbstractBuilderAlgorithm;
@@ -12,27 +7,24 @@ import model.lookup.impl.GreedyAlgorithm;
 import model.lookup.impl.SimpleModifierAlgorithm;
 import model.lookup.impl.Tabu;
 import model.parser.TspLibParser;
-import model.service.DistanceService;
 import model.service.TimeService;
 import model.service.distance.AbstractDistanceService;
 import model.service.distance.EuclidianDistanceService;
-import model.service.distance.decorator.LocalStorageDistanceService;
 import model.service.landscape.TwoOptLandscapeService;
+import tools.Constant;
+import tools.DataSources;
 import view.Window;
+
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 		TimeService time = new TimeService();
-
-//		File file = new File("/home/pierre/git/Journey/data/wi29.tsp");
-//		 File file = new File("/home/pierre/git/Journey/data/ch71009.tsp");
-//		 File file = new File("/home/pierre/git/Journey/data/ja9847.tsp");
-		 File file = new File("/home/pierre/git/Journey/data/zi929.tsp");
-
-		TspLibParser parser = new TspLibParser();
 		
-		Country country = parser.parse(file);
+		Country country = DataSources.fromParser(1);
 		System.out.println(country.getDimension());
 		System.out.println(country.getCities());
 
@@ -57,7 +49,8 @@ public class Main {
 
 		JFrame initWindow = new Window(c);
 		
-		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService, c);
+		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService);
+		landscapeService.setCircuit(c);
 
 		time.start();
 		int calculatedLength = landscapeService.getNeighborLength(new TwoCityKey(2, 4));
