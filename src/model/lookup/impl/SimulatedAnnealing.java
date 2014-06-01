@@ -46,7 +46,6 @@ public class SimulatedAnnealing<Key> extends AbstractModifierAlgorithm<Key> {
 			}
 
 			temperature *= lambda;
-			System.out.println("Temperature: " + temperature + "\tlength: " + resultLength + "\tCurrent length " + currentLength);
 		}
 
 		return result;

@@ -62,7 +62,7 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 	private int init() {
 		int count = cities.size();
 		int root = -1;
-		System.out.println(origin);
+
 		if(-1 == origin) {
 			root = Tools.random(0, count);
 		} else {
