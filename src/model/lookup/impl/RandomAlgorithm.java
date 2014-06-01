@@ -1,13 +1,13 @@
 package model.lookup.impl;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import model.data.City;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
 import model.service.DistanceService;
-import model.tools.Tools;
+
+import java.util.List;
 
 public class RandomAlgorithm extends AbstractBuilderAlgorithm {
 

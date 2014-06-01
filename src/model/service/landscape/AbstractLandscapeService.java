@@ -12,8 +12,12 @@ public abstract class AbstractLandscapeService<Key> implements LandscapeService<
 	protected Circuit circuit;
 	protected List<Integer> distances;
 	
-	public AbstractLandscapeService(DistanceService distanceService, Circuit circuit) {
+	public AbstractLandscapeService(DistanceService distanceService) {
 		this.distanceService = distanceService;
+	}
+
+	public AbstractLandscapeService(DistanceService distanceService, Circuit circuit) {
+		this(distanceService);
 		this.setCircuit(circuit);
 	}
 

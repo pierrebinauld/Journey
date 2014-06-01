@@ -14,10 +14,8 @@ public class TwoOptLandscapeService extends AbstractLandscapeService<TwoCityKey>
 
 	private int citiesSize;
 
-	
-	public TwoOptLandscapeService(DistanceService distanceService, Circuit circuit) {
-		super(distanceService, circuit);
-		this.citiesSize = circuit.getCities().size();
+	public TwoOptLandscapeService(DistanceService distanceService) {
+		super(distanceService);
 	}
 	
 	@Override

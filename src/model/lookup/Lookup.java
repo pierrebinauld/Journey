@@ -2,5 +2,5 @@ package model.lookup;
 
 public interface Lookup {
 
-	Circuit run();
+	public Circuit run();
 }

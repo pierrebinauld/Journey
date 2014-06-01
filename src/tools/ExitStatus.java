@@ -1,4 +1,4 @@
-package utils;
+package tools;
 
 public enum ExitStatus {
 	OK(0),
