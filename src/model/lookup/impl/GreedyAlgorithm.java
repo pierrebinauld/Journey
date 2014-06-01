@@ -11,12 +11,16 @@ import model.tools.Tools;
 
 public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 
-	private int origin;
+	private int origin= -1;
 	private List<Integer> indexes = new LinkedList<>();
 	private Circuit circuit = new Circuit();
 
 	public GreedyAlgorithm(DistanceService distanceService, List<City> cities) {
 		super(distanceService, cities);
+	}
+	
+	public void setOrigin(int index) {
+		origin = index;
 	}
 
 	@Override
@@ -35,7 +39,6 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 			distance = 0;
 			nearest = 0;
 			indexNearest = 0;
-			System.out.println(count);
 			
 			for (int n = 0; n < count; n++) {
 				test = distanceService.getDistance(root, indexes.get(n));
@@ -58,17 +61,23 @@ public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 
 	private int init() {
 		int count = cities.size();
-		
-		origin = Tools.random(0, count);
+		int root = -1;
+		System.out.println(origin);
+		if(-1 == origin) {
+			root = Tools.random(0, count);
+		} else {
+			root = origin;
+		}
 		indexes = buildCitiesIndex(count);
-		circuit.setCities(origin, cities);
-		indexes.remove(origin);
+		circuit = new Circuit();
+		circuit.setCities(root, cities);
+		indexes.remove(root);
 		
-		return origin;
+		return root;
 	}
 
 	private void closeCircuit(int root) {
-		circuit.close(distanceService.getDistance(origin, root));
+		circuit.close(distanceService.getDistance(circuit.getOrigin(), root));
 	}
 
 	private List<Integer> buildCitiesIndex(int size) {

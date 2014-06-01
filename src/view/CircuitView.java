@@ -52,8 +52,8 @@ public class CircuitView extends JPanel {
 			p = circuit.getCities().get(circuit.getCircuit().get(i)).getPosition();
 			
 			polygon.addPoint(
-					(int)( (p.x - min.x) / (max.x - min.x) * (this.getWidth() - padding * 2)) + padding,
-					(int)( (p.y - min.y) / (max.y - min.y) * (this.getHeight() - padding * 2)) + padding
+					this.getWidth() - ((int)( (p.y - min.y) / (max.y - min.y) * (this.getWidth() - padding * 2)) + padding),
+					this.getHeight() - ((int)( (p.x - min.x) / (max.x - min.x) * (this.getHeight() - padding * 2)) + padding)
 					);
 		}
 		g.drawPolygon(polygon);
