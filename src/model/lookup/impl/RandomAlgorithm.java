@@ -1,13 +1,12 @@
 package model.lookup.impl;
 
-import java.util.ArrayList;
-
 import model.data.City;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
 import model.service.DistanceService;
 import model.tools.Tools;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RandomAlgorithm extends AbstractBuilderAlgorithm {
@@ -26,7 +25,7 @@ public class RandomAlgorithm extends AbstractBuilderAlgorithm {
 		List<Integer> randomCityIndexes = new ArrayList<>();
 
 		for (int i = 0; i < size; i++) {
-			int random = Tools.random(0, randomCityIndexes.size()+1);
+			int random = Tools.random(0, randomCityIndexes.size() + 1);
 			if(random == randomCityIndexes.size()) {
 				randomCityIndexes.add(i);
 			} else {

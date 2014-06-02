@@ -38,37 +38,7 @@ public class Main {
 		System.out.println(country.getDimension());
 		System.out.println(country.getCities());
 
-		System.out.println("Name: " + country.getName());
-		System.out.println("Dim: " + country.getDimension());
-		System.out.println();
-
-		AbstractDistanceService distanceService = new EuclidianDistanceService(country.getCities());
-
-		AbstractBuilderAlgorithm greedy = new GreedyAlgorithm(distanceService, country.getCities());
-
-		Circuit initialCircuit = greedy.run();
-		System.out.println("length: " + initialCircuit.getLength());
-		System.out.println("Check length: " + (distanceService.checkLength(initialCircuit)));
-		System.out.println(initialCircuit); 
-
-		JFrame initWindow = new Window(initialCircuit);
-		
-		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService);
-
-		
-		Circuit result = null;
-
-		time.start();
-		Lookup sa = new SimulatedAnnealing<TwoCityKey>(landscapeService, initialCircuit, 300, 0.999999, 0.0005);
-		result = sa.run();
-		System.out.println("Simulated Annealing Time: " + time.tickInSecond());
-		System.out.println("Simulated Annealing lengh: " + result.getLength());
-		System.out.println("Simulated Annealing Percentage: " + (((float)result.getLength()-optimum)/optimum * 100) + "%");
-		System.out.println("Check lengh: " + distanceService.checkLength(result));
-		System.out.println(result);
-		System.out.println();
-
-		JFrame resultWindow = new Window(result);
+	
 		
 	}
 }

@@ -8,13 +8,13 @@ import model.lookup.Lookup;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public abstract class AbstractBenchmark<T extends AbstractParameterSetBuilder<U>, U extends ParameterSet> {
+public abstract class AbstractBenchmark<U extends ParameterSet> {
 
 	protected int executionCount;
 	protected ExecutorService executor;
-	protected T parameterSetBuilder;
+	protected AbstractParameterSetBuilder<U> parameterSetBuilder;
 
-	public AbstractBenchmark(int executionCount, T parameterSetBuilder) {
+	public AbstractBenchmark(int executionCount, AbstractParameterSetBuilder<U> parameterSetBuilder) {
 		this.executionCount = executionCount;
 		this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 		this.parameterSetBuilder = parameterSetBuilder;
