@@ -12,8 +12,6 @@ import model.tools.Tools;
 
 public class TwoOptLandscapeService extends AbstractLandscapeService<TwoCityKey> {
 
-	private int citiesSize;
-
 	public TwoOptLandscapeService(DistanceService distanceService) {
 		super(distanceService);
 	}

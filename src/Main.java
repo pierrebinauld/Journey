@@ -53,7 +53,7 @@ public class Main {
 
 		JFrame initWindow = new Window(initialCircuit);
 		
-		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService, initialCircuit);
+		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService);
 
 		
 		Circuit result = null;

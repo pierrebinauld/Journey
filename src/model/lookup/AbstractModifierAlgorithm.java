@@ -17,5 +17,7 @@ public abstract class AbstractModifierAlgorithm<Key> implements Lookup {
 		
 		this.initialCircuit = initialCircuit;
 		this.cities = initialCircuit.getCities();
+		
+		landscapeService.setCircuit(initialCircuit);
 	}
 }

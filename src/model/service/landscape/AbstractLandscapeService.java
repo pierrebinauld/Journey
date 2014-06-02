@@ -11,6 +11,7 @@ public abstract class AbstractLandscapeService<Key> implements LandscapeService<
 	protected DistanceService distanceService;
 	protected Circuit circuit;
 	protected List<Integer> distances;
+	protected int citiesSize;
 	
 	public AbstractLandscapeService(DistanceService distanceService) {
 		this.distanceService = distanceService;
@@ -26,6 +27,7 @@ public abstract class AbstractLandscapeService<Key> implements LandscapeService<
 	public void setCircuit(Circuit circuit) {
 		this.circuit = circuit;
 		this.distances = circuit.getDistances();
+		this.citiesSize = this.circuit.getCities().size();
 	}
 	
 	@Override

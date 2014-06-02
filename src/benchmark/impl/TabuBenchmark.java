@@ -20,6 +20,10 @@ public class TabuBenchmark extends AbstractBenchmark<TabuParameterSetBuilder, Ta
 
 	@Override
 	public Lookup initializeAlgorithm(TabuParameterSet parameterSet) {
+		System.out.println(parameterSet.getLandscapeService());
+		System.out.println(parameterSet.getInitialCircuit());
+		System.out.println(parameterSet.getTabuSize());
+		System.out.println(parameterSet.getIterationCount());
 		Tabu lookup = new Tabu(parameterSet.getLandscapeService(), parameterSet.getInitialCircuit(), parameterSet.getTabuSize(), parameterSet.getIterationCount());
 
 		return lookup;
@@ -30,10 +34,10 @@ public class TabuBenchmark extends AbstractBenchmark<TabuParameterSetBuilder, Ta
 		EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
 		RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(distanceService, country.getCities());
 		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService);
-		int[] tabuSize = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		int[] tabuSize = {1/*, 2, 3, 4, 5, 6, 7, 8, 9, 10*/};
 		int[] iterationCount = {1000};
 		TabuParameterSetBuilder psBuilder = new TabuParameterSetBuilder(initialCircuitBuilder, landscapeService, tabuSize, iterationCount);
-		int executionCount = 200;
+		int executionCount = 1;
 		TabuBenchmark benchmark = new TabuBenchmark(executionCount, psBuilder);
 		benchmark.run();
 	}
