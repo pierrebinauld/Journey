@@ -62,7 +62,8 @@ public class Main {
 
 //		JFrame initWindow = new Window(c);
 		
-		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService, c);
+		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService);
+		landscapeService.setCircuit(c);
 
 		time.start();
 		int calculatedLength = landscapeService.getNeighborLength(new TwoCityKey(2, 4));

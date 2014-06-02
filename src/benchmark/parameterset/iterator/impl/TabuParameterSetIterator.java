@@ -3,7 +3,6 @@ package benchmark.parameterset.iterator.impl;
 import benchmark.parameterset.builder.impl.TabuParameterSetBuilder;
 import benchmark.parameterset.impl.TabuParameterSet;
 import benchmark.parameterset.iterator.ParameterSetIterator;
-import model.lookup.AbstractBuilderAlgorithm;
 
 public class TabuParameterSetIterator implements ParameterSetIterator<TabuParameterSet> {
 
@@ -47,6 +46,6 @@ public class TabuParameterSetIterator implements ParameterSetIterator<TabuParame
 
 	@Override
 	public void remove() {
-		//we do not need this
+		throw new UnsupportedOperationException();
 	}
 }

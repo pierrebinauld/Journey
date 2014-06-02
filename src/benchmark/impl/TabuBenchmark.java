@@ -11,7 +11,7 @@ import model.service.distance.EuclidianDistanceService;
 import model.service.landscape.TwoOptLandscapeService;
 import tools.DataSources;
 
-public class TabuBenchmark extends AbstractBenchmark<TabuParameterSetBuilder, TabuParameterSet> {
+public class TabuBenchmark extends AbstractBenchmark<TabuParameterSet> {
 
 	public TabuBenchmark(int executionCount, TabuParameterSetBuilder builder) {
 		super(executionCount, builder);
@@ -30,10 +30,10 @@ public class TabuBenchmark extends AbstractBenchmark<TabuParameterSetBuilder, Ta
 		EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
 		RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(distanceService, country.getCities());
 		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService);
-		int[] tabuSize = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		int[] tabuSize = {10};
 		int[] iterationCount = {1000};
 		TabuParameterSetBuilder psBuilder = new TabuParameterSetBuilder(initialCircuitBuilder, landscapeService, tabuSize, iterationCount);
-		int executionCount = 200;
+		int executionCount = 1;
 		TabuBenchmark benchmark = new TabuBenchmark(executionCount, psBuilder);
 		benchmark.run();
 	}
