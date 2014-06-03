@@ -1,8 +1,5 @@
 package benchmark.impl;
 
-import benchmark.AbstractBenchmark;
-import benchmark.parameterset.builder.impl.TabuParameterSetBuilder;
-import benchmark.parameterset.impl.TabuParameterSet;
 import model.data.Country;
 import model.lookup.Lookup;
 import model.lookup.impl.RandomAlgorithm;
@@ -10,21 +7,28 @@ import model.lookup.impl.Tabu;
 import model.service.distance.EuclidianDistanceService;
 import model.service.landscape.TwoOptLandscapeService;
 import tools.DataSources;
+import benchmark.Benchmark;
+import benchmark.parameterset.builder.impl.TabuParameterSet;
+import benchmark.parameterset.impl.TabuParameter;
 
-public class TabuBenchmark extends AbstractBenchmark<TabuParameterSet> {
+public class TabuBenchmark extends Benchmark<TabuParameter> {
 
-	public TabuBenchmark(int executionCount, TabuParameterSetBuilder builder) {
-		super(executionCount, builder);
+	public TabuBenchmark(int executionCount, TabuParameterSet parameterSet) {
+		super(executionCount, parameterSet);
 	}
 
 
 	@Override
-	public Lookup initializeAlgorithm(TabuParameterSet parameterSet) {
-		System.out.println(parameterSet.getLandscapeService());
-		System.out.println(parameterSet.getInitialCircuit());
-		System.out.println(parameterSet.getTabuSize());
-		System.out.println(parameterSet.getIterationCount());
-		Tabu lookup = new Tabu(parameterSet.getLandscapeService(), parameterSet.getInitialCircuit(), parameterSet.getTabuSize(), parameterSet.getIterationCount());
+	public Lookup initializeAlgorithm(TabuParameter parameter) {
+		System.out.println(parameter.getLandscapeService());
+		System.out.println(parameter.getInitialCircuit());
+		System.out.println(parameter.getTabuSize());
+		System.out.println(parameter.getIterationCount());
+		Tabu lookup = new Tabu(
+				parameter.getLandscapeService(), 
+				parameter.getInitialCircuit(), 
+				parameter.getTabuSize(), 
+				parameter.getIterationCount());
 
 		return lookup;
 	}
@@ -36,9 +40,9 @@ public class TabuBenchmark extends AbstractBenchmark<TabuParameterSet> {
 		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService);
 		int[] tabuSize = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 		int[] iterationCount = {1000};
-		TabuParameterSetBuilder psBuilder = new TabuParameterSetBuilder(initialCircuitBuilder, landscapeService, tabuSize, iterationCount);
+		TabuParameterSet parameterSet = new TabuParameterSet(initialCircuitBuilder, landscapeService, tabuSize, iterationCount);
 		int executionCount = 1;
-		TabuBenchmark benchmark = new TabuBenchmark(executionCount, psBuilder);
+		TabuBenchmark benchmark = new TabuBenchmark(executionCount, parameterSet);
 		benchmark.run();
 	}
 }

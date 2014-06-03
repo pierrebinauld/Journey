@@ -1,16 +1,18 @@
 package benchmark.parameterset.builder.impl;
 
-import benchmark.parameterset.builder.AbstractModifierParameterSetBuilder;
-import benchmark.parameterset.impl.TabuParameterSet;
-import benchmark.parameterset.iterator.impl.TabuParameterSetIterator;
+import java.util.Iterator;
+
 import model.lookup.AbstractBuilderAlgorithm;
 import model.service.LandscapeService;
+import benchmark.parameterset.builder.AbstractModifierParameterSet;
+import benchmark.parameterset.impl.TabuParameter;
+import benchmark.parameterset.iterator.impl.TabuParameterIterator;
 
-public class TabuParameterSetBuilder extends AbstractModifierParameterSetBuilder<TabuParameterSet> {
+public class TabuParameterSet extends AbstractModifierParameterSet<TabuParameter> {
 	private int[] tabuSize;
 	private int[] iterationCount;
 
-	public TabuParameterSetBuilder(AbstractBuilderAlgorithm initialCircuitBuilder, LandscapeService landscapeService, int[] tabuSize, int[] iterationCount) {
+	public TabuParameterSet(AbstractBuilderAlgorithm initialCircuitBuilder, LandscapeService landscapeService, int[] tabuSize, int[] iterationCount) {
 		super(initialCircuitBuilder, landscapeService);
 		this.tabuSize = tabuSize;
 		this.iterationCount = iterationCount;
@@ -33,7 +35,7 @@ public class TabuParameterSetBuilder extends AbstractModifierParameterSetBuilder
 	}
 
 	@Override
-	public TabuParameterSetIterator iterator() {
-		return new TabuParameterSetIterator(this);
+	public Iterator<TabuParameter> iterator() {
+		return new TabuParameterIterator(this);
 	}
 }

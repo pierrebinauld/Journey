@@ -38,6 +38,11 @@ public class Main {
 		System.out.println(country.getDimension());
 		System.out.println(country.getCities());
 
+		System.out.println("Name: " + country.getName());
+		System.out.println("Dim: " + country.getDimension());
+		System.out.println();
+
+//		System.out.println("Simulated Annealing Percentage: " + (((float)result.getLength()-optimum)/optimum * 100) + "%");
 	
 		
 	}

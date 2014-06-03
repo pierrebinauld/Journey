@@ -3,7 +3,7 @@ package benchmark;
 import model.lookup.Circuit;
 import model.lookup.Lookup;
 
-public class AlgorithmThread implements Runnable {
+public class AlgorithmThread extends Thread {
 
 	private Lookup algorithm;
 	private Circuit result;
@@ -14,7 +14,17 @@ public class AlgorithmThread implements Runnable {
 
 	@Override
 	public void run() {
+		super.run();
 		result = algorithm.run();
-		//TODO: enregistrer le resultat
 	}
+
+	public Circuit getResult() {
+		return result;
+	}
+
+	public void setResult(Circuit result) {
+		this.result = result;
+	}
+	
+	
 }

@@ -1,15 +1,15 @@
 package benchmark.parameterset.builder;
 
-import benchmark.parameterset.ParameterSet;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.service.LandscapeService;
+import benchmark.parameterset.LookupParameter;
 
-public abstract class AbstractModifierParameterSetBuilder<T extends ParameterSet> implements AbstractParameterSetBuilder<T> {
+public abstract class AbstractModifierParameterSet<T extends LookupParameter> implements ParameterSet<T> {
 
 	private AbstractBuilderAlgorithm initialCircuitBuilder;
 	private LandscapeService landscapeService;
 
-	protected AbstractModifierParameterSetBuilder(AbstractBuilderAlgorithm initialCircuitBuilder, LandscapeService landscapeService) {
+	protected AbstractModifierParameterSet(AbstractBuilderAlgorithm initialCircuitBuilder, LandscapeService landscapeService) {
 		this.initialCircuitBuilder = initialCircuitBuilder;
 		this.landscapeService = landscapeService;
 	}

@@ -1,5 +1,5 @@
 package benchmark.parameterset;
 
-public interface ParameterSet {
+public interface LookupParameter {
 
 }
