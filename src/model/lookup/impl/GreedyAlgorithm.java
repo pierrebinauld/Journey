@@ -3,11 +3,11 @@ package model.lookup.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import tools.Tools;
 import model.data.City;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
 import model.service.DistanceService;
-import model.tools.Tools;
 
 public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
 

@@ -1,4 +1,8 @@
-package model.tools;
+package tools;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Tools {
@@ -13,5 +17,11 @@ public class Tools {
 	 */
 	public static int random(int min, int max) {
 		return min + (int) (Math.random() * (max - min));
+	}
+	
+	public static String getStringDateTime() {
+		Date now = new Date();
+		DateFormat df = new SimpleDateFormat("MMddyyyyHHmmss");
+		return df.format(now);
 	}
 }

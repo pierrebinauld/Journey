@@ -1,5 +1,7 @@
 package benchmark.impl;
 
+import java.util.ArrayList;
+
 import model.data.Country;
 import model.lookup.Lookup;
 import model.lookup.impl.RandomAlgorithm;
@@ -14,7 +16,7 @@ import benchmark.parameterset.impl.TabuParameter;
 public class TabuBenchmark extends Benchmark<TabuParameter> {
 
 	public TabuBenchmark(int executionCount, TabuParameterSet parameterSet) {
-		super(executionCount, parameterSet);
+		super("Tabu", executionCount, parameterSet);
 	}
 
 
@@ -44,5 +46,17 @@ public class TabuBenchmark extends Benchmark<TabuParameter> {
 		int executionCount = 1;
 		TabuBenchmark benchmark = new TabuBenchmark(executionCount, parameterSet);
 		benchmark.run();
+	}
+
+
+	@Override
+	public ArrayList<String> toStringArrayList(TabuParameter parameters) {
+		ArrayList<String> result = new ArrayList<>();
+
+		result.add(Integer.toString(parameters.getIterationCount()));
+		result.add(Integer.toString(parameters.getTabuSize()));
+		result.add(Integer.toString(parameters.getInitialCircuit().getLength()));
+		
+		return result;
 	}
 }

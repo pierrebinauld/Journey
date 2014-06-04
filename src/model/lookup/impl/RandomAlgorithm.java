@@ -4,10 +4,11 @@ import model.data.City;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
 import model.service.DistanceService;
-import model.tools.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import tools.Tools;
 
 public class RandomAlgorithm extends AbstractBuilderAlgorithm {
 

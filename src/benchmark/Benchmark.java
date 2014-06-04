@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import tools.Constant;
+import tools.Tools;
+import model.lookup.Circuit;
 import model.lookup.Lookup;
 import benchmark.parameterset.LookupParameter;
 import benchmark.parameterset.builder.ParameterSet;
@@ -14,8 +17,12 @@ public abstract class Benchmark<U extends LookupParameter> {
 	protected int executionCount;
 	protected ExecutorService executor;
 	protected ParameterSet<U> parameterSet;
+	
+	private String name;
+	private CsvFile csvFile;
 
-	public Benchmark(int executionCount, ParameterSet<U> parameterSet) {
+	public Benchmark(String name, int executionCount, ParameterSet<U> parameterSet) {
+		this.name = name;
 		this.executionCount = executionCount;
 		this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 		this.parameterSet = parameterSet;
@@ -24,46 +31,36 @@ public abstract class Benchmark<U extends LookupParameter> {
 	public void run() {
 
 		System.out.println(" --- Starting benchmark --- ");
-		List<AlgorithmThread> threads = new ArrayList<>();
+		csvFile = new CsvFile(Constant.BENCH_PATH+Tools.getStringDateTime()+"-"+name);
+		List<AlgorithmThread<U>> threads = new ArrayList<>();
 		
 		for (U parameter : parameterSet) {
 			Lookup algorithm = initializeAlgorithm(parameter);
-			AlgorithmThread algorithmThread = new AlgorithmThread(algorithm);
+			AlgorithmThread<U> algorithmThread = new AlgorithmThread<>(parameter, algorithm);
 			threads.add(algorithmThread);
 			
 		}
 
 		try {
-			for(AlgorithmThread thread : threads) {
+			for(AlgorithmThread<U> thread : threads) {
 				thread.join();
-				//TODO Save result;
+				storeResult(thread.getParameter(), thread.getResult());
 			}
 			System.out.println(" --- Benchmark terminated --- ");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+		csvFile.close();
 	}
 
-	public abstract Lookup initializeAlgorithm(U parameterSet);
+	private void storeResult(U parameters, Circuit result) {
+		ArrayList<String> csvRow = toStringArrayList(parameters);
+		csvRow.add(Integer.toString(result.getLength()));
+		csvFile.write(csvRow);
+	}
+
+	public abstract Lookup initializeAlgorithm(U parameters);
 	
-	// public static void main(String[] args) {
-	// AbstractBenchmark b = new AbstractBenchmark();
-	// try {
-	// for(String arg : args) {
-	// if(arg.startsWith("-t")) { //thread count
-	// b.setThreadCount(Integer.valueOf(arg.substring(2)));
-	// } else if(arg.startsWith("-i")) { //iteration count
-	// b.setIterationCount(Integer.valueOf(arg.substring(2)));
-	// //} else if(arg.startsWith("-f")) { //file to parse
-	// // b.setFile(new File(arg.substring(2)));
-	// } else if(arg.startsWith("-c")) { //country name
-	// b.setCountryName(arg.substring(2));
-	// } else if(arg.startsWith("-a")) { //algorithm
-	// b.setAlgorithm(arg.substring(2));
-	// }
-	// }
-	// } catch(NumberFormatException e) {
-	// System.err.println("Invalid argument.");
-	// }
-	// }
+	public abstract ArrayList<String> toStringArrayList(U parameters);
 }
