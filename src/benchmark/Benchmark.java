@@ -12,8 +12,8 @@ import model.service.distance.EuclidianDistanceService;
 import persistence.CsvFile;
 import tools.Constant;
 import tools.Tools;
-import benchmark.parameterset.LookupParameter;
-import benchmark.parameterset.builder.ParameterSet;
+import benchmark.parameter.LookupParameter;
+import benchmark.parameter.set.ParameterSet;
 
 public abstract class Benchmark<U extends LookupParameter> {
 
@@ -92,10 +92,7 @@ public abstract class Benchmark<U extends LookupParameter> {
 		for(String str : csvRow) {
 			display += "\t" + str;
 		}
-		System.out.println();
 		System.out.println(display);
-		System.out.println(result.getCircuit());
-		System.out.println(result.getDistances());
 		csvFile.write(csvRow);
 	}
 

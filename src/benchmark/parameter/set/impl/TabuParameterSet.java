@@ -1,12 +1,12 @@
-package benchmark.parameterset.builder.impl;
+package benchmark.parameter.set.impl;
 
 import java.util.Iterator;
 
 import model.lookup.AbstractBuilderAlgorithm;
 import model.service.LandscapeService;
-import benchmark.parameterset.builder.AbstractModifierParameterSet;
-import benchmark.parameterset.impl.TabuParameter;
-import benchmark.parameterset.iterator.impl.TabuParameterIterator;
+import benchmark.parameter.impl.TabuParameter;
+import benchmark.parameter.iterator.impl.TabuParameterIterator;
+import benchmark.parameter.set.AbstractModifierParameterSet;
 
 public class TabuParameterSet extends AbstractModifierParameterSet<TabuParameter> {
 	private int[] tabuSize;

@@ -1,8 +1,8 @@
-package benchmark.parameterset.iterator;
+package benchmark.parameter.iterator;
 
 import java.util.Iterator;
 
-import benchmark.parameterset.LookupParameter;
+import benchmark.parameter.LookupParameter;
 
 public interface LookupParameterIterator<T extends LookupParameter> extends Iterator<T> {
 

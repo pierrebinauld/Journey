@@ -1,4 +1,4 @@
-package benchmark.parameterset;
+package benchmark.parameter;
 
 import java.util.ArrayList;
 

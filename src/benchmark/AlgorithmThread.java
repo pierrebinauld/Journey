@@ -1,6 +1,6 @@
 package benchmark;
 
-import benchmark.parameterset.LookupParameter;
+import benchmark.parameter.LookupParameter;
 import model.lookup.Circuit;
 import model.lookup.Lookup;
 import model.service.TimeService;

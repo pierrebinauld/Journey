@@ -1,8 +1,8 @@
-package benchmark.parameterset.builder;
+package benchmark.parameter.set;
 
 import model.lookup.AbstractBuilderAlgorithm;
 import model.service.LandscapeService;
-import benchmark.parameterset.LookupParameter;
+import benchmark.parameter.LookupParameter;
 
 public abstract class AbstractModifierParameterSet<T extends LookupParameter> implements ParameterSet<T> {
 
