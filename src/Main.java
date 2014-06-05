@@ -1,24 +1,18 @@
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JFrame;
-
 import model.data.Country;
 import model.iterator.key.TwoCityKey;
-import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
 import model.lookup.Lookup;
 import model.lookup.impl.GreedyAlgorithm;
-import model.lookup.impl.SimulatedAnnealing;
 import model.lookup.impl.Tabu;
 import model.parser.TspLibParser;
 import model.service.DistanceService;
 import model.service.LandscapeService;
 import model.service.TimeService;
-import model.service.distance.AbstractDistanceService;
 import model.service.distance.EuclidianDistanceService;
 import model.service.landscape.TwoOptLandscapeService;
-import view.Window;
+
+import java.io.File;
+import java.io.IOException;
 
 public class Main {
 

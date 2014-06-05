@@ -1,10 +1,10 @@
-package benchmark.parameterset.builder.impl;
+package benchmark.parameter.set.impl;
 
-import benchmark.parameterset.builder.AbstractModifierParameterSet;
-import benchmark.parameterset.impl.SimulatedAnnealingParameter;
-import benchmark.parameterset.iterator.impl.SimulatedAnnealingParameterIterator;
+import benchmark.parameter.set.AbstractModifierParameterSet;
+import benchmark.parameter.impl.SimulatedAnnealingParameter;
+import benchmark.parameter.iterator.impl.SimulatedAnnealingParameterIterator;
 import model.lookup.AbstractBuilderAlgorithm;
-import model.service.LandscapeService;
+import model.service.factory.LandscapeFactory;
 
 import java.util.Iterator;
 
@@ -13,7 +13,7 @@ public class SimulatedAnnealingParameterSet extends AbstractModifierParameterSet
 	private double[] lambda;
 	private double[] temperatureBreakpoint;
 
-	public SimulatedAnnealingParameterSet(AbstractBuilderAlgorithm initialCircuitBuilder, LandscapeService landscapeService, double[] temperature, double[] lambda, double[] temperatureBreakpoint) {
+	public SimulatedAnnealingParameterSet(AbstractBuilderAlgorithm initialCircuitBuilder, LandscapeFactory landscapeService, double[] temperature, double[] lambda, double[] temperatureBreakpoint) {
 		super(initialCircuitBuilder, landscapeService);
 		this.temperature = temperature;
 		this.lambda = lambda;

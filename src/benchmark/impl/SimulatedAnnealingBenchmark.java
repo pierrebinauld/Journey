@@ -1,13 +1,14 @@
 package benchmark.impl;
 
 import benchmark.Benchmark;
-import benchmark.parameterset.builder.impl.SimulatedAnnealingParameterSet;
-import benchmark.parameterset.impl.SimulatedAnnealingParameter;
+import benchmark.parameter.set.impl.SimulatedAnnealingParameterSet;
+import benchmark.parameter.impl.SimulatedAnnealingParameter;
 import model.data.Country;
 import model.lookup.Lookup;
 import model.lookup.impl.RandomAlgorithm;
 import model.lookup.impl.SimulatedAnnealing;
 import model.service.distance.EuclidianDistanceService;
+import model.service.factory.impl.TwoOptLandscapeFactory;
 import model.service.landscape.TwoOptLandscapeService;
 import tools.Constant;
 import tools.DataSources;
@@ -36,12 +37,12 @@ public class SimulatedAnnealingBenchmark extends Benchmark<SimulatedAnnealingPar
 		Country country = DataSources.fromParser(countryId);
 		EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
 		RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(distanceService, country.getCities());
-		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService);
+		TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
 		//TODO: initialize parameters
 		double[] temperature = {};
 		double[] lambda = {};
 		double[] temperatureBreakpoint = {};
-		SimulatedAnnealingParameterSet parameterSet = new SimulatedAnnealingParameterSet(initialCircuitBuilder, landscapeService, temperature, lambda, temperatureBreakpoint);
+		SimulatedAnnealingParameterSet parameterSet = new SimulatedAnnealingParameterSet(initialCircuitBuilder, landscapeFactory, temperature, lambda, temperatureBreakpoint);
 		int executionCount = 1;
 		SimulatedAnnealingBenchmark benchmark = new SimulatedAnnealingBenchmark(Constant.COUNTRY_NAMES[countryId], Constant.OPTIMUM[countryId], executionCount, parameterSet);
 		benchmark.run();

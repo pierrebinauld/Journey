@@ -1,10 +1,10 @@
 package benchmark.parameter.impl;
 
-import java.util.ArrayList;
-
+import benchmark.parameter.LookupParameter;
 import model.lookup.Circuit;
 import model.service.LandscapeService;
-import benchmark.parameter.LookupParameter;
+
+import java.util.ArrayList;
 
 public class TabuParameter implements LookupParameter {
 	private Circuit initialCircuit;

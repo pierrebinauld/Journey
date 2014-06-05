@@ -1,9 +1,9 @@
 package model.lookup;
 
-import java.util.List;
-
 import model.data.City;
 import model.service.DistanceService;
+
+import java.util.List;
 
 public abstract class AbstractBuilderAlgorithm implements Lookup {
 

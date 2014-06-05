@@ -1,11 +1,11 @@
 package model.lookup.impl;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
 import model.service.LandscapeService;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Tabu<Key> extends AbstractModifierAlgorithm<Key> {
 
