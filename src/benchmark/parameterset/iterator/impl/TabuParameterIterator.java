@@ -1,5 +1,7 @@
 package benchmark.parameterset.iterator.impl;
 
+import java.util.ArrayList;
+
 import benchmark.parameterset.builder.impl.TabuParameterSet;
 import benchmark.parameterset.impl.TabuParameter;
 import benchmark.parameterset.iterator.LookupParameterIterator;
@@ -32,9 +34,9 @@ public class TabuParameterIterator implements LookupParameterIterator<TabuParame
 				parameterSet.getIterationCount(iIterationCount));
 
 		iTabuSize++;
-		if(iTabuSize == parameterSet.getTabuSizeLength() - 1) { // end of the first loop
+		if(iTabuSize == parameterSet.getTabuSizeLength()) { // end of the first loop
 			iIterationCount++;
-			if(iIterationCount == parameterSet.getIterationCountLength() - 1) { // end of the second loop
+			if(iIterationCount == parameterSet.getIterationCountLength()) { // end of the second loop
 				hasNext = false;
 			} else {
 				iTabuSize = 0;

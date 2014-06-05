@@ -15,17 +15,17 @@ import benchmark.parameterset.impl.TabuParameter;
 
 public class TabuBenchmark extends Benchmark<TabuParameter> {
 
-	public TabuBenchmark(int executionCount, TabuParameterSet parameterSet) {
-		super("Tabu", executionCount, parameterSet);
+	public TabuBenchmark(String country, int optimum, int executionCount, TabuParameterSet parameterSet) {
+		super("Tabu", country, optimum, executionCount, parameterSet);
 	}
 
 
 	@Override
 	public Lookup initializeAlgorithm(TabuParameter parameter) {
-		System.out.println(parameter.getLandscapeService());
-		System.out.println(parameter.getInitialCircuit());
-		System.out.println(parameter.getTabuSize());
-		System.out.println(parameter.getIterationCount());
+//		System.out.println(parameter.getLandscapeService());
+//		System.out.println(parameter.getInitialCircuit());
+//		System.out.println(parameter.getTabuSize());
+//		System.out.println(parameter.getIterationCount());
 		Tabu lookup = new Tabu(
 				parameter.getLandscapeService(), 
 				parameter.getInitialCircuit(), 
@@ -44,19 +44,7 @@ public class TabuBenchmark extends Benchmark<TabuParameter> {
 		int[] iterationCount = {1000};
 		TabuParameterSet parameterSet = new TabuParameterSet(initialCircuitBuilder, landscapeService, tabuSize, iterationCount);
 		int executionCount = 1;
-		TabuBenchmark benchmark = new TabuBenchmark(executionCount, parameterSet);
+		TabuBenchmark benchmark = new TabuBenchmark("Western_Sahara", 27603, executionCount, parameterSet);
 		benchmark.run();
-	}
-
-
-	@Override
-	public ArrayList<String> toStringArrayList(TabuParameter parameters) {
-		ArrayList<String> result = new ArrayList<>();
-
-		result.add(Integer.toString(parameters.getIterationCount()));
-		result.add(Integer.toString(parameters.getTabuSize()));
-		result.add(Integer.toString(parameters.getInitialCircuit().getLength()));
-		
-		return result;
 	}
 }

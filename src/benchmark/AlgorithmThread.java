@@ -3,12 +3,16 @@ package benchmark;
 import benchmark.parameterset.LookupParameter;
 import model.lookup.Circuit;
 import model.lookup.Lookup;
+import model.service.TimeService;
 
 public class AlgorithmThread<P extends LookupParameter> extends Thread {
 
 	private Lookup algorithm;
 	private P parameter;
 	private Circuit result;
+	private float executionTime;
+	
+	private TimeService time = new TimeService();
 
 	public AlgorithmThread(P parameter, Lookup algorithm) {
 		this.algorithm = algorithm;
@@ -18,7 +22,9 @@ public class AlgorithmThread<P extends LookupParameter> extends Thread {
 	@Override
 	public void run() {
 		super.run();
+		time.start();
 		result = algorithm.run();
+		executionTime = time.tickInSecond();
 	}
 
 	public Circuit getResult() {
@@ -35,6 +41,10 @@ public class AlgorithmThread<P extends LookupParameter> extends Thread {
 
 	public void setParameter(P parameter) {
 		this.parameter = parameter;
+	}
+
+	public float getExecutionTime() {
+		return executionTime;
 	}
 	
 	
