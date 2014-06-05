@@ -15,4 +15,22 @@ public class Constant {
 			"it16862",
 			"ch71009",
 	};
+
+	public static String[] COUNTRY_NAMES = {
+			"western_sahara",
+			"zimbabwe",
+			"canada",
+			"japan",
+			"italy",
+			"china",
+	};
+
+	public static int[] OPTIMUM = {
+			27603,
+			0,
+			0,
+			0,
+			0,
+			0,
+	};
 }
