@@ -21,7 +21,7 @@ public class Tools {
 	
 	public static String getStringDateTime() {
 		Date now = new Date();
-		DateFormat df = new SimpleDateFormat("MMddyyyyHHmmss");
+		DateFormat df = new SimpleDateFormat("yyyy_MM_dd-HH_mm_ss_SS");
 		return df.format(now);
 	}
 }
