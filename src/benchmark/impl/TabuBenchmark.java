@@ -34,8 +34,8 @@ public class TabuBenchmark extends Benchmark<TabuParameter> {
 		EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
 		RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(distanceService, country.getCities());
 		TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
-		int[] tabuSize = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-		int[] iterationCount = {1000, 2000, 3000, 4000, 5000, 10000};
+		int[] tabuSize = {5000/*, 2, 3, 4, 5, 6, 7, 8, 9, 10*/};
+		int[] iterationCount = {1000/*, 2000, 3000, 4000, 5000, 10000*/};
 		TabuParameterSet parameterSet = new TabuParameterSet(initialCircuitBuilder, landscapeFactory, tabuSize, iterationCount);
 		int executionCount = 1;
 		TabuBenchmark benchmark = new TabuBenchmark(country.getName(), 27603, executionCount, parameterSet);
