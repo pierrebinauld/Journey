@@ -1,17 +1,18 @@
-package benchmark.parameterset.builder;
+package benchmark.parameter.set;
 
 import model.lookup.AbstractBuilderAlgorithm;
 import model.service.LandscapeService;
-import benchmark.parameterset.LookupParameter;
+import model.service.factory.LandscapeFactory;
+import benchmark.parameter.LookupParameter;
 
 public abstract class AbstractModifierParameterSet<T extends LookupParameter> implements ParameterSet<T> {
 
 	private AbstractBuilderAlgorithm initialCircuitBuilder;
-	private LandscapeService landscapeService;
+	private LandscapeFactory landscapeFactory;
 
-	protected AbstractModifierParameterSet(AbstractBuilderAlgorithm initialCircuitBuilder, LandscapeService landscapeService) {
+	protected AbstractModifierParameterSet(AbstractBuilderAlgorithm initialCircuitBuilder, LandscapeFactory landscapeFactory) {
 		this.initialCircuitBuilder = initialCircuitBuilder;
-		this.landscapeService = landscapeService;
+		this.landscapeFactory = landscapeFactory;
 	}
 
 	public AbstractBuilderAlgorithm getInitialCircuitBuilder() {
@@ -19,6 +20,6 @@ public abstract class AbstractModifierParameterSet<T extends LookupParameter> im
 	}
 
 	public LandscapeService getLandscapeService() {
-		return landscapeService;
+		return landscapeFactory.manufacture();
 	}
 }

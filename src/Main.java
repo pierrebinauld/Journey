@@ -10,6 +10,7 @@ import model.lookup.Circuit;
 import model.lookup.Lookup;
 import model.lookup.impl.GreedyAlgorithm;
 import model.lookup.impl.SimulatedAnnealing;
+import model.lookup.impl.Tabu;
 import model.parser.TspLibParser;
 import model.service.DistanceService;
 import model.service.LandscapeService;
@@ -22,6 +23,8 @@ import view.Window;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+		for(int i = 0; i<10; i++) {
+		
 		TimeService time = new TimeService();
 
 		File file = new File("/home/pierre/git/Journey/data/wi29.tsp");
@@ -37,12 +40,12 @@ public class Main {
 		TspLibParser parser = new TspLibParser();
 		
 		Country country = parser.parse(file);
-		System.out.println(country.getDimension());
-		System.out.println(country.getCities());
-
-		System.out.println("Name: " + country.getName());
-		System.out.println("Dim: " + country.getDimension());
-		System.out.println();
+//		System.out.println(country.getDimension());
+//		System.out.println(country.getCities());
+//
+//		System.out.println("Name: " + country.getName());
+//		System.out.println("Dim: " + country.getDimension());
+//		System.out.println();
 		
 		DistanceService distanceService = new EuclidianDistanceService(country.getCities());
 		
@@ -51,16 +54,23 @@ public class Main {
 
 		LandscapeService<TwoCityKey> landscapeService = new TwoOptLandscapeService(distanceService);
 		
-		SimulatedAnnealing<TwoCityKey> algo = new SimulatedAnnealing<>(landscapeService, initialCircuit, 300, 0.99999, 0.005);
-		Circuit result = algo.run();
+//		Lookup algo = new SimulatedAnnealing<TwoCityKey>(landscapeService, initialCircuit, 300, 0.99999, 0.005);
+		Lookup algo = new Tabu<>(landscapeService, initialCircuit, 5, 1000);
 		
+		time.start();
+		Circuit result = algo.run();
+		float second = time.tickInSecond();
+
 		System.out.println();
+		System.out.println(second + "s");
+		System.out.println("Initial length: " + initialCircuit.getLength());
+		System.out.println((((float)result.getLength()-optimum)/optimum * 100) + "%");
 		System.out.println(result.getLength() + " - " + distanceService.checkLength(result));
 		System.out.println(result.getCircuit());
 		System.out.println(result.getDistances());
 		
-//		System.out.println("Simulated Annealing Percentage: " + (((float)result.getLength()-optimum)/optimum * 100) + "%");
 	
 		
+		}
 	}
 }
