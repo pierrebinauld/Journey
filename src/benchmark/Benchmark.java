@@ -37,7 +37,9 @@ public abstract class Benchmark<U extends LookupParameter> {
 
 	public void run() {
 
-		System.out.println(" --- Starting benchmark --- ");
+		System.out.println("\t\t +------------------------+ ");
+		System.out.println("\t\t | - Starting benchmark - | ");
+		System.out.println("\t\t +------------------------+ ");
 		csvFile = new CsvFile();
 		try {
 			csvFile.open(Constant.BENCH_PATH + country + "/" + name + "/", Tools.getStringDateTime() + "-" + name + ".csv");
@@ -61,10 +63,12 @@ public abstract class Benchmark<U extends LookupParameter> {
 					thread.join();
 					store(thread.getParameter(), thread.getResult(), thread.getExecutionTime());
 				}
-				System.out.println(" --- Benchmark terminated --- ");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			System.out.println("\t\t+--------------------------+ ");
+			System.out.println("\t\t| - Benchmark terminated - | ");
+			System.out.println("\t\t+--------------------------+ ");
 	
 			csvFile.close();
 		} catch (IOException e1) {
@@ -83,11 +87,12 @@ public abstract class Benchmark<U extends LookupParameter> {
 	}
 
 	private void store(U parameters, Circuit result, float executionTime) throws IOException {
+		double percentage = (double)(result.getLength() - optimum)/optimum*100;
 		ArrayList<String> csvRow = parameters.toStringArrayList();
 		csvRow.add(Integer.toString(result.getLength()));
 		csvRow.add(Integer.toString(optimum));
-		csvRow.add(Double.toString((double)(result.getLength() - optimum)/optimum*100).substring(0, 3)+"%");
-		csvRow.add(Float.toString(executionTime).substring(0, 3));
+		csvRow.add(String.format("%.3g", percentage)+"%");
+		csvRow.add(String.format("%.3g", executionTime)+"s");
 		String display = "";
 		for(String str : csvRow) {
 			display += "\t" + str;

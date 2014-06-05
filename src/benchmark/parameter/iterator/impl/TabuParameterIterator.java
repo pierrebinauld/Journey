@@ -1,7 +1,5 @@
 package benchmark.parameter.iterator.impl;
 
-import java.util.ArrayList;
-
 import benchmark.parameter.impl.TabuParameter;
 import benchmark.parameter.iterator.LookupParameterIterator;
 import benchmark.parameter.set.impl.TabuParameterSet;

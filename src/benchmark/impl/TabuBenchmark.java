@@ -5,7 +5,7 @@ import model.lookup.Lookup;
 import model.lookup.impl.RandomAlgorithm;
 import model.lookup.impl.Tabu;
 import model.service.distance.EuclidianDistanceService;
-import model.service.landscape.TwoOptLandscapeService;
+import model.service.factory.impl.TwoOptLandscapeFactory;
 import tools.DataSources;
 import benchmark.Benchmark;
 import benchmark.parameter.impl.TabuParameter;
@@ -20,10 +20,6 @@ public class TabuBenchmark extends Benchmark<TabuParameter> {
 
 	@Override
 	public Lookup initializeAlgorithm(TabuParameter parameter) {
-//		System.out.println(parameter.getLandscapeService());
-//		System.out.println(parameter.getInitialCircuit());
-//		System.out.println(parameter.getTabuSize());
-//		System.out.println(parameter.getIterationCount());
 		Tabu lookup = new Tabu(
 				parameter.getLandscapeService(), 
 				parameter.getInitialCircuit(), 
@@ -37,12 +33,12 @@ public class TabuBenchmark extends Benchmark<TabuParameter> {
 		Country country = DataSources.fromParser(0);
 		EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
 		RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(distanceService, country.getCities());
-		TwoOptLandscapeService landscapeService = new TwoOptLandscapeService(distanceService);
-		int[] tabuSize = {1/*, 2, 3, 4, 5, 6, 7, 8, 9, 10*/};
-		int[] iterationCount = {1000};
-		TabuParameterSet parameterSet = new TabuParameterSet(initialCircuitBuilder, landscapeService, tabuSize, iterationCount);
+		TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
+		int[] tabuSize = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		int[] iterationCount = {1000, 2000, 3000, 4000, 5000, 10000};
+		TabuParameterSet parameterSet = new TabuParameterSet(initialCircuitBuilder, landscapeFactory, tabuSize, iterationCount);
 		int executionCount = 1;
-		TabuBenchmark benchmark = new TabuBenchmark("Western_Sahara", 27603, executionCount, parameterSet);
+		TabuBenchmark benchmark = new TabuBenchmark(country.getName(), 27603, executionCount, parameterSet);
 		benchmark.run();
 	}
 }
