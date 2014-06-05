@@ -27,10 +27,10 @@ public class Constant {
 
 	public static int[] OPTIMUM = {
 			27603,
-			0,
-			0,
-			0,
-			0,
-			0,
+			95345,
+			1290319,
+			491924,
+			557315,
+			4566563,
 	};
 }

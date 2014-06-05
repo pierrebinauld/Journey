@@ -58,9 +58,6 @@ public class Tabu<Key> extends AbstractModifierAlgorithm<Key> {
 			}
 			currentLength = -1;
 			currentIterationCircuit = currentCircuit;
-			System.out.println(currentCircuit.getLength() + "\t" + currentCircuit.hashCode() + "\t" +
-					currentIterationCircuit.getLength() + "\t" + currentIterationCircuit.hashCode() + "\t" + 
-							result.getLength());
 		}
 
 		return result;

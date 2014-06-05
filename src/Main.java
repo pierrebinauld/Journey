@@ -1,70 +1,116 @@
-import model.data.Country;
-import model.iterator.key.TwoCityKey;
-import model.lookup.Circuit;
-import model.lookup.Lookup;
-import model.lookup.impl.GreedyAlgorithm;
-import model.lookup.impl.Tabu;
-import model.parser.TspLibParser;
-import model.service.DistanceService;
-import model.service.LandscapeService;
-import model.service.TimeService;
-import model.service.distance.EuclidianDistanceService;
-import model.service.landscape.TwoOptLandscapeService;
-
-import java.io.File;
 import java.io.IOException;
+
+import model.data.Country;
+import model.lookup.impl.GreedyAlgorithm;
+import model.lookup.impl.RandomAlgorithm;
+import model.service.distance.EuclidianDistanceService;
+import model.service.factory.impl.TwoOptLandscapeFactory;
+import tools.Constant;
+import tools.DataSources;
+import benchmark.impl.SimulatedAnnealingBenchmark;
+import benchmark.impl.TabuBenchmark;
+import benchmark.parameter.set.impl.SimulatedAnnealingParameterSet;
+import benchmark.parameter.set.impl.TabuParameterSet;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		for(int i = 0; i<10; i++) {
-		
-		TimeService time = new TimeService();
 
-		File file = new File("/home/pierre/git/Journey/data/wi29.tsp");
-		double optimum = 27603;
-//		 File file = new File("/home/pierre/git/Journey/data/ch71009.tsp");
-//		 File file = new File("/home/pierre/git/Journey/data/ja9847.tsp");
-//		 double optimum = 491924;
-//		 File file = new File("/home/pierre/git/Journey/data/ca4663.tsp");
-//		 double optimum = 1290319;
-//		 File file = new File("/home/pierre/git/Journey/data/zi929.tsp");
-//		 double optimum = 95345;
+		int executionCount = 10;
 
-		TspLibParser parser = new TspLibParser();
-		
-		Country country = parser.parse(file);
-//		System.out.println(country.getDimension());
-//		System.out.println(country.getCities());
-//
-//		System.out.println("Name: " + country.getName());
-//		System.out.println("Dim: " + country.getDimension());
-//		System.out.println();
-		
-		DistanceService distanceService = new EuclidianDistanceService(country.getCities());
-		
-		GreedyAlgorithm greedy = new GreedyAlgorithm(distanceService, country.getCities());
-		Circuit initialCircuit = greedy.run();
+		for (int i = 0; i < 6; i++) {
+			int countryId = i;
+			Country country = DataSources.fromParser(countryId);
 
-		LandscapeService<TwoCityKey> landscapeService = new TwoOptLandscapeService(distanceService);
-		
-//		Lookup algo = new SimulatedAnnealing<TwoCityKey>(landscapeService, initialCircuit, 300, 0.99999, 0.005);
-		Lookup algo = new Tabu<>(landscapeService, initialCircuit, 5, 1000);
-		
-		time.start();
-		Circuit result = algo.run();
-		float second = time.tickInSecond();
+			System.out.println("\t+---------------------------------------+");
+			System.out.println("\t| ---\t\t"+ country.getName());
+			System.out.println("\t+---------------------------------------+");
 
-		System.out.println();
-		System.out.println(second + "s");
-		System.out.println("Initial length: " + initialCircuit.getLength());
-		System.out.println((((float)result.getLength()-optimum)/optimum * 100) + "%");
-		System.out.println(result.getLength() + " - " + distanceService.checkLength(result));
-		System.out.println(result.getCircuit());
-		System.out.println(result.getDistances());
-		
-	
-		
+			{
+				System.out.println("\t+-------------------------------+");
+				System.out.println("\t| ---         Tabu          --- |");
+				System.out.println("\t|  --    Random Algoritm    --  |");
+				System.out.println("\t+-------------------------------+");
+
+				EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
+				RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(distanceService, country.getCities());
+				TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
+
+				int[] tabuSize = { 1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 5000, 10000 };
+				int[] iterationCount = { 1000, 2000, 3000, 4000, 5000, 10000, 100000 };
+
+				TabuParameterSet parameterSet = new TabuParameterSet(initialCircuitBuilder, landscapeFactory, tabuSize,
+						iterationCount);
+
+				TabuBenchmark benchmark = new TabuBenchmark(country.getName(), Constant.OPTIMUM[countryId], executionCount,
+						parameterSet);
+				benchmark.run();
+			}
+
+			{
+				System.out.println("\t+-------------------------------+");
+				System.out.println("\t| ---         Tabu          --- |");
+				System.out.println("\t|  --    Greedy Algoritm    --  |");
+				System.out.println("\t+-------------------------------+");
+
+				EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
+				GreedyAlgorithm initialCircuitBuilder = new GreedyAlgorithm(distanceService, country.getCities());
+				TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
+
+				int[] tabuSize = { 1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 5000, 10000 };
+				int[] iterationCount = { 1000, 2000, 3000, 4000, 5000, 10000, 100000 };
+
+				TabuParameterSet parameterSet = new TabuParameterSet(initialCircuitBuilder, landscapeFactory, tabuSize,
+						iterationCount);
+
+				TabuBenchmark benchmark = new TabuBenchmark(country.getName(), Constant.OPTIMUM[countryId], executionCount,
+						parameterSet);
+				benchmark.run();
+			}
+
+			{
+				System.out.println("\t+-------------------------------+");
+				System.out.println("\t| ---  Simulated Annealing  --- |");
+				System.out.println("\t|  --    Random Algoritm    --  |");
+				System.out.println("\t+-------------------------------+");
+
+				EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
+				RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(distanceService, country.getCities());
+				TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
+
+				double[] temperature = { 10, 20, 30, 50, 100, 200, 300, 500, 1000, 2000, 3000, 4000, 5000 };
+				double[] lambda = { 0.5, 0.6, 0.7, 0.8, 0.9, 0.99, 0.999, 0.9999, 0.99999 };
+				double[] temperatureBreakpoint = { 1, 0.5, 0.05, 0.005, 0.0005, 0.00005, 0.000005, 0.0000005 };
+
+				SimulatedAnnealingParameterSet parameterSet = new SimulatedAnnealingParameterSet(initialCircuitBuilder,
+						landscapeFactory, temperature, lambda, temperatureBreakpoint);
+
+				SimulatedAnnealingBenchmark benchmark = new SimulatedAnnealingBenchmark(Constant.COUNTRY_NAMES[countryId],
+						Constant.OPTIMUM[countryId], executionCount, parameterSet);
+				benchmark.run();
+			}
+
+			{
+				System.out.println("\t+-------------------------------+");
+				System.out.println("\t| ---  Simulated Annealing  --- |");
+				System.out.println("\t|  --    Greedy Algoritm    --  |");
+				System.out.println("\t+-------------------------------+");
+
+				EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
+				GreedyAlgorithm initialCircuitBuilder = new GreedyAlgorithm(distanceService, country.getCities());
+				TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
+
+				double[] temperature = { 10, 20, 30, 50, 100, 200, 300, 500, 1000, 2000, 3000, 4000, 5000 };
+				double[] lambda = { 0.5, 0.6, 0.7, 0.8, 0.9, 0.99, 0.999, 0.9999, 0.99999 };
+				double[] temperatureBreakpoint = { 1, 0.5, 0.05, 0.005, 0.0005, 0.00005, 0.000005, 0.0000005 };
+
+				SimulatedAnnealingParameterSet parameterSet = new SimulatedAnnealingParameterSet(initialCircuitBuilder,
+						landscapeFactory, temperature, lambda, temperatureBreakpoint);
+
+				SimulatedAnnealingBenchmark benchmark = new SimulatedAnnealingBenchmark(Constant.COUNTRY_NAMES[countryId],
+						Constant.OPTIMUM[countryId], executionCount, parameterSet);
+				benchmark.run();
+			}
 		}
 	}
 }
