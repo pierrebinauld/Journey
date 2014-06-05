@@ -32,15 +32,15 @@ public class SimulatedAnnealingBenchmark extends Benchmark<SimulatedAnnealingPar
 	}
 
 	public static void main(String[] args) {
-		int countryId = 0;
+		int countryId = 1;
 		Country country = DataSources.fromParser(countryId);
 		EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
 		RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(distanceService, country.getCities());
 		TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
 		//TODO: initialize parameters
-		double[] temperature = {};
-		double[] lambda = {};
-		double[] temperatureBreakpoint = {};
+		double[] temperature = {100,200,300};
+		double[] lambda = {0.999,0.9999,0.99999};
+		double[] temperatureBreakpoint = {0.05,0.005,0.0005};
 		SimulatedAnnealingParameterSet parameterSet = new SimulatedAnnealingParameterSet(initialCircuitBuilder, landscapeFactory, temperature, lambda, temperatureBreakpoint);
 		int executionCount = 1;
 		SimulatedAnnealingBenchmark benchmark = new SimulatedAnnealingBenchmark(Constant.COUNTRY_NAMES[countryId], Constant.OPTIMUM[countryId], executionCount, parameterSet);

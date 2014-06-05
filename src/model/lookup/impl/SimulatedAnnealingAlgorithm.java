@@ -46,7 +46,6 @@ public class SimulatedAnnealingAlgorithm<Key> extends AbstractModifierAlgorithm<
 			}
 
 			temperature *= lambda;
-			System.out.println(temperature);
 		}
 
 		return result;

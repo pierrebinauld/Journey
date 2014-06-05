@@ -11,7 +11,7 @@ public class TabuAlgorithm<Key> extends AbstractModifierAlgorithm<Key> {
 
 	private int iterationCount;
 	private int tabuSize;
-	private Queue<Circuit> tabu = new LinkedList<>();
+	private Queue<Integer> tabu = new LinkedList<>();
 
 	public TabuAlgorithm(LandscapeService<Key> landscapeService, Circuit initialCircuit, int tabuSize, int iterationCount) {
 		super(landscapeService, initialCircuit);
@@ -36,10 +36,10 @@ public class TabuAlgorithm<Key> extends AbstractModifierAlgorithm<Key> {
 			
 			for (Key key : landscapeService) {
 				testedLength = landscapeService.getNeighborLength(key);
-				if (testedLength < currentLength || -1 == currentLength) {
+				if (testedLength <= currentLength || -1 == currentLength) {
 					testedCircuit = landscapeService.getNeighbor(key);
 
-					if (!tabu.contains(testedCircuit)) {
+					if (!tabu.contains(testedCircuit.hashCode())) {
 						currentCircuit = testedCircuit;
 						currentLength = testedLength;
 					}
@@ -50,19 +50,18 @@ public class TabuAlgorithm<Key> extends AbstractModifierAlgorithm<Key> {
 				if(currentIterationCircuit.getLength() < result.getLength()) {
 					result = currentCircuit;
 				}
-				putTabuList(currentIterationCircuit);
+				putTabuList(currentIterationCircuit.hashCode());
 				count++;
 			}
 			currentLength = -1;
 			currentIterationCircuit = currentCircuit;
-			
 		}
 
 		return result;
 	}
 
-	private void putTabuList(Circuit c) {
-		tabu.add(c);
+	private void putTabuList(Integer circuitHashCode) {
+		tabu.add(circuitHashCode);
 		if (tabu.size() > tabuSize) {
 			tabu.poll();
 		}
