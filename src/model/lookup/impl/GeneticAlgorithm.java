@@ -1,5 +1,6 @@
 package model.lookup.impl;
 
+import benchmark.parameter.PopulationFactory;
 import model.iterator.key.CircuitPair;
 import model.lookup.Circuit;
 import model.lookup.Lookup;
@@ -15,7 +16,6 @@ import java.util.List;
 public class GeneticAlgorithm<Key> implements Lookup {
 	
 	List<Circuit> population;
-	int populationSize;
 	int randomPossibilityCount;
 	int iterationCount;
 	double mutationProbability;
@@ -27,16 +27,15 @@ public class GeneticAlgorithm<Key> implements Lookup {
 	// GeneticSelectionService selectionService;
 	// GeneticMutationService mutationService;
 
-	public GeneticAlgorithm(LandscapeService<Key> landscapeService, List<Circuit> initialPopulation, double mutationProbability, int iterationCount) {
+	public GeneticAlgorithm(LandscapeService<Key> landscapeService, PopulationFactory initialPopulationFactory, int populationSize, double mutationProbability, int iterationCount) {
 
-		this.population = initialPopulation;
+		this.population = initialPopulationFactory.manufacture(populationSize);
 
 		if(0 != this.population.size()%2) {
 			population.remove(population.size()-1);
 		}
-		
-		this.populationSize = population.size();
-		this.randomPossibilityCount = (populationSize * (populationSize+1)) / 2;
+
+		this.randomPossibilityCount = (population.size() * (population.size()+1)) / 2;
 		this.iterationCount = iterationCount;
 		this.mutationProbability = mutationProbability;
 		
@@ -55,8 +54,6 @@ public class GeneticAlgorithm<Key> implements Lookup {
 
 			System.out.println(i+1+"/"+iterationCount);
 			oldPopulation = newPopulation;
-			newPopulation = new ArrayList<>();
-			selectedPopulation = new ArrayList<>();
 			
 			oldPopulation = ranking(oldPopulation);
 			
@@ -97,16 +94,16 @@ public class GeneticAlgorithm<Key> implements Lookup {
 
 	private List<CircuitPair> selection(List<Circuit> sortedPopulation) {
 		List<CircuitPair> selectedPopulation = new ArrayList<>();
-		int halfPopulationSize = populationSize / 2;
+		int halfPopulationSize = population.size() / 2;
 		int selectedIndex, random;
 		
 		while(selectedPopulation.size() < halfPopulationSize) {
 			random = Tools.random(0, randomPossibilityCount);
-			selectedIndex = (int) (populationSize - Math.ceil(( -1 + Math.sqrt(1 + 8 * randomPossibilityCount - 8*( random )) ) / 2));
+			selectedIndex = (int) (population.size() - Math.ceil(( -1 + Math.sqrt(1 + 8 * randomPossibilityCount - 8*( random )) ) / 2));
 			Circuit first = sortedPopulation.get(selectedIndex);
 
 			random = Tools.random(0, randomPossibilityCount);
-			selectedIndex = (int) (populationSize - Math.ceil(( -1 + Math.sqrt(1 + 8 * randomPossibilityCount - 8*( random )) ) / 2));
+			selectedIndex = (int) (population.size() - Math.ceil(( -1 + Math.sqrt(1 + 8 * randomPossibilityCount - 8*( random )) ) / 2));
 			Circuit second = sortedPopulation.get(selectedIndex);
 
 			selectedPopulation.add(new CircuitPair(first, second));

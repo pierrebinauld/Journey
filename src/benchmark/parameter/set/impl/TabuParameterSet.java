@@ -6,8 +6,6 @@ import benchmark.parameter.set.AbstractModifierParameterSet;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.service.factory.LandscapeFactory;
 
-import java.util.Iterator;
-
 public class TabuParameterSet extends AbstractModifierParameterSet<TabuParameter> {
 	private int[] tabuSize;
 	private int[] iterationCount;
@@ -35,7 +33,7 @@ public class TabuParameterSet extends AbstractModifierParameterSet<TabuParameter
 	}
 
 	@Override
-	public Iterator<TabuParameter> iterator() {
+	public TabuParameterIterator iterator() {
 		return new TabuParameterIterator(this);
 	}
 }

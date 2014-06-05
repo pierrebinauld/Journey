@@ -2,7 +2,7 @@ package tools;
 
 public class Constant {
 
-//	public static String TSP_PATH = "/home/tom/Documents/polytech/OD/dev/Journey/data/"; /* <-- comment this line to switch path
+	public static String TSP_PATH = "/home/tom/Documents/polytech/OD/dev/Journey/data/"; /* <-- comment this line to switch path
 	public static String TSP_PATH = "/home/pierre/git/Journey/data/"; //*/
 	
 	public static String BENCH_PATH = "./bench/";
@@ -26,11 +26,11 @@ public class Constant {
 	};
 
 	public static int[] OPTIMUM = {
-			27603,
-			0,
-			0,
-			0,
-			0,
-			0,
+			27_603,
+			95_345,
+			1_290_319,
+			491_924,
+			557_315,
+			4_566_563, // Not really the optimal... But the closest we have.
 	};
 }

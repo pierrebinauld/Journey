@@ -3,7 +3,7 @@ import model.iterator.key.TwoCityKey;
 import model.lookup.Circuit;
 import model.lookup.Lookup;
 import model.lookup.impl.GreedyAlgorithm;
-import model.lookup.impl.Tabu;
+import model.lookup.impl.TabuAlgorithm;
 import model.parser.TspLibParser;
 import model.service.DistanceService;
 import model.service.LandscapeService;
@@ -49,7 +49,7 @@ public class Main {
 		LandscapeService<TwoCityKey> landscapeService = new TwoOptLandscapeService(distanceService);
 		
 //		Lookup algo = new SimulatedAnnealing<TwoCityKey>(landscapeService, initialCircuit, 300, 0.99999, 0.005);
-		Lookup algo = new Tabu<>(landscapeService, initialCircuit, 5, 1000);
+		Lookup algo = new TabuAlgorithm<>(landscapeService, initialCircuit, 5, 1000);
 		
 		time.start();
 		Circuit result = algo.run();

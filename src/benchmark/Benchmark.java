@@ -11,13 +11,11 @@ import tools.Tools;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public abstract class Benchmark<U extends LookupParameter> {
 
 	protected int executionCount;
-	protected ExecutorService executor;
+//	protected ExecutorService executor;
 	protected ParameterSet<U> parameterSet;
 
 	private String name;
@@ -30,7 +28,7 @@ public abstract class Benchmark<U extends LookupParameter> {
 		this.country = country;
 		this.optimum = optimum;
 		this.executionCount = executionCount;
-		this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+//		this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 		this.parameterSet = parameterSet;
 	}
 
@@ -70,9 +68,9 @@ public abstract class Benchmark<U extends LookupParameter> {
 			System.out.println("\t\t+--------------------------+ ");
 	
 			csvFile.close();
-		} catch (IOException e1) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 

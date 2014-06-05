@@ -7,13 +7,13 @@ import model.service.LandscapeService;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Tabu<Key> extends AbstractModifierAlgorithm<Key> {
+public class TabuAlgorithm<Key> extends AbstractModifierAlgorithm<Key> {
 
 	private int iterationCount;
 	private int tabuSize;
 	private Queue<Circuit> tabu = new LinkedList<>();
 
-	public Tabu(LandscapeService<Key> landscapeService, Circuit initialCircuit, int tabuSize, int iterationCount) {
+	public TabuAlgorithm(LandscapeService<Key> landscapeService, Circuit initialCircuit, int tabuSize, int iterationCount) {
 		super(landscapeService, initialCircuit);
 		this.tabuSize = tabuSize;
 		this.iterationCount = iterationCount;

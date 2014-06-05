@@ -1,15 +1,14 @@
 package benchmark.impl;
 
 import benchmark.Benchmark;
-import benchmark.parameter.set.impl.SimulatedAnnealingParameterSet;
 import benchmark.parameter.impl.SimulatedAnnealingParameter;
+import benchmark.parameter.set.impl.SimulatedAnnealingParameterSet;
 import model.data.Country;
 import model.lookup.Lookup;
 import model.lookup.impl.RandomAlgorithm;
-import model.lookup.impl.SimulatedAnnealing;
+import model.lookup.impl.SimulatedAnnealingAlgorithm;
 import model.service.distance.EuclidianDistanceService;
 import model.service.factory.impl.TwoOptLandscapeFactory;
-import model.service.landscape.TwoOptLandscapeService;
 import tools.Constant;
 import tools.DataSources;
 
@@ -22,7 +21,7 @@ public class SimulatedAnnealingBenchmark extends Benchmark<SimulatedAnnealingPar
 
 	@Override
 	public Lookup initializeAlgorithm(SimulatedAnnealingParameter parameter) {
-		SimulatedAnnealing lookup = new SimulatedAnnealing(
+		SimulatedAnnealingAlgorithm lookup = new SimulatedAnnealingAlgorithm(
 				parameter.getLandscapeService(), 
 				parameter.getInitialCircuit(), 
 				parameter.getTemperature(),

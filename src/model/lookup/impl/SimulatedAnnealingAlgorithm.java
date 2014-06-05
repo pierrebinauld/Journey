@@ -4,13 +4,13 @@ import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
 import model.service.LandscapeService;
 
-public class SimulatedAnnealing<Key> extends AbstractModifierAlgorithm<Key> {
+public class SimulatedAnnealingAlgorithm<Key> extends AbstractModifierAlgorithm<Key> {
 
 	private double temperature;
 	private double temperatureBreakpoint;
 	private double lambda;
 
-	public SimulatedAnnealing(LandscapeService<Key> landscapeService, Circuit initialCircuit, double temperature, double lambda, double temperatureBreakpoint) {
+	public SimulatedAnnealingAlgorithm(LandscapeService<Key> landscapeService, Circuit initialCircuit, double temperature, double lambda, double temperatureBreakpoint) {
 		super(landscapeService, initialCircuit);
 
 		this.temperature = temperature;
