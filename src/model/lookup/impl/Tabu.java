@@ -7,6 +7,9 @@ import model.service.LandscapeService;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Tabu<Key> extends AbstractModifierAlgorithm<Key> {
 
 	private int iterationCount;
