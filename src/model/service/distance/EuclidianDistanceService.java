@@ -1,8 +1,8 @@
 package model.service.distance;
 
-import java.util.List;
-
 import model.data.City;
+
+import java.util.List;
 
 public class EuclidianDistanceService extends AbstractDistanceService {
 

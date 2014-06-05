@@ -1,10 +1,10 @@
 package model.service.distance.decorator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import model.lookup.Circuit;
 import model.service.distance.AbstractDistanceService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocalStorageDistanceService extends DecoratorDistanceService {
 

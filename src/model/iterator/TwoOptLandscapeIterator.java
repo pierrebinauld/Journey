@@ -1,11 +1,11 @@
 package model.iterator;
 
+import model.iterator.key.TwoCityKey;
+import model.lookup.Circuit;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import model.iterator.key.TwoCityKey;
-import model.lookup.Circuit;
 
 public class TwoOptLandscapeIterator implements Iterator<TwoCityKey> {
 

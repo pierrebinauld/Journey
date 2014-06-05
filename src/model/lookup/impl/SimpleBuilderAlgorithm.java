@@ -1,11 +1,11 @@
 package model.lookup.impl;
 
-import java.util.List;
-
 import model.data.City;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
 import model.service.DistanceService;
+
+import java.util.List;
 
 public class SimpleBuilderAlgorithm extends AbstractBuilderAlgorithm {
 

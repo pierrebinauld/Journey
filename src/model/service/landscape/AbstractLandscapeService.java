@@ -1,10 +1,10 @@
 package model.service.landscape;
 
-import java.util.List;
-
 import model.lookup.Circuit;
 import model.service.DistanceService;
 import model.service.LandscapeService;
+
+import java.util.List;
 
 public abstract class AbstractLandscapeService<Key> implements LandscapeService<Key> {
 

@@ -1,16 +1,16 @@
 package model.lookup.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import tools.Tools;
 import model.iterator.key.CircuitPair;
 import model.lookup.Circuit;
 import model.lookup.Lookup;
 import model.service.DistanceService;
 import model.service.LandscapeService;
+import tools.Tools;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GeneticAlgorithm<Key> implements Lookup {
 	

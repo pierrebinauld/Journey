@@ -1,9 +1,8 @@
 package view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import model.lookup.Circuit;
+
+import javax.swing.*;
 
 public class Window extends JFrame {
 

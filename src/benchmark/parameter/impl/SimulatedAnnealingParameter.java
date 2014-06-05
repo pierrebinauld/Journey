@@ -6,25 +6,28 @@ import model.service.LandscapeService;
 
 import java.util.ArrayList;
 
-public class TabuParameter implements LookupParameter {
+public class SimulatedAnnealingParameter implements LookupParameter {
 	private Circuit initialCircuit;
 	private LandscapeService landscapeService;
-	private int tabuSize;
-	private int iterationCount;
+	private double temperature;
+	private double lambda;
+	private double temperatureBreakpoint;
 
-	public TabuParameter(Circuit initialCircuit, LandscapeService landscapeService, int tabuSize, int iterationCount) {
+	public SimulatedAnnealingParameter(Circuit initialCircuit, LandscapeService landscapeService, double temperature, double lambda, double temperatureBreakpoint) {
 		this.initialCircuit = initialCircuit;
 		this.landscapeService = landscapeService;
-		this.tabuSize = tabuSize;
-		this.iterationCount = iterationCount;
+		this.temperature = temperature;
+		this.lambda = lambda;
+		this.temperatureBreakpoint = temperatureBreakpoint;
 	}
-	
+
 	@Override
 	public ArrayList<String> titlesToStringArrayList() {
 		ArrayList<String> result = new ArrayList<>();
 
-		result.add("Nb itérations");
-		result.add("Taille liste Tabou");
+		result.add("Température");
+		result.add("Lambda");
+		result.add("Température d'arrêt");
 		result.add("Longueur circuit initial");
 		
 		return result;
@@ -34,8 +37,9 @@ public class TabuParameter implements LookupParameter {
 	public ArrayList<String> toStringArrayList() {
 		ArrayList<String> result = new ArrayList<>();
 
-		result.add(Integer.toString(getIterationCount()));
-		result.add(Integer.toString(getTabuSize()));
+		result.add(Double.toString(getTemperature()));
+		result.add(Double.toString(getLambda()));
+		result.add(Double.toString(getTemperatureBreakpoint()));
 		result.add(Integer.toString(getInitialCircuit().getLength()));
 		
 		return result;
@@ -48,11 +52,15 @@ public class TabuParameter implements LookupParameter {
 		return landscapeService;
 	}
 
-	public int getTabuSize() {
-		return tabuSize;
+	public double getTemperature() {
+		return temperature;
 	}
 
-	public int getIterationCount() {
-		return iterationCount;
+	public double getLambda() {
+		return lambda;
+	}
+
+	public double getTemperatureBreakpoint() {
+		return temperatureBreakpoint;
 	}
 }

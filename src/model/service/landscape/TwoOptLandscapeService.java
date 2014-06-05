@@ -1,14 +1,14 @@
 package model.service.landscape;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-import tools.Tools;
 import model.iterator.TwoOptLandscapeIterator;
 import model.iterator.key.TwoCityKey;
 import model.lookup.Circuit;
 import model.service.DistanceService;
+import tools.Tools;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TwoOptLandscapeService extends AbstractLandscapeService<TwoCityKey> {
 

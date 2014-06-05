@@ -1,11 +1,11 @@
 package model.service.distance;
 
-import java.util.HashSet;
-import java.util.List;
-
 import model.data.City;
 import model.lookup.Circuit;
 import model.service.DistanceService;
+
+import java.util.HashSet;
+import java.util.List;
 
 public abstract class AbstractDistanceService implements DistanceService {
 

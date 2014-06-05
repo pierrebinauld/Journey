@@ -1,19 +1,18 @@
 package benchmark;
 
+import benchmark.parameter.LookupParameter;
+import benchmark.parameter.set.ParameterSet;
+import model.lookup.Circuit;
+import model.lookup.Lookup;
+import persistence.CsvFile;
+import tools.Constant;
+import tools.Tools;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import model.lookup.Circuit;
-import model.lookup.Lookup;
-import model.service.distance.EuclidianDistanceService;
-import persistence.CsvFile;
-import tools.Constant;
-import tools.Tools;
-import benchmark.parameter.LookupParameter;
-import benchmark.parameter.set.ParameterSet;
 
 public abstract class Benchmark<U extends LookupParameter> {
 

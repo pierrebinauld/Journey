@@ -1,13 +1,12 @@
 package view;
 
+import model.data.City;
+import model.lookup.Circuit;
+
+import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.geom.Point2D;
-
-import javax.swing.JPanel;
-
-import model.data.City;
-import model.lookup.Circuit;
 
 public class CircuitView extends JPanel {
 
