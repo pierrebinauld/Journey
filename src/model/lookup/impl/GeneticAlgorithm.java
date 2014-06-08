@@ -52,7 +52,6 @@ public class GeneticAlgorithm<Key> implements Lookup {
 
 		for (int i = 0; i < iterationCount; i++) {
 
-			System.out.println(i+1+"/"+iterationCount);
 			oldPopulation = newPopulation;
 			
 			oldPopulation = ranking(oldPopulation);
@@ -62,8 +61,6 @@ public class GeneticAlgorithm<Key> implements Lookup {
 			newPopulation = crossing(selectedPopulation);
 			
 			newPopulation = mutation(newPopulation);
-
-			System.out.println(result.getLength());
 		}
 		return result;
 	}
