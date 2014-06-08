@@ -1,22 +1,23 @@
 package model.lookup.impl;
 
+import benchmark.parameter.impl.TabuParameter;
+import model.iterator.key.Key;
 import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
-import model.service.LandscapeService;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class TabuAlgorithm<Key> extends AbstractModifierAlgorithm<Key> {
+public class TabuAlgorithm<K extends Key> extends AbstractModifierAlgorithm<K, TabuParameter<K>> {
 
 	private int iterationCount;
 	private int tabuSize;
 	private Queue<Integer> tabu = new LinkedList<>();
 
-	public TabuAlgorithm(LandscapeService<Key> landscapeService, Circuit initialCircuit, int tabuSize, int iterationCount) {
-		super(landscapeService, initialCircuit);
-		this.tabuSize = tabuSize;
-		this.iterationCount = iterationCount;
+	public TabuAlgorithm(TabuParameter<K> parameter) {
+		super(parameter);
+		this.tabuSize = parameter.getTabuSize();
+		this.iterationCount = parameter.getIterationCount();
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class TabuAlgorithm<Key> extends AbstractModifierAlgorithm<Key> {
 		while(count < iterationCount) {
 			landscapeService.setCircuit(currentIterationCircuit);
 			
-			for (Key key : landscapeService) {
+			for (K key : landscapeService) {
 				testedLength = landscapeService.getNeighborLength(key);
 				if (testedLength <= currentLength || -1 == currentLength) {
 					testedCircuit = landscapeService.getNeighbor(key);

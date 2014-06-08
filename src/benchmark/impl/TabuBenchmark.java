@@ -1,10 +1,10 @@
 package benchmark.impl;
 
 import benchmark.Benchmark;
+import benchmark.parameter.BuilderParameter;
 import benchmark.parameter.impl.TabuParameter;
 import benchmark.parameter.set.impl.TabuParameterSet;
 import model.data.Country;
-import model.lookup.Lookup;
 import model.lookup.impl.RandomAlgorithm;
 import model.lookup.impl.TabuAlgorithm;
 import model.service.distance.EuclidianDistanceService;
@@ -12,7 +12,7 @@ import model.service.factory.impl.TwoOptLandscapeFactory;
 import tools.Constant;
 import tools.DataSources;
 
-public class TabuBenchmark extends Benchmark<TabuParameter> {
+public class TabuBenchmark extends Benchmark<TabuParameter, TabuAlgorithm> {
 
 	public TabuBenchmark(String country, int optimum, int executionCount, TabuParameterSet parameterSet) {
 		super("Tabu", country, optimum, executionCount, parameterSet);
@@ -20,12 +20,8 @@ public class TabuBenchmark extends Benchmark<TabuParameter> {
 
 
 	@Override
-	public Lookup initializeAlgorithm(TabuParameter parameter) {
-		TabuAlgorithm lookup = new TabuAlgorithm(
-				parameter.getLandscapeService(), 
-				parameter.getInitialCircuit(), 
-				parameter.getTabuSize(), 
-				parameter.getIterationCount());
+	public TabuAlgorithm initializeAlgorithm(TabuParameter parameter) {
+		TabuAlgorithm lookup = new TabuAlgorithm(parameter);
 
 		return lookup;
 	}
@@ -34,7 +30,7 @@ public class TabuBenchmark extends Benchmark<TabuParameter> {
 		int countryId = 0;
 		Country country = DataSources.fromParser(countryId);
 		EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
-		RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(distanceService, country.getCities());
+		RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(new BuilderParameter(distanceService, country.getCities()));
 		TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
 		int[] tabuSize = {5000/*, 2, 3, 4, 5, 6, 7, 8, 9, 10*/};
 		int[] iterationCount = {1000/*, 2000, 3000, 4000, 5000, 10000*/};

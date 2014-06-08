@@ -1,51 +1,40 @@
 package benchmark.parameter.impl;
 
-import benchmark.parameter.LookupParameter;
+import benchmark.parameter.ModifierParameter;
+import model.iterator.key.Key;
 import model.lookup.Circuit;
 import model.service.LandscapeService;
 
 import java.util.ArrayList;
 
-public class TabuParameter implements LookupParameter {
-	private Circuit initialCircuit;
-	private LandscapeService landscapeService;
+public class TabuParameter<K extends Key> extends ModifierParameter<K> {
 	private int tabuSize;
 	private int iterationCount;
 
-	public TabuParameter(Circuit initialCircuit, LandscapeService landscapeService, int tabuSize, int iterationCount) {
-		this.initialCircuit = initialCircuit;
-		this.landscapeService = landscapeService;
+	public TabuParameter(Circuit initialCircuit, LandscapeService<K> landscapeService, int tabuSize, int iterationCount) {
+		super(initialCircuit, landscapeService);
 		this.tabuSize = tabuSize;
 		this.iterationCount = iterationCount;
 	}
 	
 	@Override
 	public ArrayList<String> titlesToStringArrayList() {
-		ArrayList<String> result = new ArrayList<>();
+		ArrayList<String> result = super.titlesToStringArrayList();
 
-		result.add("Nb itérations");
+		result.add("Nombre d'itérations");
 		result.add("Taille liste Tabou");
-		result.add("Longueur circuit initial");
 		
 		return result;
 	}
 	
 	@Override
 	public ArrayList<String> toStringArrayList() {
-		ArrayList<String> result = new ArrayList<>();
+		ArrayList<String> result = super.toStringArrayList();
 
 		result.add(Integer.toString(getIterationCount()));
 		result.add(Integer.toString(getTabuSize()));
-		result.add(Integer.toString(getInitialCircuit().getLength()));
 		
 		return result;
-	}
-	public Circuit getInitialCircuit() {
-		return initialCircuit;
-	}
-
-	public LandscapeService getLandscapeService() {
-		return landscapeService;
 	}
 
 	public int getTabuSize() {

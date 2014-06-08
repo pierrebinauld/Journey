@@ -1,8 +1,8 @@
 package benchmark.parameter.set.impl;
 
-import benchmark.parameter.set.AbstractModifierParameterSet;
 import benchmark.parameter.impl.SimulatedAnnealingParameter;
 import benchmark.parameter.iterator.impl.SimulatedAnnealingParameterIterator;
+import benchmark.parameter.set.AbstractModifierParameterSet;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.service.factory.LandscapeFactory;
 

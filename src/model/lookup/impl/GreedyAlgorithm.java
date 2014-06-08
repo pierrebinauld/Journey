@@ -1,22 +1,21 @@
 package model.lookup.impl;
 
-import model.data.City;
+import benchmark.parameter.BuilderParameter;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
-import model.service.DistanceService;
 import tools.Tools;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class GreedyAlgorithm extends AbstractBuilderAlgorithm {
+public class GreedyAlgorithm extends AbstractBuilderAlgorithm<BuilderParameter> {
 
-	private int origin= -1;
+	private int origin = -1;
 	private List<Integer> indexes = new LinkedList<>();
 	private Circuit circuit = new Circuit();
 
-	public GreedyAlgorithm(DistanceService distanceService, List<City> cities) {
-		super(distanceService, cities);
+	public GreedyAlgorithm(BuilderParameter parameter) {
+		super(parameter);
 	}
 	
 	public void setOrigin(int index) {

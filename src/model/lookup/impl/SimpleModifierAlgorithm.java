@@ -1,28 +1,29 @@
 package model.lookup.impl;
 
+import benchmark.parameter.ModifierParameter;
+import model.iterator.key.Key;
 import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
-import model.service.LandscapeService;
 
-public class SimpleModifierAlgorithm<Key> extends AbstractModifierAlgorithm<Key> {
+public class SimpleModifierAlgorithm<K extends Key> extends AbstractModifierAlgorithm<K, ModifierParameter<K>> {
 
-	public SimpleModifierAlgorithm(LandscapeService<Key> landscapeService, Circuit initialCircuit) {
-		super(landscapeService, initialCircuit);
+	public SimpleModifierAlgorithm(ModifierParameter<K> parameter) {
+		super(parameter);
 	}
 
 	@Override
 	public Circuit run() {
 		Circuit result = initialCircuit;
 		int currentLength = initialCircuit.getLength();
-		int length = currentLength;
-		Key currentKey = null;
+		int length;
+		K currentKey;
 		boolean run = true;
 
 		while(run){
 			currentKey = null;
 			landscapeService.setCircuit(result);
 			
-			for(Key key : landscapeService) {
+			for(K key : landscapeService) {
 				length = landscapeService.getNeighborLength(key);
 				if (length < currentLength) {
 					currentLength = length;

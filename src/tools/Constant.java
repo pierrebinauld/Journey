@@ -2,10 +2,10 @@ package tools;
 
 public class Constant {
 
-//	public static String TSP_PATH = "/home/tom/Documents/polytech/OD/dev/Journey/data/"; /* <-- comment this line to switch path
+	public static String TSP_PATH = "/home/tom/Documents/polytech/OD/dev/Journey/data/"; /* <-- comment this line to switch path
 	public static String TSP_PATH = "/home/pierre/git/Journey/data/"; //*/
 	
-	public static String BENCH_PATH = "./bench/";
+	public static String BENCHMARK_PATH = "./benchmark/";
 	
 	public static String[] TSP_FILES = {
 			"wi29",

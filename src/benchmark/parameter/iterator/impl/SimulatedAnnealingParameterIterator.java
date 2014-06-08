@@ -1,8 +1,8 @@
 package benchmark.parameter.iterator.impl;
 
+import benchmark.parameter.impl.SimulatedAnnealingParameter;
 import benchmark.parameter.iterator.LookupParameterIterator;
 import benchmark.parameter.set.impl.SimulatedAnnealingParameterSet;
-import benchmark.parameter.impl.SimulatedAnnealingParameter;
 
 public class SimulatedAnnealingParameterIterator implements LookupParameterIterator<SimulatedAnnealingParameter> {
 
