@@ -12,7 +12,7 @@ import benchmark.parameter.BuilderParameter;
 import benchmark.parameter.impl.SimulatedAnnealingParameter;
 import benchmark.parameter.set.impl.SimulatedAnnealingParameterSet;
 
-public class SimulatedAnnealingBenchmark extends Benchmark<SimulatedAnnealingParameter, SimulatedAnnealingAlgorithm> {
+public class SimulatedAnnealingBenchmark extends Benchmark<SimulatedAnnealingParameter> {
 
 	public SimulatedAnnealingBenchmark(String country, int optimum, int executionCount,
 			SimulatedAnnealingParameterSet parameterSet) {

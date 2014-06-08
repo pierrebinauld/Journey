@@ -13,7 +13,7 @@ import benchmark.parameter.BuilderParameter;
 import benchmark.parameter.impl.GeneticParameter;
 import benchmark.parameter.set.impl.GeneticParameterSet;
 
-public class GeneticBenchmark extends Benchmark<GeneticParameter, GeneticAlgorithm> {
+public class GeneticBenchmark extends Benchmark<GeneticParameter> {
 
 	public GeneticBenchmark(String country, int optimum, int executionCount, GeneticParameterSet parameterSet) {
 		super("Genetic", country, optimum, executionCount, parameterSet);
@@ -37,7 +37,7 @@ public class GeneticBenchmark extends Benchmark<GeneticParameter, GeneticAlgorit
 			
 			
 			int[] initialPopulationSize = {10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000};
-			double[] mutationProbability = {.01, .02, .03, .05, .1, .2, .5, .8};
+			double[] mutationProbability = {.01, .02, .03, .05/*, .1, .2, .5, .8*/};
 			int[] iterationCount = {1000, 2000, 5000, 10000, 50000};
 			
 			
