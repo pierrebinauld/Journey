@@ -1,6 +1,14 @@
 package model.lookup;
 
-public interface Lookup {
+import benchmark.parameter.LookupParameter;
 
-	public Circuit run();
+public abstract class Lookup<P extends LookupParameter> {
+
+	protected P parameter;
+
+	public Lookup(P parameter) {
+		this.parameter = parameter;
+	}
+
+	abstract public Circuit run();
 }

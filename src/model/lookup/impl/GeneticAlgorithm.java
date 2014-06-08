@@ -1,7 +1,8 @@
 package model.lookup.impl;
 
-import benchmark.parameter.PopulationFactory;
+import benchmark.parameter.impl.GeneticParameter;
 import model.iterator.key.CircuitPair;
+import model.iterator.key.Key;
 import model.lookup.Circuit;
 import model.lookup.Lookup;
 import model.service.DistanceService;
@@ -13,7 +14,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GeneticAlgorithm<Key> implements Lookup {
+public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 	
 	List<Circuit> population;
 	int randomPossibilityCount;
@@ -22,24 +23,25 @@ public class GeneticAlgorithm<Key> implements Lookup {
 	Circuit result;
 
 	DistanceService distanceService;
-	LandscapeService<Key> landscapeService;
+	LandscapeService<K> landscapeService;
 
 	// GeneticSelectionService selectionService;
 	// GeneticMutationService mutationService;
 
-	public GeneticAlgorithm(LandscapeService<Key> landscapeService, PopulationFactory initialPopulationFactory, int populationSize, double mutationProbability, int iterationCount) {
+	public GeneticAlgorithm(GeneticParameter<K> parameter) {
+		super(parameter);
 
-		this.population = initialPopulationFactory.manufacture(populationSize);
+		this.population = parameter.getInitialPopulationFactory().manufacture(parameter.getInitialPopulationSize());
 
 		if(0 != this.population.size()%2) {
 			population.remove(population.size()-1);
 		}
 
 		this.randomPossibilityCount = (population.size() * (population.size()+1)) / 2;
-		this.iterationCount = iterationCount;
-		this.mutationProbability = mutationProbability;
+		this.iterationCount = parameter.getIterationCount();
+		this.mutationProbability = parameter.getMutationProbability();
 		
-		this.landscapeService = landscapeService;
+		this.landscapeService = parameter.getLandscapeService();
 		this.distanceService = landscapeService.getDistanceService();
 	}
 

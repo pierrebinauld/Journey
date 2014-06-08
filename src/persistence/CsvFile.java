@@ -22,7 +22,7 @@ public class CsvFile {
 
 		for (String data : csvRow) {
 			writer.append(data);
-			writer.append(',');
+			writer.append(';');
 		}
 
 		writer.append('\n');

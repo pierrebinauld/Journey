@@ -1,25 +1,27 @@
 package model.lookup.impl;
 
+import benchmark.parameter.impl.SimulatedAnnealingParameter;
+import model.iterator.key.Key;
 import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
-import model.service.LandscapeService;
 
-public class SimulatedAnnealingAlgorithm<Key> extends AbstractModifierAlgorithm<Key> {
+public class SimulatedAnnealingAlgorithm<K extends Key> extends AbstractModifierAlgorithm<K, SimulatedAnnealingParameter<K>> {
 
 	private double temperature;
 	private double temperatureBreakpoint;
 	private double lambda;
 
-	public SimulatedAnnealingAlgorithm(LandscapeService<Key> landscapeService, Circuit initialCircuit, double temperature, double lambda, double temperatureBreakpoint) {
-		super(landscapeService, initialCircuit);
+	public SimulatedAnnealingAlgorithm(SimulatedAnnealingParameter<K> parameter) {
+		super(parameter);
 
-		this.temperature = temperature;
-		this.temperatureBreakpoint = temperatureBreakpoint;
+		this.temperature = parameter.getTemperature();
+		this.temperatureBreakpoint = parameter.getTemperatureBreakpoint();
 		
-		if (lambda >= 1) {
-			lambda = lambda - Math.floor(lambda);
+		if (parameter.getLambda() >= 1) { // TODO: what is it supposed to do ???
+			this.lambda = parameter.getLambda() - Math.floor(parameter.getLambda());
+		} else {
+			this.lambda = parameter.getLambda();
 		}
-		this.lambda = lambda;
 	}
 
 	@Override
@@ -31,7 +33,7 @@ public class SimulatedAnnealingAlgorithm<Key> extends AbstractModifierAlgorithm<
 		int currentLength = initialCircuit.getLength();
 
 		while(temperature > temperatureBreakpoint) {
-			Key key = landscapeService.randomKey();
+			K key = landscapeService.randomKey();
 			
 			length = landscapeService.getNeighborLength(key);
 			if(length < currentLength || metropolisRule(length, currentLength)) {
@@ -49,7 +51,6 @@ public class SimulatedAnnealingAlgorithm<Key> extends AbstractModifierAlgorithm<
 		}
 
 		return result;
-
 	}
 
 	private boolean metropolisRule(int testedLength, int currentLength) {

@@ -1,51 +1,29 @@
 package benchmark;
 
 import benchmark.parameter.LookupParameter;
-import model.lookup.Circuit;
 import model.lookup.Lookup;
 import model.service.TimeService;
 
-public class AlgorithmThread<P extends LookupParameter> extends Thread {
+import java.util.concurrent.Callable;
+
+public class AlgorithmThread<P extends LookupParameter> implements Callable<ExecutionResult<P>> {
 
 	private Lookup algorithm;
-	private P parameter;
-	private Circuit result;
-	private float executionTime;
+	private ExecutionResult<P> result = new ExecutionResult<>();
 	
 	private TimeService time = new TimeService();
 
 	public AlgorithmThread(P parameter, Lookup algorithm) {
 		this.algorithm = algorithm;
-		this.parameter = parameter;
+		result.setParameter(parameter);
 	}
 
 	@Override
-	public void run() {
-		super.run();
+	public ExecutionResult<P> call() throws Exception {
 		time.start();
-		result = algorithm.run();
-		executionTime = time.tickInSecond();
-	}
+		result.setCircuit(algorithm.run());
+		result.setExecutionTime(time.tickInSecond());
 
-	public Circuit getResult() {
 		return result;
 	}
-
-	public void setResult(Circuit result) {
-		this.result = result;
-	}
-
-	public P getParameter() {
-		return parameter;
-	}
-
-	public void setParameter(P parameter) {
-		this.parameter = parameter;
-	}
-
-	public float getExecutionTime() {
-		return executionTime;
-	}
-	
-	
 }

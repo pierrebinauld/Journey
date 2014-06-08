@@ -1,16 +1,13 @@
 package model.lookup.impl;
 
-import model.data.City;
+import benchmark.parameter.BuilderParameter;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
-import model.service.DistanceService;
 
-import java.util.List;
+public class SimpleBuilderAlgorithm extends AbstractBuilderAlgorithm<BuilderParameter> {
 
-public class SimpleBuilderAlgorithm extends AbstractBuilderAlgorithm {
-
-	public SimpleBuilderAlgorithm(DistanceService distanceService, List<City> cities) {
-		super(distanceService, cities);
+	public SimpleBuilderAlgorithm(BuilderParameter parameter) {
+		super(parameter);
 	}
 
 	@Override

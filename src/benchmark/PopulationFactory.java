@@ -1,4 +1,4 @@
-package benchmark.parameter;
+package benchmark;
 
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;

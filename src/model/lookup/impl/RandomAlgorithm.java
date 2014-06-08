@@ -1,18 +1,17 @@
 package model.lookup.impl;
 
-import model.data.City;
+import benchmark.parameter.BuilderParameter;
 import model.lookup.AbstractBuilderAlgorithm;
 import model.lookup.Circuit;
-import model.service.DistanceService;
 import tools.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RandomAlgorithm extends AbstractBuilderAlgorithm {
+public class RandomAlgorithm extends AbstractBuilderAlgorithm<BuilderParameter> {
 
-	public RandomAlgorithm(DistanceService distanceService, List<City> cities) {
-		super(distanceService, cities);
+	public RandomAlgorithm(BuilderParameter parameter) {
+		super(parameter);
 	}
 
 	@Override

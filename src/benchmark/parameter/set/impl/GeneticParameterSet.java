@@ -1,6 +1,6 @@
 package benchmark.parameter.set.impl;
 
-import benchmark.parameter.PopulationFactory;
+import benchmark.PopulationFactory;
 import benchmark.parameter.impl.GeneticParameter;
 import benchmark.parameter.iterator.impl.GeneticParameterIterator;
 import benchmark.parameter.set.ParameterSet;
