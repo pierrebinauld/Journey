@@ -32,18 +32,20 @@ public class GeneticBenchmark extends Benchmark<GeneticParameter> {
 			EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
 			
 			RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(new BuilderParameter(distanceService, country.getCities()));
+			String algoName = "Random";
 			PopulationFactory populationFactory = new PopulationFactory(initialCircuitBuilder);
 			TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
 			
 			
-			int[] initialPopulationSize = {10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000};
-			double[] mutationProbability = {.01, .02, .03, .05/*, .1, .2, .5, .8*/};
-			int[] iterationCount = {1000, 2000, 5000, 10000, 50000};
+			int[] initialPopulationSize = {10, 20, 50, 100,200, 500, 1000, 2000, /*5000, 10000/**/};
+			double[] mutationProbability = {.01, .02, .03, .05, .1, .2, .5, .8/**/};
+			int[] iterationCount = {1000, 2000, 5000, 10000, /*50000/**/};
 			
 			
 			GeneticParameterSet parameterSet = new GeneticParameterSet(landscapeFactory, populationFactory, initialPopulationSize, mutationProbability, iterationCount);
 			int executionCount = 1;
-			GeneticBenchmark benchmark = new GeneticBenchmark(country.getName(), Constant.OPTIMUM[countryId], executionCount, parameterSet);
+			GeneticBenchmark benchmark = new GeneticBenchmark(Constant.COUNTRY_NAMES[countryId] + "/"
+					+ algoName, Constant.OPTIMUM[countryId], executionCount, parameterSet);
 			benchmark.run();
 
 		}

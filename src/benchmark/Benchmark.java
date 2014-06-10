@@ -32,7 +32,7 @@ public abstract class Benchmark<P extends LookupParameter> {
 		this.countryName = countryName;
 		this.optimum = optimum;
 		this.executionCount = executionCount;
-		this.pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+		this.pool = Executors.newFixedThreadPool(/*1*/Runtime.getRuntime().availableProcessors());
 		this.parameterSet = parameterSet;
 	}
 
