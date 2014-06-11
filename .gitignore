@@ -3,6 +3,7 @@
 /bin/
 /target/
 /bench
+/benchmark
 
 # OS Files #
 .DS_Store

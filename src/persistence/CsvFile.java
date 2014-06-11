@@ -15,7 +15,7 @@ public class CsvFile {
 
 	public void open(String path, String name) throws IOException {
 		createFolder(path);
-		writer = new FileWriter(path+"/"+name);
+		writer = new FileWriter(path+name);
 	}
 
 	public void write(ArrayList<String> csvRow) throws IOException {
