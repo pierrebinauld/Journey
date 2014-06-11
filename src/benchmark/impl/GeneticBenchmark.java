@@ -36,7 +36,7 @@ public class GeneticBenchmark extends Benchmark<GeneticParameter, GeneticAlgorit
 		int[] iterationCount = {1000, 2000};
 		GeneticParameterSet parameterSet = new GeneticParameterSet(landscapeFactory, populationFactory, initialPopulationSize, mutationProbability, iterationCount);
 		int executionCount = 100;
-		GeneticBenchmark benchmark = new GeneticBenchmark(country.getName(), Constant.OPTIMUM[countryId], executionCount, parameterSet);
+		GeneticBenchmark benchmark = new GeneticBenchmark(Constant.COUNTRY_NAMES[countryId], Constant.OPTIMUM[countryId], executionCount, parameterSet);
 		benchmark.run();
 	}
 }
