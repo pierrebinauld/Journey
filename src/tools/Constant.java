@@ -2,8 +2,7 @@ package tools;
 
 public class Constant {
 
-//	public static String TSP_PATH = "/home/tom/Documents/polytech/OD/dev/Journey/data/"; /* <-- comment this line to switch path
-	public static String TSP_PATH = "/home/pierre/git/Journey/data/"; //*/
+	public static String TSP_PATH = "./data/";
 	
 	public static String BENCHMARK_PATH = "./benchmark/";
 	

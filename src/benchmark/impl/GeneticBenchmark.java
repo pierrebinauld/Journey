@@ -1,5 +1,10 @@
 package benchmark.impl;
 
+import benchmark.Benchmark;
+import benchmark.PopulationFactory;
+import benchmark.parameter.BuilderParameter;
+import benchmark.parameter.impl.GeneticParameter;
+import benchmark.parameter.set.impl.GeneticParameterSet;
 import model.data.Country;
 import model.lookup.impl.GeneticAlgorithm;
 import model.lookup.impl.GreedyAlgorithm;
@@ -7,11 +12,6 @@ import model.service.distance.EuclidianDistanceService;
 import model.service.factory.impl.TwoOptLandscapeFactory;
 import tools.Constant;
 import tools.DataSources;
-import benchmark.Benchmark;
-import benchmark.PopulationFactory;
-import benchmark.parameter.BuilderParameter;
-import benchmark.parameter.impl.GeneticParameter;
-import benchmark.parameter.set.impl.GeneticParameterSet;
 
 public class GeneticBenchmark extends Benchmark<GeneticParameter> {
 
