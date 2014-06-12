@@ -1,26 +1,12 @@
 package model.lookup.impl;
 
-import benchmark.parameter.BuilderParameter;
-import benchmark.parameter.impl.SimulatedAnnealingParameter;
 import benchmark.parameter.impl.TabuParameter;
-import model.data.Country;
 import model.iterator.key.Key;
-import model.iterator.key.TwoCityKey;
 import model.lookup.AbstractModifierAlgorithm;
 import model.lookup.Circuit;
-import model.lookup.Lookup;
-import model.service.DistanceService;
-import model.service.LandscapeService;
-import model.service.distance.EuclidianDistanceService;
-import model.service.landscape.TwoOptLandscapeService;
 
 import java.util.LinkedList;
 import java.util.Queue;
-
-import javax.swing.JFrame;
-
-import tools.DataSources;
-import view.Window;
 
 public class TabuAlgorithm<K extends Key> extends AbstractModifierAlgorithm<K, TabuParameter<K>> {
 
@@ -88,22 +74,5 @@ public class TabuAlgorithm<K extends Key> extends AbstractModifierAlgorithm<K, T
 
 	public void setTabuSize(int tabuSize) {
 		this.tabuSize = tabuSize;
-	}
-	
-	public static void main(String[] args) {
-		Country country = DataSources.fromParser(0); // 0: Western Sahara - 1: Zimbabwe - 2: Canada...
-		
-		DistanceService distanceService = new EuclidianDistanceService(country.getCities());
-		LandscapeService<TwoCityKey> landscape = new TwoOptLandscapeService(distanceService);
-		
-		Circuit initial = new GreedyAlgorithm(new BuilderParameter(distanceService, country.getCities())).run();
-		Window initWin = new Window(initial);
-		
-		TabuParameter<TwoCityKey> params = new TabuParameter<>(initial, landscape, 3, 100);
-		
-		Lookup<TabuParameter<TwoCityKey>> algo = new TabuAlgorithm<>(params);
-		
-		Window win = new Window(algo.run());
-		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

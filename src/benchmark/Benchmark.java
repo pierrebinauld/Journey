@@ -28,11 +28,15 @@ public abstract class Benchmark<P extends LookupParameter> {
 	private CsvFile csvFile;
 
 	public Benchmark(String algorithmName, String countryName, int optimum, int executionCount, ParameterSet<P> parameterSet) {
+		this(algorithmName, countryName, optimum, executionCount, parameterSet, Runtime.getRuntime().availableProcessors());
+	}
+
+	public Benchmark(String algorithmName, String countryName, int optimum, int executionCount, ParameterSet<P> parameterSet, int threadCount) {
 		this.algorithmName = algorithmName;
 		this.countryName = countryName;
 		this.optimum = optimum;
 		this.executionCount = executionCount;
-		this.pool = Executors.newFixedThreadPool(/*1*/Runtime.getRuntime().availableProcessors());
+		this.pool = Executors.newFixedThreadPool(threadCount);
 		this.parameterSet = parameterSet;
 	}
 

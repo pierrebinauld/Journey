@@ -12,7 +12,11 @@ import model.service.factory.impl.TwoOptLandscapeFactory;
 import tools.Constant;
 import tools.DataSources;
 
-public class TabuBenchmark extends Benchmark<TabuParameter, TabuAlgorithm> {
+public class TabuBenchmark extends Benchmark<TabuParameter> {
+
+	public TabuBenchmark(String country, int optimum, int executionCount, TabuParameterSet parameterSet, int threadCount) {
+		super("Tabu", country, optimum, executionCount, parameterSet, threadCount);
+	}
 
 	public TabuBenchmark(String country, int optimum, int executionCount, TabuParameterSet parameterSet) {
 		super("Tabu", country, optimum, executionCount, parameterSet);
@@ -36,7 +40,7 @@ public class TabuBenchmark extends Benchmark<TabuParameter, TabuAlgorithm> {
 		int[] iterationCount = {1000/*, 2000, 3000, 4000, 5000, 10000*/};
 		TabuParameterSet parameterSet = new TabuParameterSet(initialCircuitBuilder, landscapeFactory, tabuSize, iterationCount);
 		int executionCount = 1;
-		TabuBenchmark benchmark = new TabuBenchmark(country.getName(), Constant.OPTIMUM[countryId], executionCount, parameterSet);
+		TabuBenchmark benchmark = new TabuBenchmark(Constant.COUNTRY_NAMES[countryId], Constant.OPTIMUM[countryId], executionCount, parameterSet);
 		benchmark.run();
 	}
 }

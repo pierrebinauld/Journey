@@ -19,15 +19,20 @@ public class GeneticBenchmark extends Benchmark<GeneticParameter> {
 		super("Genetic", country, optimum, executionCount, parameterSet);
 	}
 
+	public GeneticBenchmark(String country, int optimum, int executionCount, GeneticParameterSet parameterSet, int threadCount) {
+		super("Genetic", country, optimum, executionCount, parameterSet, threadCount);
+	}
+
 	@Override
 	public GeneticAlgorithm initializeAlgorithm(GeneticParameter parameter) {
 		return new GeneticAlgorithm(parameter);
 	}
 
 	public static void main(String[] args) {
-		for(int i=0; i<3; i++) {
-				
-			int countryId = i;
+		int executionCount = 1;
+		int maxCountryId = 1;
+		for(int countryId=0; countryId<maxCountryId; countryId++) {
+
 			Country country = DataSources.fromParser(countryId);
 			EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
 			
@@ -37,15 +42,14 @@ public class GeneticBenchmark extends Benchmark<GeneticParameter> {
 			TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
 			
 			
-			int[] initialPopulationSize = {10, 20, 50, 100,200, 500, 1000, 2000, /*5000, 10000/**/};
-			double[] mutationProbability = {.01, .02, .03, .05, .1, .2, .5, .8/**/};
-			int[] iterationCount = {1000, 2000, 5000, 10000, /*50000/**/};
+			int[] initialPopulationSize = {10/*, 20, 50, 100,200, 500, 1000, 2000, /*5000, 10000/**/};
+			double[] mutationProbability = {.01/*, .02, .03, .05, .1, .2, .5, .8/**/};
+			int[] iterationCount = {1000/*, 2000, 5000, 10000, 50000/**/};
 			
 			
 			GeneticParameterSet parameterSet = new GeneticParameterSet(landscapeFactory, populationFactory, initialPopulationSize, mutationProbability, iterationCount);
-			int executionCount = 1;
-			GeneticBenchmark benchmark = new GeneticBenchmark(Constant.COUNTRY_NAMES[countryId] + "/"
-					+ algoName, Constant.OPTIMUM[countryId], executionCount, parameterSet);
+
+			GeneticBenchmark benchmark = new GeneticBenchmark(Constant.COUNTRY_NAMES[countryId] + "/" + algoName, Constant.OPTIMUM[countryId], executionCount, parameterSet, 1);
 			benchmark.run();
 
 		}

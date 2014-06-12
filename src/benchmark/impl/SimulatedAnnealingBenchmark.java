@@ -1,5 +1,9 @@
 package benchmark.impl;
 
+import benchmark.Benchmark;
+import benchmark.parameter.BuilderParameter;
+import benchmark.parameter.impl.SimulatedAnnealingParameter;
+import benchmark.parameter.set.impl.SimulatedAnnealingParameterSet;
 import model.data.Country;
 import model.lookup.impl.RandomAlgorithm;
 import model.lookup.impl.SimulatedAnnealingAlgorithm;
@@ -7,16 +11,15 @@ import model.service.distance.EuclidianDistanceService;
 import model.service.factory.impl.TwoOptLandscapeFactory;
 import tools.Constant;
 import tools.DataSources;
-import benchmark.Benchmark;
-import benchmark.parameter.BuilderParameter;
-import benchmark.parameter.impl.SimulatedAnnealingParameter;
-import benchmark.parameter.set.impl.SimulatedAnnealingParameterSet;
 
 public class SimulatedAnnealingBenchmark extends Benchmark<SimulatedAnnealingParameter> {
 
-	public SimulatedAnnealingBenchmark(String country, int optimum, int executionCount,
-			SimulatedAnnealingParameterSet parameterSet) {
+	public SimulatedAnnealingBenchmark(String country, int optimum, int executionCount, SimulatedAnnealingParameterSet parameterSet) {
 		super("Simulated_annealing", country, optimum, executionCount, parameterSet);
+	}
+
+	public SimulatedAnnealingBenchmark(String country, int optimum, int executionCount, SimulatedAnnealingParameterSet parameterSet, int threadCount) {
+		super("Simulated_annealing", country, optimum, executionCount, parameterSet, threadCount);
 	}
 
 	@Override
@@ -39,12 +42,10 @@ public class SimulatedAnnealingBenchmark extends Benchmark<SimulatedAnnealingPar
 			double[] lambda = { 0.5, 0.6, 0.7, 0.8, 0.9, 0.99, 0.999, 0.9999, 0.99999 };
 			double[] temperatureBreakpoint = { 0.05, 0.005, 0.0005 };
 
-			SimulatedAnnealingParameterSet parameterSet = new SimulatedAnnealingParameterSet(initialCircuitBuilder,
-					landscapeFactory, temperature, lambda, temperatureBreakpoint);
+			SimulatedAnnealingParameterSet parameterSet = new SimulatedAnnealingParameterSet(initialCircuitBuilder, landscapeFactory, temperature, lambda, temperatureBreakpoint);
 			int executionCount = 1;
 
-			SimulatedAnnealingBenchmark benchmark = new SimulatedAnnealingBenchmark(Constant.COUNTRY_NAMES[countryId] + "/"
-					+ algoName, Constant.OPTIMUM[countryId], executionCount, parameterSet);
+			SimulatedAnnealingBenchmark benchmark = new SimulatedAnnealingBenchmark(Constant.COUNTRY_NAMES[countryId] + "/" + algoName, Constant.OPTIMUM[countryId], executionCount, parameterSet);
 
 			benchmark.run();
 		}
