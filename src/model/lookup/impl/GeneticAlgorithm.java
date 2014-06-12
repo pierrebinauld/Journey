@@ -3,11 +3,19 @@ package model.lookup.impl;
 import benchmark.parameter.impl.GeneticParameter;
 import model.iterator.key.CircuitPair;
 import model.iterator.key.Key;
+import model.iterator.key.TwoCityKey;
 import model.lookup.Circuit;
 import model.lookup.Lookup;
 import model.service.DistanceService;
 import model.service.LandscapeService;
+import model.service.distance.EuclidianDistanceService;
+import model.service.landscape.TwoOptLandscapeService;
+import tools.DataSources;
 import tools.Tools;
+import view.Window;
+import benchmark.PopulationFactory;
+import benchmark.parameter.BuilderParameter;
+import benchmark.parameter.impl.GeneticParameter;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -31,7 +39,11 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 		size = size % 2 == 0 ? size : size - 1;
 		this.population = parameter.getInitialPopulationFactory().manufacture(size);
 
-		this.randomPossibilityCount = (size * (size + 1)) / 2;
+		if(0 != this.population.size()%2) {
+			population.remove(population.size()-1);
+		}
+
+		this.randomPossibilityCount = (population.size() * (population.size()+1)) / 2;
 		this.iterationCount = parameter.getIterationCount();
 		this.mutationProbability = parameter.getMutationProbability();
 
@@ -60,6 +72,9 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 				newPopulation.add(mutation(crossedPair.second()));
 			}
 			System.out.println(i + "/" + iterationCount);
+			if (i % 100 == 0) {
+				System.out.println(i + "/" + iterationCount + "\t" + result.getLength());
+			}
 		}
 		return result;
 	}
@@ -165,5 +180,24 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 		}
 
 		return new CircuitPair(c3, c4);
+	}
+
+	public static void main(String[] args) {
+		Country country = DataSources.fromParser(1); // 0: Western Sahara - 1:
+														// Zimbabwe - 2:
+														// Canada...
+
+		DistanceService distanceService = new EuclidianDistanceService(country.getCities());
+		LandscapeService<TwoCityKey> landscape = new TwoOptLandscapeService(distanceService);
+
+		PopulationFactory populationFactory = new PopulationFactory(new RandomAlgorithm(new BuilderParameter(distanceService,
+				country.getCities())));
+
+		GeneticParameter<TwoCityKey> params = new GeneticParameter<>(landscape, populationFactory, 100, 0.1, 1000);
+
+		Lookup<GeneticParameter<TwoCityKey>> algo = new GeneticAlgorithm(params);
+
+		Window win = new Window(algo.run());
+		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

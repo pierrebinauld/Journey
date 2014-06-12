@@ -38,6 +38,8 @@ public class GeneticBenchmark extends Benchmark<GeneticParameter> {
 			
 			RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(new BuilderParameter(distanceService, country.getCities()));
 			String algoName = "Random";
+//			GreedyAlgorithm initialCircuitBuilder = new GreedyAlgorithm(new BuilderParameter(distanceService, country.getCities()));
+//			String algoName = "Greedy";
 			PopulationFactory populationFactory = new PopulationFactory(initialCircuitBuilder);
 			TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
 			
