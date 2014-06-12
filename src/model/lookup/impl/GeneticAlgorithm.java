@@ -1,6 +1,9 @@
 package model.lookup.impl;
 
+import benchmark.PopulationFactory;
+import benchmark.parameter.BuilderParameter;
 import benchmark.parameter.impl.GeneticParameter;
+import model.data.Country;
 import model.iterator.key.CircuitPair;
 import model.iterator.key.Key;
 import model.iterator.key.TwoCityKey;
@@ -13,10 +16,8 @@ import model.service.landscape.TwoOptLandscapeService;
 import tools.DataSources;
 import tools.Tools;
 import view.Window;
-import benchmark.PopulationFactory;
-import benchmark.parameter.BuilderParameter;
-import benchmark.parameter.impl.GeneticParameter;
 
+import javax.swing.*;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -183,7 +184,7 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 	}
 
 	public static void main(String[] args) {
-		Country country = DataSources.fromParser(1); // 0: Western Sahara - 1:
+		Country country = DataSources.fromParser(1);    // 0: Western Sahara - 1:
 														// Zimbabwe - 2:
 														// Canada...
 
@@ -198,6 +199,6 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 		Lookup<GeneticParameter<TwoCityKey>> algo = new GeneticAlgorithm(params);
 
 		Window win = new Window(algo.run());
-		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		win.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 }
