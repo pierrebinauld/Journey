@@ -12,7 +12,7 @@ import model.service.factory.impl.TwoOptLandscapeFactory;
 import tools.Constant;
 import tools.DataSources;
 
-public class TabuBenchmark extends Benchmark<TabuParameter, TabuAlgorithm> {
+public class TabuBenchmark extends Benchmark<TabuParameter> {
 
 	public TabuBenchmark(String country, int optimum, int executionCount, TabuParameterSet parameterSet) {
 		super("Tabu", country, optimum, executionCount, parameterSet);
