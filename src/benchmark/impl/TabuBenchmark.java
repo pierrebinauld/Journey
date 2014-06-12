@@ -36,7 +36,7 @@ public class TabuBenchmark extends Benchmark<TabuParameter, TabuAlgorithm> {
 		int[] iterationCount = {1000/*, 2000, 3000, 4000, 5000, 10000*/};
 		TabuParameterSet parameterSet = new TabuParameterSet(initialCircuitBuilder, landscapeFactory, tabuSize, iterationCount);
 		int executionCount = 1;
-		TabuBenchmark benchmark = new TabuBenchmark(Constant.COUNTRY_NAMES[countryId], Constant.OPTIMUM[countryId], executionCount, parameterSet);
+		TabuBenchmark benchmark = new TabuBenchmark(country.getName(), Constant.OPTIMUM[countryId], executionCount, parameterSet);
 		benchmark.run();
 	}
 }

@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public abstract class Benchmark<P extends LookupParameter, L extends Lookup> {
+public abstract class Benchmark<P extends LookupParameter> {
 
 	protected int executionCount;
 	protected ExecutorService pool;
@@ -32,7 +32,7 @@ public abstract class Benchmark<P extends LookupParameter, L extends Lookup> {
 		this.countryName = countryName;
 		this.optimum = optimum;
 		this.executionCount = executionCount;
-		this.pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+		this.pool = Executors.newFixedThreadPool(/*1*/Runtime.getRuntime().availableProcessors());
 		this.parameterSet = parameterSet;
 	}
 
@@ -47,7 +47,7 @@ public abstract class Benchmark<P extends LookupParameter, L extends Lookup> {
 
 				for(int iExecution = 0; iExecution < executionCount; iExecution++) {
 					for(P parameter : parameterSet) {
-						L algorithm = initializeAlgorithm(parameter);
+						Lookup algorithm = initializeAlgorithm(parameter);
 						AlgorithmThread<P> algorithmThread = new AlgorithmThread<>(parameter, algorithm);
 						futures.add(pool.submit(algorithmThread));
 					}
@@ -102,5 +102,5 @@ public abstract class Benchmark<P extends LookupParameter, L extends Lookup> {
 		csvFile.write(csvRow);
 	}
 
-	public abstract L initializeAlgorithm(P parameter);
+	public abstract Lookup initializeAlgorithm(P parameter);
 }

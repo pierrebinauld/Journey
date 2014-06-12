@@ -13,7 +13,7 @@ import model.service.factory.impl.TwoOptLandscapeFactory;
 import tools.Constant;
 import tools.DataSources;
 
-public class GeneticBenchmark extends Benchmark<GeneticParameter, GeneticAlgorithm> {
+public class GeneticBenchmark extends Benchmark<GeneticParameter> {
 
 	public GeneticBenchmark(String country, int optimum, int executionCount, GeneticParameterSet parameterSet) {
 		super("Genetic", country, optimum, executionCount, parameterSet);
@@ -25,18 +25,29 @@ public class GeneticBenchmark extends Benchmark<GeneticParameter, GeneticAlgorit
 	}
 
 	public static void main(String[] args) {
-		int countryId = 0;
-		Country country = DataSources.fromParser(countryId);
-		EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
-		RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(new BuilderParameter(distanceService, country.getCities()));
-		PopulationFactory populationFactory = new PopulationFactory(initialCircuitBuilder);
-		TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
-		int[] initialPopulationSize = {20, 50, 100};
-		double[] mutationProbability = {.05, .1, .2};
-		int[] iterationCount = {1000, 2000};
-		GeneticParameterSet parameterSet = new GeneticParameterSet(landscapeFactory, populationFactory, initialPopulationSize, mutationProbability, iterationCount);
-		int executionCount = 100;
-		GeneticBenchmark benchmark = new GeneticBenchmark(Constant.COUNTRY_NAMES[countryId], Constant.OPTIMUM[countryId], executionCount, parameterSet);
-		benchmark.run();
+		for(int i=0; i<3; i++) {
+				
+			int countryId = i;
+			Country country = DataSources.fromParser(countryId);
+			EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
+			
+			RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(new BuilderParameter(distanceService, country.getCities()));
+			String algoName = "Random";
+			PopulationFactory populationFactory = new PopulationFactory(initialCircuitBuilder);
+			TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
+			
+			
+			int[] initialPopulationSize = {10, 20, 50, 100,200, 500, 1000, 2000, /*5000, 10000/**/};
+			double[] mutationProbability = {.01, .02, .03, .05, .1, .2, .5, .8/**/};
+			int[] iterationCount = {1000, 2000, 5000, 10000, /*50000/**/};
+			
+			
+			GeneticParameterSet parameterSet = new GeneticParameterSet(landscapeFactory, populationFactory, initialPopulationSize, mutationProbability, iterationCount);
+			int executionCount = 1;
+			GeneticBenchmark benchmark = new GeneticBenchmark(Constant.COUNTRY_NAMES[countryId] + "/"
+					+ algoName, Constant.OPTIMUM[countryId], executionCount, parameterSet);
+			benchmark.run();
+
+		}
 	}
 }
