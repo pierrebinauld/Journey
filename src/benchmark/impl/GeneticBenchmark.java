@@ -2,7 +2,7 @@ package benchmark.impl;
 
 import model.data.Country;
 import model.lookup.impl.GeneticAlgorithm;
-import model.lookup.impl.RandomAlgorithm;
+import model.lookup.impl.GreedyAlgorithm;
 import model.service.distance.EuclidianDistanceService;
 import model.service.factory.impl.TwoOptLandscapeFactory;
 import tools.Constant;
@@ -31,15 +31,15 @@ public class GeneticBenchmark extends Benchmark<GeneticParameter> {
 			Country country = DataSources.fromParser(countryId);
 			EuclidianDistanceService distanceService = new EuclidianDistanceService(country.getCities());
 			
-			RandomAlgorithm initialCircuitBuilder = new RandomAlgorithm(new BuilderParameter(distanceService, country.getCities()));
-			String algoName = "Random";
+			GreedyAlgorithm initialCircuitBuilder = new GreedyAlgorithm(new BuilderParameter(distanceService, country.getCities()));
+			String algoName = "Greedy";
 			PopulationFactory populationFactory = new PopulationFactory(initialCircuitBuilder);
 			TwoOptLandscapeFactory landscapeFactory = new TwoOptLandscapeFactory(distanceService);
 			
 			
 			int[] initialPopulationSize = {10, 20, 50, 100,200, 500, 1000, 2000, /*5000, 10000/**/};
-			double[] mutationProbability = {.01, .02, .03, .05, .1, .2, .5, .8/**/};
-			int[] iterationCount = {1000, 2000, 5000, 10000, /*50000/**/};
+			double[] mutationProbability = {.01, .02, .03/*, .05, .1, .2, .5, .8/**/};
+			int[] iterationCount = {1000, 2000, 5000/*, 10000, /*50000/**/};
 			
 			
 			GeneticParameterSet parameterSet = new GeneticParameterSet(landscapeFactory, populationFactory, initialPopulationSize, mutationProbability, iterationCount);

@@ -25,7 +25,7 @@ import benchmark.parameter.BuilderParameter;
 import benchmark.parameter.impl.GeneticParameter;
 
 public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
-	
+
 	List<Circuit> population;
 	int randomPossibilityCount;
 	int iterationCount;
@@ -43,14 +43,14 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 
 		this.population = parameter.getInitialPopulationFactory().manufacture(parameter.getInitialPopulationSize());
 
-		if(0 != this.population.size()%2) {
-			population.remove(population.size()-1);
+		if (0 != this.population.size() % 2) {
+			population.remove(population.size() - 1);
 		}
 
-		this.randomPossibilityCount = (population.size() * (population.size()+1)) / 2;
+		this.randomPossibilityCount = (population.size() * (population.size() + 1)) / 2;
 		this.iterationCount = parameter.getIterationCount();
 		this.mutationProbability = parameter.getMutationProbability();
-		
+
 		this.landscapeService = parameter.getLandscapeService();
 		this.distanceService = landscapeService.getDistanceService();
 	}
@@ -65,14 +65,18 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 		for (int i = 0; i < iterationCount; i++) {
 
 			oldPopulation = newPopulation;
-			
+
 			oldPopulation = ranking(oldPopulation);
-			
+
 			selectedPopulation = selection(oldPopulation);
-			
+
 			newPopulation = crossing(selectedPopulation);
-			
+
 			newPopulation = mutation(newPopulation);
+
+			if (i % 100 == 0) {
+				System.out.println(i + "/" + iterationCount + "\t" + result.getLength());
+			}
 		}
 		return result;
 	}
@@ -93,6 +97,7 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 
 	/**
 	 * Return a sorted list by circuit size
+	 * 
 	 * @param population
 	 * @return
 	 */
@@ -105,25 +110,27 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 		List<CircuitPair> selectedPopulation = new ArrayList<>();
 		int halfPopulationSize = population.size() / 2;
 		int selectedIndex, random;
-		
-		while(selectedPopulation.size() < halfPopulationSize) {
+
+		while (selectedPopulation.size() < halfPopulationSize) {
 			random = Tools.random(0, randomPossibilityCount);
-			selectedIndex = (int) (population.size() - Math.ceil(( -1 + Math.sqrt(1 + 8 * randomPossibilityCount - 8*( random )) ) / 2));
+			selectedIndex = (int) (population.size() - Math
+					.ceil((-1 + Math.sqrt(1 + 8 * randomPossibilityCount - 8 * (random))) / 2));
 			Circuit first = sortedPopulation.get(selectedIndex);
 
 			random = Tools.random(0, randomPossibilityCount);
-			selectedIndex = (int) (population.size() - Math.ceil(( -1 + Math.sqrt(1 + 8 * randomPossibilityCount - 8*( random )) ) / 2));
+			selectedIndex = (int) (population.size() - Math
+					.ceil((-1 + Math.sqrt(1 + 8 * randomPossibilityCount - 8 * (random))) / 2));
 			Circuit second = sortedPopulation.get(selectedIndex);
 
 			selectedPopulation.add(new CircuitPair(first, second));
 		}
-		
+
 		return selectedPopulation;
 	}
 
 	private List<Circuit> crossing(List<CircuitPair> selectedPopulation) {
 		List<Circuit> newPopulation = new ArrayList<>();
-		for(CircuitPair pair : selectedPopulation) {
+		for (CircuitPair pair : selectedPopulation) {
 			CircuitPair pairCrossed = atomicCrossing(pair);
 			newPopulation.add(pairCrossed.first());
 			newPopulation.add(pairCrossed.second());
@@ -133,8 +140,8 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 
 	private List<Circuit> mutation(List<Circuit> population) {
 		int size = population.size();
-		for(int i = 0; i<size; i++) {
-			if(Math.random() < mutationProbability) {
+		for (int i = 0; i < size; i++) {
+			if (Math.random() < mutationProbability) {
 				landscapeService.setCircuit(population.get(i));
 				Circuit mutatedCircuit = landscapeService.getNeighbor(landscapeService.randomKey());
 				population.set(i, mutatedCircuit);
@@ -142,7 +149,7 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 		}
 		return population;
 	}
-	
+
 	private CircuitPair atomicCrossing(CircuitPair pair) {
 
 		LinkedList<Integer> circuit1 = pair.first().getCircuit();
@@ -190,29 +197,32 @@ public class GeneticAlgorithm<K extends Key> extends Lookup<GeneticParameter> {
 		c3.close(distanceService.getDistance(lastC3City, c3.getCircuit().get(0)));
 		c4.close(distanceService.getDistance(lastC4City, c4.getCircuit().get(0)));
 
-		if(c3.getLength() < result.getLength()) {
+		if (c3.getLength() < result.getLength()) {
 			result = c3;
 		}
 
-		if(c4.getLength() < result.getLength()) {
+		if (c4.getLength() < result.getLength()) {
 			result = c4;
 		}
-		
+
 		return new CircuitPair(c3, c4);
 	}
-	
+
 	public static void main(String[] args) {
-		Country country = DataSources.fromParser(1); // 0: Western Sahara - 1: Zimbabwe - 2: Canada...
-		
+		Country country = DataSources.fromParser(1); // 0: Western Sahara - 1:
+														// Zimbabwe - 2:
+														// Canada...
+
 		DistanceService distanceService = new EuclidianDistanceService(country.getCities());
 		LandscapeService<TwoCityKey> landscape = new TwoOptLandscapeService(distanceService);
-		
-		PopulationFactory populationFactory = new PopulationFactory(new RandomAlgorithm(new BuilderParameter(distanceService, country.getCities())));
-		
+
+		PopulationFactory populationFactory = new PopulationFactory(new RandomAlgorithm(new BuilderParameter(distanceService,
+				country.getCities())));
+
 		GeneticParameter<TwoCityKey> params = new GeneticParameter<>(landscape, populationFactory, 100, 0.1, 1000);
-		
+
 		Lookup<GeneticParameter<TwoCityKey>> algo = new GeneticAlgorithm(params);
-		
+
 		Window win = new Window(algo.run());
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
